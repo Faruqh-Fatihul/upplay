@@ -1,0 +1,71 @@
+/* ===== UpPlay V3: PVP muat layar laptop/TV, ikat kepala sesuai tim, tebak-tebakan L4–5 tanpa scroll ===== */
+/* --- PVP Tarik Tambang: seluruh arena muat satu layar (tanpa scroll, tanpa keluar dari padding) --- */
+@media (min-width:760px){
+ #teacherPortalPage #teacherGuruV4:has(.tg5-wrap) .tg4-head{display:none!important}
+ #teacherPortalPage:has(#teacherGuruV4 .tg5-wrap) .teacher-main{padding-top:12px!important;padding-bottom:12px!important}
+ #teacherPortalPage #teacherGuruV4 .tg5-wrap{box-sizing:border-box;height:calc(100vh - 98px);min-height:360px;padding:clamp(8px,1.6vh,16px) clamp(8px,1.2vw,16px);border-radius:22px;display:flex}
+ #teacherPortalPage #teacherGuruV4 .tg5-grid{flex:1;min-height:0;width:100%;grid-template-columns:clamp(156px,16vw,236px) minmax(0,1fr) clamp(156px,16vw,236px)!important;gap:clamp(8px,1.2vw,18px);align-items:stretch!important}
+ #teacherPortalPage #teacherGuruV4 .tg5-center{grid-column:auto!important;grid-row:auto!important;position:relative;display:flex;flex-direction:column;min-height:0;min-width:0}
+ #teacherPortalPage #teacherGuruV4 .tg5-title{margin:0 0 clamp(4px,1vh,8px);font-size:clamp(1rem,2.6vh,1.25rem)}
+ #teacherPortalPage #teacherGuruV4 .tg5-stage{flex:1 1 auto;min-height:0;display:flex;align-items:flex-end;justify-content:center}
+ #teacherPortalPage #teacherGuruV4 .tg5-svg{width:100%;height:auto;max-height:100%}
+ #teacherPortalPage #teacherGuruV4 .tg5-cap{margin-top:clamp(4px,1vh,8px);font-size:clamp(.74rem,1.9vh,.9rem)}
+ #teacherPortalPage #teacherGuruV4 .tg5-chips{margin-top:clamp(4px,1vh,10px)}
+ #teacherPortalPage #teacherGuruV4 .tg5-chip{padding:clamp(4px,.9vh,7px) 14px;font-size:clamp(.74rem,1.8vh,.85rem)}
+ #teacherPortalPage #teacherGuruV4 .tg5-abort{margin-top:clamp(6px,1.2vh,12px);padding:clamp(5px,1vh,9px) 14px}
+ #teacherPortalPage #teacherGuruV4 .tg5-end{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);z-index:6;width:min(94%,440px);margin:0}
+ #teacherPortalPage #teacherGuruV4 .tg5-end.hidden{display:none}
+ #teacherPortalPage #teacherGuruV4 .tg5-pad{display:flex;flex-direction:column;min-height:0;padding:clamp(6px,1.4vh,14px);border-radius:22px;box-sizing:border-box;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+ #teacherPortalPage #teacherGuruV4 .tg5-who{min-height:0;margin:0 0 clamp(3px,.8vh,8px);font-size:clamp(.68rem,1.7vh,.78rem)}
+ #teacherPortalPage #teacherGuruV4 .tg5-q{padding:clamp(7px,1.6vh,15px) 6px;font-size:clamp(.95rem,2.5vh,1.25rem);border-radius:16px}
+ #teacherPortalPage #teacherGuruV4 .tg5-disp{height:clamp(32px,6vh,46px);margin:clamp(5px,1.2vh,10px) 0;font-size:clamp(1.1rem,2.8vh,1.4rem);flex:none}
+ #teacherPortalPage #teacherGuruV4 .tg5-keys{flex:1;min-height:0;grid-template-rows:repeat(4,minmax(0,1fr));gap:clamp(4px,1vh,8px);padding:clamp(5px,1vh,10px)}
+ #teacherPortalPage #teacherGuruV4 .tg5-key{height:auto;min-height:0;font-size:clamp(.95rem,2.4vh,1.15rem);touch-action:none;-webkit-user-select:none;user-select:none}
+ #teacherPortalPage #teacherGuruV4 .tg5-key.pressed{transform:scale(.92);filter:brightness(.93);box-shadow:0 1px 3px rgba(0,0,0,.18)}
+ #teacherPortalPage #teacherGuruV4 .tg5-meta{margin-top:clamp(3px,.8vh,10px);font-size:clamp(.66rem,1.6vh,.76rem)}
+ #teacherPortalPage #teacherGuruV4 .tg5-hint{margin-top:clamp(2px,.6vh,6px);text-align:center;font-size:clamp(.62rem,1.5vh,.72rem);font-weight:800;color:#4b5563}
+}
+@media (max-width:759px){ #teacherPortalPage #teacherGuruV4 .tg5-pad,#teacherPortalPage #teacherGuruV4 .tg5-key{touch-action:none;-webkit-user-select:none;user-select:none} }
+/* --- Tebak-tebakan Level 4 & 5 (dan semua level) muat layar laptop tanpa scroll --- */
+@media (min-width:900px) and (min-height:470px){
+ #ttPlayPage:not(.hidden)>main{overflow:hidden!important;padding-top:0!important;padding-bottom:10px!important}
+ #ttPlayPage:not(.hidden) .page-head{margin-bottom:clamp(4px,1vh,8px)!important}
+ #ttPlayPage .tt-card{padding:clamp(8px,1.8vh,20px) clamp(14px,1.6vw,22px)!important}
+ #ttPlayPage .lg-qhead{margin-bottom:clamp(4px,1vh,12px)!important}
+ #ttPlayPage .lg-qhead h2{font-size:clamp(.95rem,2.3vh,1.2rem)}
+ #ttPlayPage .tt-riddle{padding:clamp(6px,1.4vh,16px) 18px!important;margin-bottom:clamp(5px,1.2vh,14px)!important}
+ #ttPlayPage .tt-riddle .tt-rtitle{margin:clamp(2px,.6vh,8px) 0!important;font-size:clamp(.95rem,2.4vh,1.2rem)}
+ #ttPlayPage .tt-riddle p{margin-top:clamp(2px,.6vh,6px)!important;font-size:clamp(.82rem,2vh,1.1rem)!important;line-height:1.35!important}
+ #ttPlayPage .tt-blurbox{height:clamp(64px,19vh,180px)!important}
+ #ttPlayPage .tt-blurem{font-size:clamp(3rem,13vh,7.5rem)!important;line-height:1}
+ #ttPlayPage .tt-scene{padding:clamp(5px,1.2vh,14px) 12px!important;font-size:clamp(1.5rem,4.4vh,2.7rem)!important;line-height:1.1!important;letter-spacing:3px!important;gap:2px!important}
+ #ttPlayPage .tt-cap{padding:clamp(5px,1vh,12px) 14px!important}
+ #ttPlayPage .tt-cap *{line-height:1.3}
+ #ttPlayPage .tt-opts4{gap:clamp(6px,1vh,12px)!important}
+ #ttPlayPage .tt-optc{padding:clamp(5px,1vh,14px) 8px clamp(4px,.9vh,12px)!important;gap:2px!important;border-radius:16px!important}
+ #ttPlayPage .tt-optc span{font-size:clamp(1.5rem,5.2vh,2.5rem)!important;line-height:1.1!important}
+ #ttPlayPage .tt-optc b{font-size:clamp(.78rem,1.9vh,.92rem)}
+ #ttPlayPage .tt-optsP{gap:clamp(5px,1vh,10px)!important}
+ #ttPlayPage .tt-optp{padding:clamp(5px,1.1vh,13px) 14px!important;gap:12px!important}
+ #ttPlayPage .tt-optp em{width:clamp(22px,3.8vh,30px)!important;height:clamp(22px,3.8vh,30px)!important}
+ #ttPlayPage .tt-optp span{font-size:clamp(.82rem,2vh,1rem)!important;line-height:1.25!important}
+ #ttPlayPage .lg-fb{margin-top:clamp(4px,1vh,12px)!important;padding:clamp(4px,.9vh,10px) 14px!important;font-size:clamp(.74rem,1.8vh,.9rem)!important;line-height:1.3!important}
+ #ttPlayPage .game-panel{padding:clamp(10px,2vh,24px)!important}
+ #ttPlayPage .game-panel h2{font-size:clamp(1rem,2.6vh,1.3rem)!important}
+ #ttPlayPage .tt-hint{margin-top:clamp(5px,1vh,12px)!important;padding:clamp(6px,1.2vh,12px) 14px!important}
+ #ttPlayPage .lg-note{font-size:clamp(.7rem,1.7vh,.82rem)!important;line-height:1.35!important}
+}
+@media (min-width:900px) and (min-height:470px){
+ #ttPlayPage .tt-slots{margin:clamp(6px,1.4vh,16px) 0 2px!important}
+ #ttPlayPage .tt-slot{width:min(var(--s,44px),clamp(30px,5.8vh,44px))!important;height:min(calc(var(--s,44px) + 4px),clamp(34px,6.2vh,48px))!important;font-size:clamp(.9rem,2.6vh,1.3rem)!important}
+ #ttPlayPage .tt-pic{height:clamp(66px,12vh,112px)!important}
+ #ttPlayPage .tt-pic span{font-size:clamp(1.8rem,5.4vh,2.9rem)!important}
+ #ttPlayPage .tt-key{height:clamp(34px,6vh,50px)!important}
+}
+@media (min-width:900px) and (max-height:700px){
+ #ttPlayPage .game-panel p#ttPanelP{display:none}
+}
+@media (min-width:900px) and (max-height:640px){
+ #ttPlayPage #ttNote{display:none}
+ #ttPlayPage .mini-stat{padding:8px 12px!important}
+}

@@ -1,0 +1,140 @@
+/* ===== LEVEL CARD: ukuran laptop + seluruh area tetap clickable ===== */
+#mathLevelsPage .level-grid{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:row!important;
+  flex-wrap:nowrap!important;
+  align-items:stretch!important;
+  gap:14px!important;
+  width:100%!important;
+  max-width:1180px!important;
+  margin:16px auto!important;
+  padding:6px 8px 14px!important;
+  overflow-x:auto!important;
+  overflow-y:visible!important;
+  position:relative!important;
+}
+
+#mathLevelsPage .level-grid > .level-card{
+  box-sizing:border-box!important;
+  position:relative!important;
+  flex:0 0 214px!important;
+  width:214px!important;
+  min-width:214px!important;
+  max-width:214px!important;
+  height:304px!important;
+  min-height:304px!important;
+  max-height:304px!important;
+  margin:0!important;
+  padding:18px 16px 14px!important;
+  overflow:visible!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-start!important;
+  cursor:pointer!important;
+  z-index:1!important;
+}
+
+#mathLevelsPage .level-grid > .level-card *{
+  box-sizing:border-box!important;
+}
+
+#mathLevelsPage .level-card .level-icon,
+#mathLevelsPage .level-card .icon,
+#mathLevelsPage .level-card [class*="icon"]{
+  width:52px!important;
+  height:52px!important;
+  min-width:52px!important;
+  min-height:52px!important;
+  font-size:26px!important;
+  line-height:1!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  margin:0 auto 10px!important;
+  flex-shrink:0!important;
+}
+
+#mathLevelsPage .level-card h3,
+#mathLevelsPage .level-card h4{
+  font-size:18px!important;
+  line-height:1.2!important;
+  margin:5px 0 7px!important;
+  min-height:22px!important;
+}
+
+#mathLevelsPage .level-card p,
+#mathLevelsPage .level-card .description{
+  font-size:12px!important;
+  line-height:1.45!important;
+  margin:0 0 9px!important;
+}
+
+#mathLevelsPage .level-card .level-number,
+#mathLevelsPage .level-card .number,
+#mathLevelsPage .level-card .badge{
+  font-size:11px!important;
+  line-height:1!important;
+}
+
+#mathLevelsPage .level-card button,
+#mathLevelsPage .level-card .btn,
+#mathLevelsPage .level-card a{
+  position:relative!important;
+  z-index:20!important;
+  pointer-events:auto!important;
+  flex-shrink:0!important;
+  min-height:40px!important;
+  height:40px!important;
+  width:100%!important;
+  margin-top:auto!important;
+  padding:9px 10px!important;
+  border-radius:12px!important;
+  font-size:13px!important;
+  line-height:1.1!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  cursor:pointer!important;
+}
+
+#mathLevelsPage .level-card.locked button{
+  pointer-events:none!important;
+}
+
+#mathLevelsPage .level-card::before,
+#mathLevelsPage .level-card::after{
+  pointer-events:none!important;
+}
+
+#mathLevelsPage .level-card{
+  overflow:visible!important;
+}
+
+#mathLevelsPage .level-grid::-webkit-scrollbar{height:8px}
+#mathLevelsPage .level-grid::-webkit-scrollbar-thumb{
+  background:#e5e0d9;border-radius:99px;
+}
+#mathLevelsPage .level-grid::-webkit-scrollbar-track{
+  background:#efe9e1;border-radius:99px;
+}
+
+@media (min-width:1180px){
+  #mathLevelsPage .level-grid{
+    overflow-x:hidden!important;
+    justify-content:center!important;
+  }
+}
+
+@media (max-width:900px){
+  #mathLevelsPage .level-grid{
+    justify-content:flex-start!important;
+  }
+}
+
+/* Hindari elemen dekoratif menutupi tombol/card */
+#mathLevelsPage .level-card svg,
+#mathLevelsPage .level-card .decorative,
+#mathLevelsPage .level-card .shine{
+  pointer-events:none!important;
+}

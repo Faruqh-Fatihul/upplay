@@ -1,0 +1,62 @@
+/* =========================================================
+   CERDASPLAY ROOM QUIZ V2
+   - Room quiz dibuat guru
+   - Sistem mengacak game + level
+   - Lobby siswa + avatar + realtime polling/storage
+   - Ranking akumulasi nilai room
+   ========================================================= */
+.student-room-top-actions{display:flex;align-items:center;gap:10px}
+.student-room-top-actions{margin-left:auto!important}
+@media(max-width:700px){.student-room-top-actions{width:100%;margin-top:10px}.student-room-top-actions .join-room-btn{width:100%}}
+.room-vnext-modal{max-width:760px!important;width:min(94vw,760px)!important}
+.room-vnext-code{font-size:2rem;font-weight:1000;letter-spacing:5px;color:var(--primary)}
+.room-vnext-lobby{display:grid;gap:16px}
+.room-vnext-status{padding:16px;border-radius:18px;background:linear-gradient(135deg,#f6f3ee,#fff);border:1px solid #e5e0d9}
+.room-vnext-status strong{display:block;font-size:1.1rem}
+.room-vnext-status small{color:var(--muted)}
+.avatar-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;margin-top:10px}
+.avatar-choice{height:54px;border:2px solid #e5e0d9;border-radius:14px;background:#fff;font-size:1.6rem;cursor:pointer}
+.avatar-choice.active{border-color:var(--primary);background:#efe9e1;box-shadow:0 0 0 3px rgba(30,31,31,.10)}
+.room-player-grid{display:flex;flex-wrap:wrap;gap:9px;margin-top:10px}
+.room-player-chip{display:inline-flex;align-items:center;gap:7px;padding:9px 11px;border-radius:999px;background:#f6f3ee;border:1px solid #e5e0d9;font-weight:900;font-size:.84rem}
+.room-player-chip.me{background:#efe9e1;color:var(--primary);border-color:#e5e0d9}
+.room-vnext-answer-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:15px}
+.room-answer{padding:13px 14px;border:2px solid #e5e0d9;border-radius:14px;background:#fff;text-align:left;font-weight:900;cursor:pointer}
+.room-answer:hover{border-color:var(--primary);background:#f6f3ee}
+.room-answer.correct{border-color:#22c55e;background:#dcfce7}
+.room-answer.wrong{border-color:#ef4444;background:#fee2e2}
+.room-vnext-timer{font-variant-numeric:tabular-nums;font-weight:1000;color:var(--orange)}
+.room-vnext-result{text-align:center;padding:20px;border-radius:18px;background:#f6f3ee}
+.room-vnext-ranking{display:grid;gap:8px;margin-top:14px}
+.room-rank-row{display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:10px;padding:11px 13px;border-radius:13px;background:#f6f3ee}
+.room-rank-row.top{background:#fff6d9}
+.teacher-vnext-panel{display:none}
+.teacher-vnext-panel.active{display:block}
+.teacher-vnext-create{margin-top:18px;padding:22px;border:2px solid #e5e0d9;border-radius:22px;background:linear-gradient(135deg,#f6f3ee,#fff)}
+.teacher-vnext-create h3{margin:0 0 7px}
+.teacher-vnext-create p{margin:0 0 15px;color:var(--muted);line-height:1.55}
+.teacher-room-config{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:end}
+.teacher-room-config .field-group select{width:100%;padding:12px;border:2px solid #e5e0d9;border-radius:12px;background:#fff}
+.teacher-room-active{margin-top:15px;padding:16px;border-radius:18px;background:#fff;border:1px solid var(--line)}
+.teacher-room-seq{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:12px}
+.teacher-round-chip{padding:10px 11px;border-radius:12px;background:#f6f3ee;font-size:.82rem;font-weight:900}
+.teacher-live-ranking{display:grid;gap:8px;margin-top:14px}
+.teacher-score-note{color:var(--muted);line-height:1.55}
+.teacher-pvp-only-note{padding:16px;border-radius:16px;background:#fff8f1;border:1px solid #ffe1c7;color:#6b4b2b}
+#teacherVNextRoot{width:100%}#teacherVNextRoot .portal-top{margin-bottom:18px}#teacherVNextRoot .portal-cards{margin-bottom:18px}#teacherVNextRoot .teacher-vnext-panel.portal-panel{padding:24px}#teacherPortalPage .teacher-sidebar .side-nav{gap:8px}#teacherPortalPage .teacher-sidebar .teacher-menu{width:100%;text-align:left}#teacherPortalPage .teacher-sidebar .teacher-menu.active{background:#efe9e1;color:var(--primary)}#teacherPvpOriginalBoxV2{display:none!important;margin-top:18px}
+@media(max-width:700px){
+ .avatar-grid{grid-template-columns:repeat(4,1fr)}
+ .room-vnext-answer-grid,.teacher-room-config,.teacher-room-seq{grid-template-columns:1fr}
+}
+<style id="cerdasplay-local-pvp-style">
+.local-pvp-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:18px}.local-pvp-head h2{margin:5px 0 6px}.local-pvp-head p{margin:0;color:var(--muted);line-height:1.6;max-width:820px}
+.local-pvp-setup,.local-pvp-arena,.local-pvp-result{position:relative;z-index:20;pointer-events:auto;padding:24px;border:1px solid var(--line);border-radius:24px;background:#fff;box-shadow:var(--shadow)}
+.local-pvp-setup *{pointer-events:auto}
+.local-pvp-name-card input{position:relative;z-index:50;pointer-events:auto!important;user-select:text!important;-webkit-user-select:text!important;cursor:text!important;opacity:1!important}
+.local-pvp-rule{padding:14px 16px;border-radius:15px;background:#f6f3ee;border:1px solid #e5e0d9;color:#4a4a49;line-height:1.55;margin-bottom:18px}.local-pvp-name-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.local-pvp-name-card{padding:18px;border-radius:18px;border:2px solid #e5e0d9;background:#f6f3ee}.local-pvp-name-card span{display:block;font-weight:1000;margin-bottom:12px}.local-pvp-name-card label{display:block;font-weight:800;font-size:.82rem;margin-bottom:7px}.local-pvp-name-card input{width:100%;box-sizing:border-box;padding:13px 14px;border:2px solid #e5e0d9;border-radius:13px;outline:none;background:#fff;color:var(--ink);font:inherit}.local-pvp-name-card input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(30,31,31,.10)}.team-a-card{border-top:5px solid #2563eb}.team-b-card{border-top:5px solid #ef4444}.local-pvp-start{margin-top:18px;width:100%;min-height:48px}.local-pvp-note{color:var(--muted);font-size:.84rem;line-height:1.5;text-align:center;margin:12px 0 0}.local-pvp-error{display:none;margin-top:12px;padding:10px 13px;border-radius:12px;background:#fff1f2;border:1px solid #fecdd3;color:#be123c;font-weight:800}.local-pvp-error.show{display:block}
+.local-pvp-arena-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.local-pvp-arena-head span{font-weight:1000}.local-pvp-arena-head strong{padding:9px 13px;border-radius:12px;background:#fff4e8;color:#e56b00}.local-pvp-progress{height:8px;border-radius:99px;background:#edf0f7;overflow:hidden;margin-bottom:18px}.local-pvp-progress>i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#2563eb,#1e1f1f,#ef4444);transition:width .4s linear}
+.local-pvp-battle{position:relative;border-radius:24px;padding:20px 16px 22px;background:linear-gradient(180deg,#f6f3ee,#fff);border:1px solid #e5e0d9;overflow:hidden}.local-pvp-sky{position:absolute;inset:0 0 45%;background:linear-gradient(180deg,#eef3ff,#fff);pointer-events:none}.local-pvp-people{position:relative;display:grid;grid-template-columns:1fr 1.35fr 1fr;align-items:end;gap:12px;min-height:230px}.local-pvp-person{display:flex;flex-direction:column;align-items:center;justify-content:end;min-width:0;transition:transform .18s ease}.local-pvp-person.left{transform:translateX(calc(var(--rope-shift,0px) * -0.22))}.local-pvp-person.right{transform:translateX(calc(var(--rope-shift,0px) * 0.22))}.local-pvp-person .person-avatar{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;font-size:4.2rem;background:#fff;border:5px solid #2563eb;box-shadow:0 12px 25px rgba(37,99,235,.16)}.local-pvp-person.right .person-avatar{border-color:#ef4444;box-shadow:0 12px 25px rgba(239,68,68,.16)}.local-pvp-person .person-body{width:78px;height:52px;margin-top:-5px;border-radius:40px 40px 14px 14px;background:#2563eb;position:relative}.local-pvp-person.right .person-body{background:#ef4444}.local-pvp-person .person-body:before,.local-pvp-person .person-body:after{content:'';position:absolute;top:13px;width:48px;height:11px;border-radius:99px;background:inherit}.local-pvp-person .person-body:before{right:58px;transform:rotate(-18deg)}.local-pvp-person .person-body:after{left:58px;transform:rotate(18deg)}.local-pvp-person .person-name{margin-top:9px;font-weight:1000;font-size:1rem;max-width:150px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.local-pvp-side-label{font-size:.75rem;font-weight:1000;color:var(--muted);margin-top:3px}.local-pvp-rope-stage{position:relative;height:110px;display:flex;align-items:center;justify-content:center}.local-pvp-rope-line{position:absolute;left:2%;right:2%;height:18px;border-radius:99px;background:repeating-linear-gradient(90deg,#b87937 0 18px,#d79a57 18px 31px,#a8682d 31px 39px);box-shadow:0 7px 10px rgba(90,58,25,.18);transition:transform .28s cubic-bezier(.2,.8,.2,1)}.local-pvp-rope-line:after{content:'';position:absolute;left:50%;top:-19px;bottom:-19px;width:5px;border-radius:99px;background:#f97316;box-shadow:0 0 0 4px rgba(249,115,22,.12);transform:translateX(-50%);transition:left .28s cubic-bezier(.2,.8,.2,1)}.local-pvp-rope-line.pulse{animation:localRopePulse .3s ease}.local-pvp-rope-flag{position:absolute;top:13px;left:50%;transform:translateX(-50%);font-size:2rem;transition:left .28s cubic-bezier(.2,.8,.2,1);z-index:2}.local-pvp-ground{height:28px;margin:0 4%;border-bottom:8px solid #d8dbe6;border-radius:50%}
+@keyframes localRopePulse{0%{transform:scaleY(1)}50%{transform:scaleY(1.55)}100%{transform:scaleY(1)}}
+.local-pvp-question-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}.local-pvp-question{padding:17px;border-radius:18px;background:#fff;border:2px solid #e5e0d9}.local-pvp-question.blue{border-top:5px solid #2563eb}.local-pvp-question.red{border-top:5px solid #ef4444}.local-pvp-question h3{margin:0 0 8px;font-size:1rem}.local-pvp-question-text{min-height:50px;font-size:1.05rem;font-weight:1000;line-height:1.35}.local-pvp-answer-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.local-pvp-answer{border:2px solid #e5e0d9;background:#f8f9fc;border-radius:12px;padding:11px 9px;font-weight:900;cursor:pointer;min-height:48px;transition:.12s}.local-pvp-answer:hover{border-color:var(--primary);background:#f6f3ee}.local-pvp-answer:active{transform:scale(.97)}.local-pvp-answer.correct{background:#dcfce7;border-color:#22c55e}.local-pvp-answer.wrong{background:#fee2e2;border-color:#ef4444}.local-pvp-feedback{min-height:20px;margin-top:8px;font-size:.78rem;font-weight:900;color:var(--muted)}.local-pvp-stats{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:15px}.local-pvp-stat{padding:8px 12px;border-radius:999px;background:#f6f3ee;font-weight:900;font-size:.82rem}.local-pvp-result{text-align:center;padding:45px 24px}.local-pvp-result-icon{font-size:4rem}.local-pvp-result h2{margin:8px 0}.local-pvp-result-points{margin:18px auto 20px;padding:14px;border-radius:14px;background:#f6f3ee;color:#4a4a49;max-width:520px}
+@media(max-width:820px){.local-pvp-people{grid-template-columns:1fr 1fr;min-height:auto}.local-pvp-rope-stage{grid-column:1/-1;grid-row:2}.local-pvp-person.left,.local-pvp-person.right{transform:none}.local-pvp-question-grid,.local-pvp-name-grid{grid-template-columns:1fr}}
+@media(max-width:700px){.local-pvp-question-grid{grid-template-columns:1fr}.local-pvp-answer-grid{grid-template-columns:1fr 1fr}.local-pvp-head{flex-direction:column}}

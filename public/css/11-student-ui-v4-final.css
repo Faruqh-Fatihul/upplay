@@ -1,0 +1,167 @@
+/* =========================================================
+   CERDASPLAY V4 — FINAL LAYOUT / NAVIGATION
+   ========================================================= */
+#studentDashboard .portal-content{
+  width:100%!important;
+  max-width:1180px!important;
+  margin:0 auto!important;
+  padding:30px 34px 55px!important;
+  box-sizing:border-box!important;
+}
+#studentDashboard .student-view{width:100%!important;box-sizing:border-box!important}
+
+/* Dashboard spacing */
+#studentDashboard .dashboard-summary-cards{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:20px!important;
+  margin:0 0 22px!important;
+}
+#studentDashboard .dashboard-summary-cards .portal-stat{
+  min-height:132px!important;
+  padding:24px 26px!important;
+  box-sizing:border-box!important;
+  border-radius:18px!important;
+}
+#studentDashboard .dashboard-games-panel{
+  width:100%!important;
+  box-sizing:border-box!important;
+  padding:28px!important;
+  margin:0 0 22px!important;
+  border-radius:20px!important;
+}
+#studentDashboard .dashboard-section-head{margin:0 0 20px!important}
+#studentDashboard .dashboard-section-head h2{margin:5px 0 7px!important}
+#studentDashboard .dashboard-section-head p{margin:0!important;line-height:1.6!important}
+
+/* IMPORTANT: the grid itself contains the 3 cards, not another grid nested in it. */
+#studentDashboard #dashboardGameGrid{
+  width:100%!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:22px!important;
+  margin:0!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+}
+#studentDashboard #dashboardGameGrid > .subject-card{
+  width:100%!important;
+  height:350px!important;
+  min-height:350px!important;
+  max-height:350px!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+  border-radius:22px!important;
+  overflow:hidden!important;
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+}
+#studentDashboard #dashboardGameGrid > .subject-card .subject-card-content{
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  box-sizing:border-box!important;
+  padding:28px!important;
+  display:flex!important;
+  flex-direction:column!important;
+}
+#studentDashboard #dashboardGameGrid .subject-icon{
+  width:58px!important;height:58px!important;min-width:58px!important;
+  margin:0 0 18px!important;border-radius:16px!important;
+}
+#studentDashboard #dashboardGameGrid .card-game-tag{
+  width:max-content!important;margin:0 0 12px!important;
+}
+#studentDashboard #dashboardGameGrid .subject-card h2{
+  margin:0 0 10px!important;font-size:1.42rem!important;line-height:1.2!important;
+}
+#studentDashboard #dashboardGameGrid .subject-card p{
+  margin:0!important;line-height:1.6!important;
+}
+#studentDashboard #dashboardGameGrid .play-label{
+  width:100%!important;box-sizing:border-box!important;
+  margin-top:auto!important;text-align:center!important;
+  justify-content:center!important;
+  padding:12px 14px!important;border-radius:11px!important;
+}
+#studentDashboard .dashboard-flow{
+  width:100%!important;box-sizing:border-box!important;
+  margin:0!important;padding:24px 28px!important;border-radius:20px!important;
+}
+#studentDashboard .dashboard-flow .game-flow{
+  display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:18px!important;margin-top:18px!important;
+}
+#studentDashboard .dashboard-flow .game-flow>div{
+  min-width:0!important;padding:18px!important;box-sizing:border-box!important;
+}
+
+/* Profile exists only in #studentViewProfile. It is never shown on Dashboard. */
+#studentDashboard #studentViewDashboard .profile-card,
+#studentDashboard #studentViewDashboard .profile-summary,
+#studentDashboard #studentViewDashboard .profile-layout{
+  display:none!important;
+}
+#studentDashboard #studentViewProfile{
+  width:100%!important;
+}
+#studentDashboard #studentViewProfile .profile-layout{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 310px!important;
+  gap:22px!important;
+  align-items:start!important;
+  margin:0!important;
+}
+#studentDashboard #studentViewProfile .profile-card,
+#studentDashboard #studentViewProfile .profile-summary{
+  width:100%!important;
+  box-sizing:border-box!important;
+  border-radius:20px!important;
+  margin:0!important;
+}
+#studentDashboard #studentViewProfile .profile-card{padding:28px!important}
+#studentDashboard #studentViewProfile .profile-summary{padding:25px!important;position:sticky!important;top:96px!important}
+#studentDashboard #studentViewProfile .profile-grid{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:16px!important;
+}
+#studentDashboard #studentViewProfile .profile-password-box{
+  margin-top:20px!important;padding:21px!important;border-radius:15px!important;
+}
+#studentDashboard #studentViewProfile .password-stack{
+  display:grid!important;grid-template-columns:1fr!important;gap:14px!important;
+}
+#studentDashboard #studentViewProfile .profile-actions{
+  display:flex!important;justify-content:flex-end!important;gap:10px!important;
+}
+
+/* The old standalone Game menu/view is not a sidebar item anymore. */
+#studentDashboard #studentViewGame{display:none!important}
+
+@media(max-width:1050px){
+  #studentDashboard .portal-content{padding:26px 24px 48px!important}
+  #studentDashboard #dashboardGameGrid{gap:16px!important}
+  #studentDashboard #dashboardGameGrid > .subject-card{
+    height:315px!important;min-height:315px!important;max-height:315px!important;
+  }
+  #studentDashboard #dashboardGameGrid > .subject-card .subject-card-content{padding:22px!important}
+  #studentDashboard #studentViewProfile .profile-layout{grid-template-columns:minmax(0,1fr) 285px!important}
+}
+@media(max-width:820px){
+  #studentDashboard #dashboardGameGrid{grid-template-columns:1fr!important}
+  #studentDashboard #dashboardGameGrid > .subject-card{
+    height:300px!important;min-height:300px!important;max-height:300px!important;
+  }
+  #studentDashboard #studentViewProfile .profile-layout{grid-template-columns:1fr!important}
+  #studentDashboard #studentViewProfile .profile-summary{position:static!important}
+}
+@media(max-width:620px){
+  #studentDashboard .portal-content{padding:20px 14px 40px!important}
+  #studentDashboard .dashboard-summary-cards,
+  #studentDashboard #studentViewProfile .profile-grid,
+  #studentDashboard .dashboard-flow .game-flow{
+    grid-template-columns:1fr!important;
+  }
+  #studentDashboard .dashboard-games-panel{padding:18px!important}
+}

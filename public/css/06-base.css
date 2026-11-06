@@ -1,0 +1,12 @@
+/* Tutorial hanya milik Landing Page; tidak tampil di dashboard, card menu, atau game. */
+#landingPage.hidden #tutorial { display: none !important; }
+#studentDashboard #tutorial, #teacherPortalPage #tutorial, #mathLevelsPage #tutorial,
+#snakeGamePage #tutorial, #memoryPage #tutorial,
+#logicGamePage #tutorial, #pictureGamePage #tutorial, #adminPortalPage #tutorial,
+#simpleRolePage #tutorial { display: none !important; }
+
+/* Papan Ular Tangga nyaman untuk laptop desktop. */
+@media (min-width: 1051px) {
+  #snakeGamePage .board-shell { width: 600px; }
+  #snakeGamePage .board { width: 100%; }
+}

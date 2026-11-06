@@ -1,0 +1,104 @@
+/* =========================================================
+   PVP TARIK TAMBANG — panel guru & halaman permainan siswa
+========================================================= */
+.teacher-divider{ height:1px; margin:22px 0; background:var(--line); }
+.teacher-subheading{ margin:0 0 6px; font-size:1.05rem; }
+
+.pvp-teacher-box{
+  margin-top:18px; padding:20px; border:2px solid #ffe1c7; border-radius:20px;
+  background:linear-gradient(135deg,#fff8f1,#fffdf9);
+}
+.pvp-teacher-head p{ margin:8px 0 16px; color:var(--muted); line-height:1.6; }
+.pvp-room-box{ margin-top:4px; }
+.pvp-room-code-row{
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  margin-bottom:12px; padding:14px 16px; border-radius:16px; background:#fff;
+  border:1px solid var(--line);
+}
+.pvp-room-code-row small{ display:block; color:var(--muted); font-weight:800; font-size:.74rem; }
+.pvp-room-code{ font-size:1.9rem; font-weight:1000; letter-spacing:4px; color:var(--orange); }
+.pvp-status-badge{ padding:8px 12px; border-radius:11px; background:#eef2ff; color:#1e1f1f; font-weight:900; font-size:.8rem; white-space:nowrap; }
+.pvp-status-badge.live{ background:#dcfce7; color:#15803d; }
+.pvp-status-badge.done{ background:#fee2e2; color:#b91c1c; }
+.pvp-room-hint{ margin:4px 0 8px; color:var(--muted); font-size:.85rem; font-weight:800; }
+.pvp-player-list{ display:flex; flex-wrap:wrap; gap:8px; min-height:34px; }
+.pvp-player-chip{
+  padding:8px 12px; border-radius:11px; background:#fff; border:1px solid var(--line);
+  font-weight:900; font-size:.84rem; color:var(--ink);
+}
+.pvp-player-chip.team-a{ background:#eaf1ff; border-color:#bcd4ff; color:#1d4ed8; }
+.pvp-player-chip.team-b{ background:#ffecec; border-color:#ffc9c9; color:#b91c1c; }
+.pvp-room-actions{ display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+.pvp-live-box{
+  margin-top:16px; padding:14px; border-radius:15px; background:#fff; border:1px dashed #ffcf9e;
+}
+.pvp-live-box .pvp-live-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; font-weight:900; margin-bottom:6px; }
+.pvp-live-track{ height:12px; border-radius:999px; background:#eceffa; overflow:hidden; position:relative; }
+.pvp-live-fill{ position:absolute; top:0; bottom:0; left:50%; background:linear-gradient(90deg,#2563eb,#ef4444); width:2px; transition:left .25s ease, width .25s ease; }
+
+@media(max-width:700px){
+  .pvp-room-code-row{ flex-direction:column; align-items:flex-start; }
+}
+
+/* ---------- Halaman permainan Tarik Tambang ---------- */
+.tugwar-page{
+  min-height:calc(100vh - 72px); padding:34px 6% 60px;
+  background:radial-gradient(circle at 10% 10%,rgba(239,68,68,.08),transparent 22%),
+             radial-gradient(circle at 90% 15%,rgba(37,99,235,.09),transparent 24%),
+             var(--background);
+}
+.tugwar-waiting{ display:grid; min-height:60vh; place-items:center; }
+.tugwar-waiting-box{
+  max-width:560px; width:100%; padding:40px; text-align:center; border-radius:28px;
+  background:#fff; box-shadow:var(--shadow);
+}
+.tugwar-waiting-box h1{ margin:12px 0 8px; font-size:1.8rem; }
+.tugwar-waiting-box h1 span{ color:var(--orange); letter-spacing:3px; }
+.tugwar-waiting-box p{ color:var(--muted); line-height:1.6; }
+.tugwar-waiting-count{ margin:14px 0 10px!important; font-weight:900; color:var(--ink)!important; }
+.tugwar-waiting .pvp-player-list{ justify-content:center; margin-top:6px; }
+
+.tugwar-arena{
+  display:grid; grid-template-columns:1fr minmax(260px,420px) 1fr; gap:20px;
+  align-items:start; max-width:1100px; margin:26px auto 0;
+}
+.tugwar-team{ padding:18px; border-radius:20px; background:#fff; border:1px solid var(--line); min-height:220px; }
+.tugwar-team h3{ margin:0 0 12px; }
+.tugwar-team.team-a{ border-top:5px solid #2563eb; }
+.tugwar-team.team-b{ border-top:5px solid #ef4444; }
+.tugwar-team-list{ display:grid; gap:8px; }
+.tugwar-team-list div{ padding:9px 11px; border-radius:11px; background:#f6f3ee; font-weight:800; font-size:.88rem; }
+
+.tugwar-rope-wrap{ padding-top:8px; }
+.tugwar-score-row{ display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:14px; font-size:1.7rem; font-weight:1000; color:var(--ink); }
+.tugwar-score-row .tugwar-vs{ font-size:.95rem; color:var(--muted); font-weight:900; }
+.tugwar-rope-track{
+  position:relative; height:26px; border-radius:999px; background:linear-gradient(90deg,#dbeafe,#fff,#fee2e2);
+  border:3px solid #2f286c22; overflow:hidden; box-shadow:inset 0 2px 6px rgba(0,0,0,.08);
+}
+.tugwar-rope-mid{ position:absolute; top:0; bottom:0; left:50%; width:2px; background:#84817d; transform:translateX(-50%); }
+.tugwar-rope-flag{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  font-size:1.4rem; transition:left .35s cubic-bezier(.3,.8,.3,1);
+}
+.tugwar-rope-labels{ display:flex; justify-content:space-between; margin-top:8px; font-size:.74rem; font-weight:900; color:var(--muted); }
+
+.tugwar-action-wrap{ display:grid; place-items:center; gap:14px; margin-top:34px; }
+.tugwar-your-team{ font-weight:900; padding:9px 14px; border-radius:12px; background:#fff; border:1px solid var(--line); }
+.tugwar-pull-btn{
+  min-width:220px; padding:22px 30px; border-radius:22px; color:#fff; font-size:1.3rem; font-weight:1000;
+  background:linear-gradient(135deg,#fb8500,#ef4444); box-shadow:0 16px 30px rgba(239,68,68,.32);
+  transition:transform .08s ease;
+}
+.tugwar-pull-btn:active{ transform:scale(.94); }
+.tugwar-pull-btn:disabled{ opacity:.5; cursor:not-allowed; box-shadow:none; }
+
+.tugwar-finished{ display:grid; min-height:60vh; place-items:center; }
+.tugwar-finished-box{ max-width:480px; width:100%; padding:40px; text-align:center; border-radius:28px; background:#fff; box-shadow:var(--shadow); }
+.tugwar-result-emoji{ font-size:4rem; margin-bottom:6px; }
+.tugwar-finished-box p{ color:var(--muted); line-height:1.6; margin:8px 0 22px; }
+
+@media(max-width:860px){
+  .tugwar-arena{ grid-template-columns:1fr; }
+  .tugwar-team{ min-height:0; }
+}

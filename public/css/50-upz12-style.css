@@ -1,0 +1,101 @@
+/* =====================================================================
+   UpPlay V12 — lupa kata sandi, profil & permainan guru, kontrol permainan 2 kartu
+   ===================================================================== */
+
+/* ---------- 1. Lupa kata sandi ---------- */
+.up-forgot-row{display:flex;justify-content:flex-end;margin:-4px 0 2px}
+.up-forgot-link{appearance:none;border:0;background:none;padding:2px 0;font:inherit;font-size:.84rem!important;font-weight:700;color:#5f5c58!important;cursor:pointer;text-decoration:underline;text-decoration-color:#d3b99d;text-underline-offset:3px;text-decoration-thickness:1.5px}
+.up-forgot-link:hover{color:#1e1f1f!important;text-decoration-color:#1e1f1f}
+.up-forgot-link:focus-visible{outline:2px solid #1e1f1f;outline-offset:3px;border-radius:4px}
+#upForgotModal .password-wrap{position:relative}
+#upForgotModal .up-ftoggle{display:grid;place-items:center;color:#84817d}
+.up-fnote{margin:2px 0 4px;padding:11px 14px;border-radius:14px;background:#efe9e1;border:1px solid #e5e0d9;color:#4a4a49;font-size:.84rem;line-height:1.5}
+.up-fnote b{color:#1e1f1f}
+.up-frow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.up-frow .btn{width:100%;justify-content:center}
+/* form Masuk, Daftar, Lupa kata sandi SELALU terang (tidak ikut mode gelap pengguna mana pun) */
+html.upx-dark :is(#loginModal,#registerModal,#upForgotModal) .modal{background:#f6f3ee!important;color:#1e1f1f!important;border-color:#e5e0d9!important}
+html.upx-dark :is(#loginModal,#registerModal,#upForgotModal) :is(h2,label,p,strong,b){color:#1e1f1f!important}
+html.upx-dark :is(#loginModal,#registerModal,#upForgotModal) :is(input,select){background:#fff!important;color:#1e1f1f!important;border-color:#e5e0d9!important}
+
+/* ---------- 2. Profil guru ---------- */
+.up-tprof{display:block}
+.up-tp-card{padding:26px;border-radius:24px;background:var(--upx-surface,#f6f3ee);border:1px solid var(--upx-line,#d8d0c5);box-shadow:var(--upx-shadow,none);color:var(--upx-ink,#1e1f1f)}
+.up-tp-kick{font-size:.7rem;font-weight:700;letter-spacing:.14em;color:var(--upx-muted,#5f5c58)}
+.up-tp-card h2{margin:6px 0 18px!important;font-size:1.35rem!important}
+.up-tp-photo{display:flex;align-items:center;gap:20px;padding:16px;border-radius:18px;background:var(--upx-surface-2,#ede7df);margin-bottom:20px}
+.up-tp-photo strong{display:block;font-size:1rem;color:var(--upx-ink)}
+.up-tp-photo p{margin:4px 0 10px;color:var(--upx-muted);font-size:.86rem}
+.up-tp-ava{position:relative;flex:0 0 96px;width:96px;height:96px;border-radius:50%;display:grid;place-items:center;background:var(--upx-surface,#f6f3ee);color:var(--upx-muted);border:2px solid var(--upx-line);cursor:default}
+.up-tp-ava.has{cursor:zoom-in}
+.up-tp-ava img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
+.up-tp-ava.has:hover img{filter:brightness(.92)}
+.up-tp-cam{position:absolute;right:-2px;bottom:-2px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#1e1f1f;color:#f6f3ee;border:2px solid var(--upx-surface,#f6f3ee);cursor:pointer}
+html.upx-dark .up-tp-cam{background:#d3b99d;color:#1e1f1f}
+.up-tp-btns{display:flex;gap:8px;flex-wrap:wrap}
+.up-tp-btns .btn{padding:9px 16px!important;min-height:0!important;font-size:.86rem!important;cursor:pointer}
+.up-tp-btns .btn:disabled{opacity:.45;cursor:not-allowed}
+.up-tp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px}
+.up-tp-grid .field-group{display:flex;flex-direction:column;gap:6px;margin:0}
+.up-tp-grid label{font-weight:700;font-size:.86rem;color:var(--upx-ink)}
+.up-tp-grid input{width:100%;box-sizing:border-box;padding:12px 14px;border-radius:14px;border:1.5px solid var(--upx-line);background:var(--upx-surface,#fff);color:var(--upx-ink);font:inherit;font-size:.95rem}
+.up-tp-grid input:focus{outline:2px solid #1e1f1f;outline-offset:1px}
+html.upx-dark .up-tp-grid input:focus{outline-color:#d3b99d}
+.up-tp-grid small{font-size:.76rem;color:var(--upx-muted)}
+/* data yang dikunci sekolah: abu-abu, tidak bisa diketik */
+.up-tp-grid .up-ro input,.up-tp-pw input{background:#e9e5df!important;color:#6b6863!important;border-color:#d8d0c5!important;cursor:not-allowed!important;-webkit-text-fill-color:#6b6863}
+html.upx-dark .up-tp-grid .up-ro input,html.upx-dark .up-tp-pw input{background:#2a2a29!important;color:#a9a49e!important;border-color:#3a3936!important;-webkit-text-fill-color:#a9a49e}
+.up-tp-lock{position:relative}
+.up-tp-lock svg{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:#84817d;pointer-events:none}
+.up-tp-lock input{padding-right:40px!important;letter-spacing:.2em}
+.up-tp-actions{display:flex;align-items:center;justify-content:flex-end;gap:14px;margin-top:20px;flex-wrap:wrap}
+.up-tp-msg{font-weight:700;font-size:.88rem}
+.up-tp-msg.ok{color:#2f6b3d}.up-tp-msg.bad{color:#a3442f}
+html.upx-dark .up-tp-msg.ok{color:#9fd2ab}html.upx-dark .up-tp-msg.bad{color:#f0a593}
+@media (max-width:640px){
+  .up-tp-card{padding:18px 16px}
+  .up-tp-photo{flex-direction:column;text-align:center}
+  .up-tp-btns{justify-content:center}
+  .up-tp-grid{grid-template-columns:1fr}
+  .up-tp-actions .btn{width:100%}
+}
+
+/* ---------- 2b. Permainan guru ---------- */
+.up-tgames .up-tgame-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:16px!important;margin-top:14px}
+.up-tgames .subject-card{min-height:300px;cursor:default}
+.up-tgames .subject-card h2{font-size:1.25rem!important;line-height:1.25!important}
+.up-tgames .subject-card .play-label{display:inline-flex!important;align-items:center;gap:8px;align-self:flex-start;padding:10px 18px!important;border:1.5px solid currentColor!important;border-radius:999px!important;background:transparent!important;cursor:pointer!important;font-weight:700;transition:background-color .25s,color .25s,transform .25s cubic-bezier(.22,1,.36,1)}
+.up-tgames .subject-card .play-label:hover{transform:translateY(-2px)}
+.up-tgames .subject-card .play-label:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.up-tempty{margin-top:14px;padding:18px;border-radius:16px;background:var(--upx-surface-2);color:var(--upx-muted);font-weight:700}
+@media (max-width:980px){.up-tgames .up-tgame-grid{grid-template-columns:1fr!important}.up-tgames .subject-card{min-height:240px}}
+
+/* ---------- 3. Kontrol permainan: dua kartu ---------- */
+.up-ctabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:6px 0 12px}
+.up-ctab{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:20px;border:1.5px solid var(--upx-line,#d8d0c5);background:var(--upx-surface,#f6f3ee);color:var(--upx-ink,#1e1f1f);cursor:pointer;text-align:left;font:inherit;transition:transform .25s cubic-bezier(.22,1,.36,1),background-color .25s,border-color .25s}
+.up-ctab:hover{transform:translateY(-2px)}
+.up-ctab b{display:block;font-size:1.02rem}
+.up-ctab small{display:block;margin-top:2px;color:var(--upx-muted);font-weight:700;font-size:.8rem}
+.up-ct-ic{flex:0 0 44px;width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--upx-surface-2,#ede7df)}
+.up-ctab.on{background:#1e1f1f;border-color:#1e1f1f;color:#f6f3ee}
+.up-ctab.on small{color:#d3b99d}
+.up-ctab.on .up-ct-ic{background:#d3b99d;color:#1e1f1f}
+html.upx-dark .up-ctab.on{background:#d3b99d;border-color:#d3b99d;color:#1e1f1f}
+html.upx-dark .up-ctab.on small{color:#4a4a49}
+html.upx-dark .up-ctab.on .up-ct-ic{background:#1e1f1f;color:#d3b99d}
+.up-ctab:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.up-ctab-note{margin:0 0 14px!important}
+.up-tcls .ad-card h2{font-size:1.05rem!important;overflow-wrap:anywhere}
+@media (max-width:560px){.up-ctabs{grid-template-columns:1fr}}
+
+/* ---------- 4. kontras mode gelap: kartu permainan pakai tinta palet ---------- */
+html.upx-dark body .app-view:not(#upz1):not(#upz2):not(#upz3):not(#upz4) .subject-card.logic :is(h2,p,span,small,.play-label){color:#1e1f1f!important}
+html.upx-dark body .app-view:not(#upz1):not(#upz2):not(#upz3):not(#upz4) .subject-card.logic .play-label:hover{background:#1e1f1f!important;color:#f6f3ee!important}
+html.upx-dark body .app-view:not(#upz1):not(#upz2):not(#upz3):not(#upz4) .subject-card.picture p{color:#c9c2b8!important}
+.up-ct-ic svg{stroke:currentColor!important;fill:none!important;color:inherit}
+html.upx-dark .up-ctab .up-ct-ic{color:#d3b99d!important}
+html.upx-dark .up-ctab.on .up-ct-ic{color:#d3b99d!important;background:#1e1f1f!important}
+.up-ctab .up-ct-ic{color:#1e1f1f}
+html:not(.upx-dark) .up-ctab.on .up-ct-ic{color:#1e1f1f!important}
+html body .app-view:not(#upz1):not(#upz2):not(#upz3):not(#upz4) .up-ct-ic svg{stroke:#1e1f1f!important}
+html.upx-dark body .app-view:not(#upz1):not(#upz2):not(#upz3):not(#upz4) .up-ct-ic svg{stroke:#d3b99d!important}

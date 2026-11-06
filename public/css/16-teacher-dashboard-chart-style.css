@@ -1,0 +1,64 @@
+/* =========================================================
+   Dashboard guru: grafik jumlah siswa seluruh kelas + cardmenu
+   jumlah game/level, dan tabel ranking Nilai Siswa.
+========================================================= */
+.teacher-chart-card{
+  margin-top:20px; padding:22px; border-radius:22px; background:#fff;
+  border:1px solid var(--line); box-shadow:0 10px 26px rgba(58,57,54,.06);
+}
+.teacher-chart-head{ margin-bottom:14px; }
+.teacher-chart-head h3{ margin:6px 0 0; font-size:1.08rem; }
+.teacher-chart-box{ width:100%; overflow-x:auto; }
+.teacher-chart-svg{ width:100%; height:auto; min-width:520px; display:block; }
+.teacher-chart-legend{
+  display:flex; align-items:center; gap:8px; margin-top:12px;
+  font-size:.82rem; font-weight:800; color:var(--muted);
+}
+.teacher-chart-legend .legend-dot{
+  width:10px; height:10px; border-radius:50%; background:#1e1f1f; display:inline-block;
+}
+
+.game-level-grid{
+  display:grid; grid-template-columns:repeat(5,1fr); gap:12px;
+}
+.game-level-card{
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  padding:16px 10px; border-radius:16px; background:#f6f3ee;
+  border:1px solid var(--line); text-align:center;
+}
+.game-level-card.total{ background:#efe9e1; border-color:#e5e0d9; }
+.game-level-card .glc-icon{ font-size:1.6rem; }
+.game-level-card b{ font-size:.82rem; }
+.game-level-card .glc-count{
+  font-size:.76rem; font-weight:900; color:var(--primary);
+  padding:3px 9px; border-radius:999px; background:#fff;
+}
+@media(max-width:900px){ .game-level-grid{ grid-template-columns:repeat(2,1fr); } }
+
+/* Tabel ranking Nilai Siswa: peringkat | nama | absen | jabatan | score */
+.room-rank-table{ margin-top:16px; border-radius:18px; overflow:hidden; border:1px solid var(--line); }
+.room-rank-header,.room-rank-row2{
+  display:grid; grid-template-columns:70px 1.6fr 100px 1.3fr 90px;
+  align-items:center; gap:8px; padding:11px 14px;
+}
+.room-rank-header{
+  background:#f6f3ee; color:var(--muted); font-size:.74rem; font-weight:900;
+  text-transform:uppercase; letter-spacing:.3px;
+}
+.room-rank-row2{ border-top:1px solid var(--line); background:#fff; font-size:.88rem; font-weight:700; }
+.room-rank-row2.top{ background:#fff8e1; }
+.room-rank-row2 .rr-rank{ font-weight:1000; color:var(--primary); }
+.room-rank-row2 .rr-absen{ color:var(--muted); font-weight:800; }
+.room-rank-row2 .rr-score{ font-weight:1000; color:#16a34a; text-align:right; }
+.rr-jabatan{
+  justify-self:start; padding:6px 10px; border-radius:10px; background:#efe9e1;
+  color:var(--ink); font-size:.78rem; font-weight:800; border:1px dashed #d4ccc1;
+}
+.rr-jabatan:hover{ background:#efe9e1; border-color:var(--primary); color:var(--primary); }
+@media(max-width:760px){
+  .room-rank-header{ display:none; }
+  .room-rank-row2{ grid-template-columns:40px 1fr 1fr; row-gap:4px; }
+  .room-rank-row2 .rr-absen{ order:4; }
+  .room-rank-row2 .rr-jabatan{ order:5; }
+  .room-rank-row2 .rr-score{ order:3; text-align:left; }
+}

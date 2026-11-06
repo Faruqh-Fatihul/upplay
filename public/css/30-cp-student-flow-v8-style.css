@@ -1,0 +1,38 @@
+/* ---------- tombol kanan atas top bar di halaman game dihilangkan ---------- */
+:is(#snakeGamePage,#memoryPage,#crosswordGamePage,#mathMazePage,#safeCrackerPage) .topbar .btn{display:none!important}
+
+/* ---------- panah keluar Level 5 (level lain sudah punya panah di page-head) ---------- */
+#safeCrackerPage{position:relative}
+#safeExitArrow{display:none}
+#safeCrackerPage:not(.hidden) #safeExitArrow{display:grid;position:absolute;left:26px;top:90px;z-index:6;width:34px;height:34px;place-items:center;padding:0;border-radius:12px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.12);color:#eaf0ff;font:900 1rem/1 Nunito,Arial,sans-serif;cursor:pointer}
+#safeCrackerPage:not(.hidden) #safeExitArrow:hover{background:rgba(255,255,255,.22)}
+@media(max-width:899px){#safeCrackerPage:not(.hidden) .safe-shell{padding-top:48px}#safeCrackerPage:not(.hidden) #safeExitArrow{left:14px;top:62px}}
+
+/* ---------- Level 4: kotak labirin selalu persegi, penanda kecil ---------- */
+#mathMazePage .maze-grid.real-maze{grid-template-rows:repeat(var(--mz,17),minmax(0,1fr))!important;align-content:stretch!important;gap:1px!important;padding:3px!important}
+#mathMazePage .maze-grid.real-maze .maze-cell{overflow:hidden;min-width:0!important;min-height:0!important;padding:0!important;margin:0!important;line-height:1!important;aspect-ratio:auto;font-size:clamp(8px,calc(250px / var(--mz,17)),13px)!important}
+#mathMazePage .maze-grid.real-maze .maze-cell.goal{font-size:clamp(8px,calc(260px / var(--mz,17)),14px)!important}
+#mathMazePage .maze-grid.real-maze .maze-cell.player{box-shadow:inset 0 0 0 1.5px #38bdf8!important}
+
+/* ---------- popup bubble (rules & keluar) ---------- */
+.cp-ov{position:fixed;inset:0;z-index:130000;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(42,42,41,.55);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+.cp-ov.cp-show{display:flex}
+.cp-bubble{position:relative;width:min(540px,94vw);max-height:92vh;overflow:auto;box-sizing:border-box;padding:28px 30px 26px;border-radius:30px;background:#fff;color:#2a2a29;box-shadow:0 30px 80px rgba(74,74,73,.38);animation:cpPop .3s cubic-bezier(.2,1.3,.4,1)}
+.cp-bubble.cp-small{width:min(420px,92vw);text-align:center;padding:30px 28px 26px}
+@keyframes cpPop{from{transform:translateY(14px) scale(.9);opacity:0}to{transform:none;opacity:1}}
+.cp-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border:0;border-radius:50%;background:#efe9e1;color:#4a4a49;font-size:1.05rem;font-weight:900;cursor:pointer;display:grid;place-items:center}
+.cp-close:hover{background:#e5e0d9}
+.cp-badge{display:inline-block;padding:5px 12px;border-radius:999px;background:#efe9e1;color:#1e1f1f;font-weight:900;font-size:.8rem;letter-spacing:.3px}
+.cp-bubble h2{margin:10px 40px 6px 0;font-size:1.45rem;line-height:1.25;color:#2a2a29}
+.cp-bubble.cp-small h2{margin:8px 0 6px}
+.cp-goal{margin:0 0 14px;color:#4a4a49;font-weight:700;line-height:1.5}
+.cp-time{display:flex;align-items:center;gap:10px;margin:0 0 14px;padding:11px 14px;border-radius:16px;background:#fff4e0;border:1px solid #ffd993;color:#8a4b00;font-weight:800}
+.cp-time strong{margin-left:auto;font-size:1.05rem;color:#c25e00}
+.cp-list{margin:0 0 20px;padding:0;list-style:none;display:grid;gap:9px}
+.cp-list li{position:relative;padding:10px 12px 10px 40px;border-radius:14px;background:#f6f3ee;color:#3a3936;font-weight:700;line-height:1.45}
+.cp-list li::before{content:"✓";position:absolute;left:12px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;background:#1e1f1f;color:#fff;font-size:.78rem;font-weight:900;display:grid;place-items:center}
+.cp-actions{display:flex;gap:10px;flex-wrap:wrap}
+.cp-actions .btn{flex:1;min-width:120px;justify-content:center}
+.cp-emoji{font-size:2.6rem;line-height:1}
+.cp-sub{margin:0 0 20px;color:#4a4a49;font-weight:700;line-height:1.5}
+body.cp-hide-old-tut #gameTutorialModal{display:none!important}

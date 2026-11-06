@@ -1,0 +1,99 @@
+/* ===== LEVEL 1 FINAL VISUAL: 25-cell board fits the laptop viewport ===== */
+#snakeGamePage .game-page{
+  height:calc(100vh - 72px)!important;
+  min-height:0!important;
+  overflow:hidden!important;
+  box-sizing:border-box;
+  padding:10px 22px 14px!important;
+}
+#snakeGamePage .page-head{
+  width:min(930px,100%);
+  margin:0 auto 7px!important;
+  min-height:44px;
+}
+#snakeGamePage .page-head h1{font-size:1.28rem!important;margin:0 0 2px!important}
+#snakeGamePage .page-head p{font-size:.84rem!important;margin:0!important}
+#snakeGamePage .game-layout{
+  width:min(930px,100%)!important;
+  height:calc(100% - 51px)!important;
+  margin:0 auto!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,410px) minmax(285px,330px)!important;
+  gap:14px!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+#snakeGamePage .board-shell{
+  width:min(410px,calc(100vh - 175px),calc(100vw - 385px))!important;
+  max-width:410px!important;
+  aspect-ratio:1/1;
+  box-sizing:border-box;
+  padding:6px!important;
+  border:4px solid #4a4a49!important;
+  border-radius:16px!important;
+  margin:0!important;
+  flex:none;
+}
+#snakeGamePage .board{
+  width:100%!important;
+  height:100%!important;
+  aspect-ratio:1/1;
+  grid-template-columns:repeat(5,1fr)!important;
+  grid-template-rows:repeat(5,1fr)!important;
+  overflow:hidden!important;
+  border-radius:10px!important;
+}
+#snakeGamePage .cell{
+  box-sizing:border-box!important;
+  min-width:0!important;
+  min-height:0!important;
+  padding:3px!important;
+  font-size:clamp(.58rem,1vw,.76rem)!important;
+  border:1px solid rgba(74,74,73,.22)!important;
+  z-index:1!important;
+}
+#snakeGamePage .cell .cell-number{font-weight:1000!important;position:relative;z-index:2}
+#snakeGamePage .board-svg{z-index:4!important;overflow:visible!important}
+#snakeGamePage .player-token{width:28px!important;height:28px!important;z-index:10!important;font-size:.78rem!important}
+#snakeGamePage .game-panel{
+  width:100%!important;
+  max-height:100%!important;
+  box-sizing:border-box!important;
+  padding:13px!important;
+  border-radius:17px!important;
+  overflow:hidden!important;
+}
+#snakeGamePage .game-panel h2{font-size:1.12rem!important;margin-bottom:4px!important}
+#snakeGamePage .game-panel>p{font-size:.78rem!important;line-height:1.35!important;margin-bottom:7px!important}
+#snakeGamePage .score-row{gap:7px!important;margin-bottom:7px!important}
+#snakeGamePage .mini-stat{padding:7px!important}
+#snakeGamePage .mini-stat small{font-size:.64rem!important}
+#snakeGamePage .mini-stat strong{font-size:.95rem!important}
+#snakeGamePage .question-box{min-height:0!important;padding:9px!important;border-radius:14px!important}
+#snakeGamePage .question-text{font-size:.92rem!important;line-height:1.3!important;min-height:34px!important}
+#snakeGamePage .answer-area{gap:6px!important}
+#snakeGamePage .answer-area input{min-width:0!important;padding:8px!important}
+#snakeGamePage .check-answer{padding:8px 11px!important}
+#snakeGamePage .game-message{padding:7px!important;font-size:.72rem!important;line-height:1.3!important;margin:6px 0!important}
+#snakeGamePage .dice-wrapper{gap:6px!important;margin-top:5px!important}
+#snakeGamePage .dice{width:52px!important;height:52px!important}
+#snakeGamePage .roll-button{padding:8px 11px!important}
+#snakeGamePage .game-rules{padding:7px!important;margin-top:6px!important;font-size:.66rem!important;line-height:1.25!important}
+#snakeGamePage .game-rules h3{font-size:.72rem!important;margin-bottom:2px!important}
+#snakeGamePage .snake-level-timer{
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  gap:8px!important;margin:0 0 7px!important;padding:7px 10px!important;
+  border:2px solid #efe9e1!important;border-radius:12px!important;background:#f6f3ee!important;
+}
+#snakeGamePage .snake-level-timer .timer-label{font-size:.68rem!important;font-weight:900!important;color:#1e1f1f!important}
+#snakeGamePage .snake-level-timer .timer-value{min-width:58px;text-align:center;font-size:1.12rem!important;font-variant-numeric:tabular-nums;font-weight:1000!important;color:#2a2a29!important}
+#snakeGamePage .snake-level-timer.warning{border-color:#f59e0b!important;background:#fff8e7!important}
+#snakeGamePage .snake-level-timer.warning .timer-value{color:#b45309!important}
+#snakeGamePage .snake-level-timer.danger{border-color:#ef4444!important;background:#fff0f0!important}
+#snakeGamePage .snake-level-timer.danger .timer-value{color:#b91c1c!important}
+@media(max-width:900px){
+  #snakeGamePage .game-page{height:auto!important;min-height:calc(100vh - 72px)!important;overflow:auto!important}
+  #snakeGamePage .game-layout{height:auto!important;grid-template-columns:minmax(0,520px)!important;justify-content:center!important;align-items:start!important}
+  #snakeGamePage .board-shell{width:min(92vw,500px)!important;max-width:500px!important}
+  #snakeGamePage .game-panel{max-height:none!important;overflow:visible!important}
+}

@@ -1,0 +1,20 @@
+{
+  "name": "upplay",
+  "version": "14.0.0",
+  "private": true,
+  "description": "UpPlay — media belajar berbasis permainan untuk siswa kelas 5 & 6 SD (siswa, guru, admin, master).",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node --watch server/server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "firebase-admin": "^14.5.0",
+    "helmet": "^8.3.0"
+  }
+}

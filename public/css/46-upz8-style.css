@@ -1,0 +1,88 @@
+/* =====================================================================
+   UpPlay V8
+   ===================================================================== */
+
+/* ---------- 1. SATU warna latar untuk seluruh user (siswa, guru, admin, master) ----------
+   latar halaman  : ground #e5e0d9 (gelap: #141413)
+   sidebar & kartu: paper  #f6f3ee (gelap: #1e1f1f)  -> sedikit lebih terang dari latar
+   tidak ada pita "topbar" di dalam aplikasi; topbar hanya di landing page */
+html body.upx-app{background:var(--upx-page)!important}
+html body.upx-app .app-view:not(#landingPage):not(#upz1):not(#upz2),
+html body.upx-app .app-view:not(#landingPage):not(#upz1):not(#upz2) > *:not(.upx-head):not(header),
+html body.upx-app .app-view:not(#landingPage):not(#upz1):not(#upz2) :is(.portal-shell,.portal-content,#belajar,.teacher-shell,.teacher-main,.ad-wrap,.ad-main,#adMain,#teacherGuruV4,.levels-page,.vault-main,.safe-shell,.page-shell){
+  background:transparent!important;background-image:none!important
+}
+html body.upx-app .app-view:not(#landingPage):not(#upz1)::before,
+html body.upx-app .app-view:not(#landingPage):not(#upz1)::after,
+html body.upx-app .app-view:not(#landingPage):not(#upz1) > main::before,
+html body.upx-app .app-view:not(#landingPage):not(#upz1) > main::after{background:none!important;box-shadow:none!important}
+html body.upx-app .upx-head{background:transparent!important;border:0!important;box-shadow:none!important}
+#upxSide{background:var(--upx-surface)!important}
+html body.upx-app :is(.level-card,.portal-stat,.portal-panel,.sd-chart-card,.tg4-panel,.tg4-stat,.ad-card,.ad-stat,.profile-card){background:var(--upx-surface)!important}
+/* isi kartu level: satu warna */
+html body.upx-app .level-card :is(.game-preview,.level-preview,.preview,.level-emoji){background:transparent!important;border:1px solid var(--upx-line)!important;box-shadow:none!important}
+
+/* ---------- 2. Join Room: tanpa tombol kembali, tanpa popup game mandiri ---------- */
+html body.cp-room-mode .app-view:not(.hidden):not(#upz1):not(#upz2) :is(.back-btn,#safeExitArrow,#upxFback){display:none!important}
+body.cp-room-mode :is(#levelOutcomeModal,#timeoutModalV3,#cp5Outcome,#lgOutcome,#ttOutcome,#cpRulesModal,#lgRulesModal,#ttRulesModal,#gameTutorialModal,#cpExitModal,#lgExitModal,#ttExitModal,#countdownOverlay){opacity:0!important;pointer-events:none!important}
+body.cp-room-guard:not(.cp-room-mode) :is(#levelOutcomeModal,#timeoutModalV3,#cp5Outcome,#lgOutcome,#ttOutcome){opacity:0!important;pointer-events:none!important}
+#cpRoomInter{position:fixed;inset:0;z-index:100010;display:grid;place-items:center;background:rgba(20,20,19,.5);backdrop-filter:blur(4px)}
+#cpRoomInter > div{background:var(--g-paper,#f6f3ee)!important;color:#1e1f1f!important;border:1px solid #d8d0c5;border-radius:22px;padding:28px 34px;text-align:center;box-shadow:0 40px 80px -40px rgba(0,0,0,.6)}
+#cpRoomInter .pts{font-family:var(--upz-display)!important;font-size:2.2rem;font-weight:800;color:#1e1f1f!important}
+#cpRoomInter .cpi-next{display:block;margin-top:8px;color:#84817d}
+#cpRoomInter .cpi-count{margin:14px auto 0;width:88px;height:88px;border-radius:50%;display:grid;place-items:center;background:#1e1f1f;color:#d3b99d}
+#cpRoomInter .cpi-count b{font-family:var(--upz-display)!important;font-size:2.6rem;line-height:1;animation:cpiTick 1s cubic-bezier(.16,1,.3,1) both}
+@keyframes cpiTick{0%{opacity:.45;transform:scale(1.3)}35%{opacity:1;transform:scale(1)}100%{opacity:1;transform:scale(.92)}}
+#cpRoomInter .cpi-kick{color:#ba9d7f!important}
+html.upx-dark #cpRoomInter > div{background:#1e1f1f!important;color:#efe9e1!important;border-color:#3a3936}
+html.upx-dark #cpRoomInter .pts{color:#d3b99d!important}
+html.upx-dark #cpRoomInter .cpi-count{background:#d3b99d;color:#1e1f1f}
+#cpRoomHud{background:#1e1f1f!important;color:#efe9e1!important}
+#cpRoomHud b{color:#d3b99d!important}
+
+/* ---------- 3. grafik terlihat di mode gelap ---------- */
+html.upx-dark svg.up-class-chart path[fill="none"]{stroke:#d3b99d!important}
+html.upx-dark svg.up-class-chart circle{stroke:#d3b99d!important;fill:#1e1f1f!important}
+html.upx-dark svg.up-class-chart stop{stop-color:#d3b99d!important}
+html.upx-dark svg.up-class-chart text{fill:#e5e0d9!important}
+html.upx-dark svg.up-class-chart line{stroke:#3a3936!important}
+html.upx-dark .up-chart-card .up-dot,html.upx-dark #studentDashboard .sd-legend i,html.upx-dark #studentDashboard .sd-legend span:first-child{background:#d3b99d!important}
+
+/* ---------- 4. notifikasi gaya pesan, atas tengah ---------- */
+#upNotifs{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:100100;display:flex;flex-direction:column;gap:8px;width:min(420px,calc(100vw - 24px));pointer-events:none}
+.up-notif{pointer-events:auto;display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:18px;background:rgba(246,243,238,.97);color:#1e1f1f;border:1px solid #d8d0c5;box-shadow:0 18px 40px -18px rgba(30,31,31,.45);backdrop-filter:blur(10px);cursor:pointer;animation:upNIn .5s cubic-bezier(.16,1,.3,1) both}
+.up-notif.out{animation:upNOut .3s ease both}
+@keyframes upNIn{from{opacity:0;transform:translateY(-24px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes upNOut{to{opacity:0;transform:translateY(-16px) scale(.97)}}
+.up-n-ic{flex:0 0 40px;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#1e1f1f;color:#d3b99d}
+.up-n-body{min-width:0;flex:1}
+.up-n-top{display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:#84817d;margin-bottom:2px}
+.up-n-top b{color:#4a4a49;letter-spacing:.04em}
+.up-notif strong{display:block;font-size:.95rem;margin-bottom:2px}
+.up-notif p{margin:0;font-size:.88rem;color:#4a4a49;line-height:1.4}
+html.upx-dark .up-notif{background:rgba(30,31,31,.97);color:#efe9e1;border-color:#3a3936}
+html.upx-dark .up-n-ic{background:#d3b99d;color:#1e1f1f}
+html.upx-dark .up-notif p,html.upx-dark .up-n-top b{color:#c9c2b8}
+#cpToast:not(.up-notif),.ad-toast{display:none!important}
+
+/* ---------- 5. Kontrol Kelas & Game: semua kartu sama ukuran ---------- */
+html body #adminPortalPage .ad-cls{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:16px!important;align-items:stretch!important}
+html body #adminPortalPage .ad-cls > .ad-card{margin:0!important;height:100%!important;box-sizing:border-box;display:flex;flex-direction:column;gap:8px}
+html body #adminPortalPage .ad-cls label{display:flex;align-items:center;gap:8px;min-height:30px}
+@media (max-width:1200px){html body #adminPortalPage .ad-cls{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media (max-width:620px){html body #adminPortalPage .ad-cls{grid-template-columns:1fr!important}}
+
+/* ---------- 6. ikon abstrak pengganti emoji ---------- */
+.upz-ab{display:inline-flex;vertical-align:-.16em;line-height:1;margin:0 .12em}
+.upz-ab svg{width:1.05em;height:1.05em;display:block}
+
+html body .level-card .game-preview{display:flex!important;align-items:center!important;justify-content:center!important;gap:12px!important;flex-wrap:nowrap!important;font-size:1.55rem!important;color:var(--upx-ink)}
+html body .game-stars .upz-ab{margin:0 1px}
+html body .game-stars .on .upz-ab svg,html body .game-stars .filled .upz-ab svg,html body .game-stars .active .upz-ab svg{fill:currentColor}
+
+/* ---------- 7. landing: ilustrasi lama dihapus permanen ---------- */
+#landingPage .hero-visual .visual-card,#landingPage .illustration-boy{display:none!important}
+
+/* ---------- 8. tanpa kedip saat halaman dimuat ---------- */
+html.upz-boot body>*:not(#upBoot){opacity:0!important}
+html.upz-booted body>*{transition:opacity .35s ease}

@@ -1,0 +1,52 @@
+/* =====================================================================
+   UpPlay V13 — sidebar tooltip, pesan form masuk, avatar donat,
+   ikon abstrak landing, teks portal guru, gerak halus
+   ===================================================================== */
+
+/* ---------- 1. tooltip sidebar tertutup (seluruh pengguna) ---------- */
+body:not(.upx-open) #upxSide .upx-item:hover::after{display:none!important;content:none!important}
+#upSideTip{position:fixed;z-index:100500;left:0;top:0;pointer-events:none;max-width:240px;padding:7px 11px;border-radius:10px;background:#1e1f1f;color:#f6f3ee;font-size:.8rem;font-weight:700;line-height:1.2;white-space:nowrap;box-shadow:0 10px 24px -10px rgba(0,0,0,.45);opacity:0;transform:translate(-6px,-50%);transition:opacity .16s ease,transform .22s cubic-bezier(.22,1,.36,1)}
+#upSideTip::before{content:"";position:absolute;left:-4px;top:50%;width:8px;height:8px;background:inherit;transform:translateY(-50%) rotate(45deg);border-radius:2px}
+#upSideTip.show{opacity:1;transform:translate(0,-50%)}
+html.upx-dark #upSideTip{background:#efe9e1;color:#1e1f1f}
+
+/* sidebar: transisi halus, tanpa kedip saat item aktif berpindah */
+#upxSide .upx-item{transition:background-color .28s ease,color .28s ease,box-shadow .28s ease,transform .28s cubic-bezier(.22,1,.36,1)!important;backface-visibility:hidden;-webkit-font-smoothing:antialiased}
+#upxSide .upx-item svg{transition:transform .35s cubic-bezier(.22,1,.36,1)}
+#upxSide .upx-item:hover svg{transform:translateY(-1px)}
+
+/* ---------- 2. pesan form Masuk / Daftar / Lupa sandi: hanya warna huruf ---------- */
+html body :is(#loginError,#registerError,#upFErr).login-error,
+html body :is(#loginError,#registerError,#upFErr){background:none!important;border:0!important;box-shadow:none!important;padding:0!important;margin:2px 0 4px!important;min-height:0!important;color:#b42318!important;font-weight:700!important;font-size:.88rem!important;line-height:1.45!important;display:flex!important;align-items:flex-start;gap:8px;text-align:left}
+html body :is(#loginError,#registerError,#upFErr):empty{display:none!important}
+html body :is(#loginError,#registerError,#upFErr).success-message{color:#1f7a3d!important;background:none!important;border:0!important}
+html body :is(#loginError,#registerError,#upFErr) strong{color:inherit!important;font-weight:700!important}
+html body :is(#loginError,#registerError,#upFErr) .success-check{display:inline-grid!important;place-items:center;flex:0 0 16px;width:16px!important;height:16px!important;min-width:0!important;margin:2px 0 0!important;padding:0!important;border-radius:50%!important;background:#1f7a3d!important;color:#fff!important;font-size:10px!important;line-height:1!important;box-shadow:none!important}
+.up-err-ic{flex:0 0 16px;width:16px;height:16px;margin-top:2px;color:#b42318}
+.up-err-ic svg{display:block;width:16px;height:16px}
+
+/* ---------- 3. avatar ---------- */
+.up-tp-ava img,#upxAva img{object-fit:cover}
+
+/* ---------- 4. portal guru ---------- */
+#teacherGuruV4 .tg4-head .badge{display:none!important}
+.up-tg-kick{display:flex;align-items:center;gap:8px;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--upx-muted,#5f5c58)}
+.up-tg-kick svg{width:15px;height:15px;flex:0 0 15px}
+html body .up-tgames .up-tg-title{margin:6px 0 2px!important;font-size:1.3rem!important;line-height:1.25!important;font-weight:700!important;color:var(--upx-ink,#1e1f1f)!important}
+.up-tg-sub{margin:0 0 4px;font-size:.86rem;color:var(--upx-muted,#5f5c58);font-weight:600}
+
+/* ---------- 5. ikon abstrak landing ---------- */
+.up-abs{display:inline-grid;place-items:center;vertical-align:-3px}
+.up-abs svg{display:block;width:100%;height:100%;overflow:visible}
+#landingPage .badge .up-abs{width:15px;height:15px;margin-right:6px}
+#landingPage .feature-icon .up-abs{width:24px;height:24px}
+#landingPage .tutorial-number .up-abs{width:20px;height:20px}
+#landingPage .section-heading h2 .up-abs{width:.9em;height:.9em;margin-right:.3em;vertical-align:-.08em}
+.sc-dice .up-abs{width:1em!important;height:1em!important;color:#d3b99d}
+.sc-kata .em .up-abs{width:1em;height:1em;vertical-align:-.12em}
+
+/* ---------- 6. gerak halus ---------- */
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+html body :is(.btn,.upx-item,.play-label,.up-ctab,.subject-card,.level-card,.ad-card,.upcc){-webkit-tap-highlight-color:transparent}
+html body .btn{transition:transform .28s cubic-bezier(.22,1,.36,1),background-color .25s ease,color .25s ease,box-shadow .28s ease,border-color .25s ease}

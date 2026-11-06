@@ -1,0 +1,215 @@
+/* =========================================================
+   CERDASPLAY GURU V4
+   BLOK KHUSUS PORTAL GURU.
+   Tidak mengubah selector atau DOM portal siswa.
+========================================================= */
+#teacherPortalPage #teacherVNextRoot{display:none!important}
+#teacherPortalPage #teacherVNextRoot *{pointer-events:none}
+#teacherPortalPage #teacherGuruV4{width:100%}
+#teacherPortalPage #teacherGuruV4 .tg4-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:18px}
+#teacherPortalPage #teacherGuruV4 .tg4-head h1{margin:5px 0 6px;font-size:2rem}
+#teacherPortalPage #teacherGuruV4 .tg4-head p{margin:0;color:var(--muted);line-height:1.6}
+#teacherPortalPage #teacherGuruV4 .tg4-chip{padding:9px 13px;border-radius:12px;background:#efe9e1;color:var(--primary);font-weight:1000;white-space:nowrap}
+#teacherPortalPage #teacherGuruV4 .tg4-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:18px}
+#teacherPortalPage #teacherGuruV4 .tg4-stat{padding:18px 20px;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:0 10px 25px rgba(58,57,54,.06)}
+#teacherPortalPage #teacherGuruV4 .tg4-stat span{display:block;color:var(--muted);font-size:.82rem;font-weight:800}
+#teacherPortalPage #teacherGuruV4 .tg4-stat strong{display:block;margin-top:5px;font-size:1.8rem;color:var(--primary)}
+#teacherPortalPage #teacherGuruV4 .tg4-stat small{display:block;margin-top:4px;color:var(--muted);font-weight:700}
+#teacherPortalPage #teacherGuruV4 .tg4-panel{padding:22px;border:1px solid var(--line);border-radius:22px;background:#fff;box-shadow:0 12px 28px rgba(58,57,54,.06);margin-bottom:18px}
+#teacherPortalPage #teacherGuruV4 .tg4-panel h2{margin:0 0 7px}
+#teacherPortalPage #teacherGuruV4 .tg4-panel>p{margin:0 0 16px;color:var(--muted);line-height:1.6}
+#teacherPortalPage #teacherGuruV4 .tg4-chart-wrap{width:100%;overflow-x:auto}
+#teacherPortalPage #teacherGuruV4 .tg4-chart{width:100%;min-width:700px;height:auto;display:block}
+#teacherPortalPage #teacherGuruV4 .tg4-chart-note{margin-top:10px;color:var(--muted);font-size:.78rem;font-weight:800}
+#teacherPortalPage #teacherGuruV4 .tg4-table-wrap{overflow-x:auto}
+#teacherPortalPage #teacherGuruV4 .tg4-table{width:100%;border-collapse:collapse;min-width:650px}
+#teacherPortalPage #teacherGuruV4 .tg4-table th,#teacherPortalPage #teacherGuruV4 .tg4-table td{padding:11px 12px;border:1px solid #e5e0d9;text-align:left}
+#teacherPortalPage #teacherGuruV4 .tg4-table th{background:#f6f3ee;font-size:.78rem;text-transform:uppercase;letter-spacing:.3px}
+#teacherPortalPage #teacherGuruV4 .tg4-table td{background:#fff;font-weight:700}
+#teacherPortalPage #teacherGuruV4 .tg4-rank{font-weight:1000;color:var(--primary);text-align:center}
+#teacherPortalPage #teacherGuruV4 .tg4-score{font-weight:1000;color:#16a34a}
+#teacherPortalPage #teacherGuruV4 .tg4-game-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:15px}
+#teacherPortalPage #teacherGuruV4 .tg4-game-card{padding:18px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(145deg,#f6f3ee,#fff)}
+#teacherPortalPage #teacherGuruV4 .tg4-game-icon{font-size:2rem}
+#teacherPortalPage #teacherGuruV4 .tg4-game-card b{display:block;margin-top:7px}
+#teacherPortalPage #teacherGuruV4 .tg4-levels{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:12px}
+#teacherPortalPage #teacherGuruV4 .tg4-level{padding:7px 4px;text-align:center;border-radius:9px;background:#efe9e1;color:var(--primary);font-size:.72rem;font-weight:900}
+#teacherPortalPage #teacherGuruV4 .tg4-form-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end}
+#teacherPortalPage #teacherGuruV4 .tg4-field{display:grid;gap:7px}
+#teacherPortalPage #teacherGuruV4 .tg4-field label{font-size:.82rem;font-weight:900}
+#teacherPortalPage #teacherGuruV4 select,#teacherPortalPage #teacherGuruV4 input{width:100%;box-sizing:border-box;padding:12px 13px;border:2px solid #e5e0d9;border-radius:12px;background:#fff;color:var(--ink);font:inherit;outline:none}
+#teacherPortalPage #teacherGuruV4 select:focus,#teacherPortalPage #teacherGuruV4 input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(30,31,31,.1)}
+#teacherPortalPage #teacherGuruV4 .tg4-room-code{font-size:2rem;letter-spacing:5px;font-weight:1000;color:var(--orange)}
+#teacherPortalPage #teacherGuruV4 .tg4-room-top{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;padding:15px;border-radius:17px;background:#f6f3ee;border:1px solid #e5e0d9}
+#teacherPortalPage #teacherGuruV4 .tg4-status{padding:8px 12px;border-radius:11px;background:#fff7df;color:#9a5b00;font-size:.8rem;font-weight:900}
+#teacherPortalPage #teacherGuruV4 .tg4-status.live{background:#dcfce7;color:#15803d}
+#teacherPortalPage #teacherGuruV4 .tg4-status.done{background:#fee2e2;color:#b91c1c}
+#teacherPortalPage #teacherGuruV4 .tg4-round-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px}
+#teacherPortalPage #teacherGuruV4 .tg4-round{padding:11px;border-radius:13px;background:#f6f3ee;border:1px solid #e5e0d9;font-size:.8rem;font-weight:900}
+#teacherPortalPage #teacherGuruV4 .tg4-round small{display:block;color:var(--muted);margin-top:4px}
+#teacherPortalPage #teacherGuruV4 .tg4-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+#teacherPortalPage #teacherGuruV4 .tg4-note{padding:13px 15px;border-radius:14px;background:#f6f3ee;color:#555d78;line-height:1.55;font-size:.84rem}
+#teacherPortalPage #teacherGuruV4 .tg4-pvp-select{max-width:300px}
+#teacherPortalPage #teacherGuruV4 .tg4-members{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+#teacherPortalPage #teacherGuruV4 .tg4-team{padding:18px;border:2px solid #e5e0d9;border-radius:19px;background:#f6f3ee}
+#teacherPortalPage #teacherGuruV4 .tg4-team.red{border-top:6px solid #ef4444}
+#teacherPortalPage #teacherGuruV4 .tg4-team.blue{border-top:6px solid #2563eb}
+#teacherPortalPage #teacherGuruV4 .tg4-team h3{margin:0 0 12px}
+#teacherPortalPage #teacherGuruV4 .tg4-member-row{display:grid;grid-template-columns:34px 1fr;gap:8px;align-items:center;margin-top:8px}
+#teacherPortalPage #teacherGuruV4 .tg4-member-num{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:#efe9e1;color:var(--primary);font-weight:1000}
+#teacherPortalPage #teacherGuruV4 .tg4-error{display:none;margin-top:12px;padding:10px 12px;border-radius:12px;background:#fff1f2;border:1px solid #fecdd3;color:#be123c;font-weight:800}
+#teacherPortalPage #teacherGuruV4 .tg4-error.show{display:block}
+#teacherPortalPage #teacherGuruV4 .tg4-battle{margin-top:18px;padding:18px;border-radius:24px;background:linear-gradient(180deg,#cdefff 0%,#f8fbff 57%,#83c96f 57%,#65b85d 100%);overflow:hidden}
+#teacherPortalPage #teacherGuruV4 .tg4-battle-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+#teacherPortalPage #teacherGuruV4 .tg4-battle-title{font-weight:1000}
+#teacherPortalPage #teacherGuruV4 .tg4-rope-scene{position:relative;min-height:190px;margin:10px 0;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,.1));border:1px solid rgba(255,255,255,.7)}
+#teacherPortalPage #teacherGuruV4 .tg4-center-line{position:absolute;left:50%;top:10px;bottom:10px;width:4px;transform:translateX(-50%);background:#ef4444;z-index:5;box-shadow:0 0 0 2px rgba(255,255,255,.75)}
+#teacherPortalPage #teacherGuruV4 .tg4-rope{position:absolute;left:50%;top:50%;width:76%;height:10px;transform:translate(-50%,-50%);border-radius:999px;background:repeating-linear-gradient(90deg,#8b5a2b 0 18px,#c98b4b 18px 30px);box-shadow:0 4px 8px rgba(66,42,20,.22);transition:transform .28s ease}
+#teacherPortalPage #teacherGuruV4 .tg4-flag{position:absolute;top:50%;left:50%;z-index:6;width:34px;height:50px;transform:translate(-50%,-50%);transition:left .28s ease;font-size:1.5rem}
+#teacherPortalPage #teacherGuruV4 .tg4-people{position:absolute;left:4%;right:4%;top:22px;bottom:15px;display:flex;justify-content:space-between;align-items:center;z-index:4;pointer-events:none}
+#teacherPortalPage #teacherGuruV4 .tg4-side-people{position:absolute;top:38px;bottom:34px;display:flex;align-items:flex-end;gap:3px;width:37%;font-size:2.7rem;filter:drop-shadow(0 5px 3px rgba(0,0,0,.18));z-index:4}
+#teacherPortalPage #teacherGuruV4 .tg4-side-people.red{left:4%;justify-content:flex-start}
+#teacherPortalPage #teacherGuruV4 .tg4-side-people.blue{right:4%;justify-content:flex-end}
+#teacherPortalPage #teacherGuruV4 .tg4-side-people.blue{justify-content:flex-end;flex-direction:row-reverse}
+#teacherPortalPage #teacherGuruV4 .tg4-side-label{position:absolute;bottom:6px;font-size:.72rem;font-weight:1000;padding:5px 8px;border-radius:9px;background:rgba(255,255,255,.82)}
+#teacherPortalPage #teacherGuruV4 .tg4-side-label.red{left:8px;color:#b91c1c}
+#teacherPortalPage #teacherGuruV4 .tg4-side-label.blue{right:8px;color:#1d4ed8}
+#teacherPortalPage #teacherGuruV4 .tg4-battle-grid{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:12px;align-items:stretch}
+#teacherPortalPage #teacherGuruV4 .tg4-question{padding:15px;border-radius:17px;background:#fff;border:2px solid #fee2e2}
+#teacherPortalPage #teacherGuruV4 .tg4-question.blue{border-color:#dbeafe}
+#teacherPortalPage #teacherGuruV4 .tg4-question h4{margin:0 0 7px}
+#teacherPortalPage #teacherGuruV4 .tg4-qtext{min-height:52px;font-size:1rem;font-weight:1000;line-height:1.45}
+#teacherPortalPage #teacherGuruV4 .tg4-answer-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+#teacherPortalPage #teacherGuruV4 .tg4-answer{padding:10px 8px;border:2px solid #e5e0d9;border-radius:11px;background:#fff;font-weight:900;cursor:pointer}
+#teacherPortalPage #teacherGuruV4 .tg4-answer:hover{border-color:var(--primary);background:#f6f3ee}
+#teacherPortalPage #teacherGuruV4 .tg4-answer.correct{border-color:#22c55e;background:#dcfce7}
+#teacherPortalPage #teacherGuruV4 .tg4-answer.wrong{border-color:#ef4444;background:#fee2e2}
+#teacherPortalPage #teacherGuruV4 .tg4-stats{display:grid;gap:10px;align-content:center}
+#teacherPortalPage #teacherGuruV4 .tg4-score-box{padding:13px;border-radius:15px;background:#fff;text-align:center;border:1px solid #e5e0d9}
+#teacherPortalPage #teacherGuruV4 .tg4-score-box strong{display:block;font-size:1.45rem}
+#teacherPortalPage #teacherGuruV4 .tg4-score-box small{color:var(--muted);font-weight:800}
+#teacherPortalPage #teacherGuruV4 .tg4-group-table{margin-top:16px}
+#teacherPortalPage #teacherGuruV4 .tg4-history{margin-top:16px}
+#teacherPortalPage #teacherGuruV4 .tg4-history-item{padding:13px 15px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.85rem}
+#teacherPortalPage #teacherGuruV4 .tg4-history-item strong{color:var(--primary)}
+#teacherPortalPage #teacherGuruV4 .tg4-pvp-result{padding:18px;border-radius:18px;background:#f6f3ee;border:1px solid #e5e0d9;margin-top:15px}
+@media(max-width:900px){
+ #teacherPortalPage #teacherGuruV4 .tg4-cards{grid-template-columns:1fr}
+ #teacherPortalPage #teacherGuruV4 .tg4-game-grid{grid-template-columns:1fr}
+ #teacherPortalPage #teacherGuruV4 .tg4-round-grid{grid-template-columns:1fr 1fr}
+ #teacherPortalPage #teacherGuruV4 .tg4-members{grid-template-columns:1fr}
+ #teacherPortalPage #teacherGuruV4 .tg4-battle-grid{grid-template-columns:1fr}
+ #teacherPortalPage #teacherGuruV4 .tg4-stats{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+ #teacherPortalPage #teacherGuruV4 .tg4-form-row{grid-template-columns:1fr}
+ #teacherPortalPage #teacherGuruV4 .tg4-round-grid{grid-template-columns:1fr}
+ #teacherPortalPage #teacherGuruV4 .tg4-stats{grid-template-columns:1fr}
+ #teacherPortalPage #teacherGuruV4 .tg4-side-people{font-size:2rem}
+}
+/* ===== PVP Tarik Tambang V5 (arena kartun) + Nilai Kelompok — khusus portal guru ===== */
+#teacherPortalPage #teacherGuruV4 .tg5-wrap{padding:22px;border-radius:28px;background:linear-gradient(180deg,#a9d8ff 0%,#d8ecff 55%,#f3f9ff 100%);border:1px solid #cfe3f7;box-shadow:0 12px 28px rgba(58,57,54,.08)}
+#teacherPortalPage #teacherGuruV4 .tg5-grid{display:grid;grid-template-columns:218px minmax(0,1fr) 218px;gap:18px;align-items:start}
+#teacherPortalPage #teacherGuruV4 .tg5-center{min-width:0;text-align:center}
+#teacherPortalPage #teacherGuruV4 .tg5-title{font-weight:1000;font-size:1.25rem;color:#2b2b2b;margin:6px 0 4px}
+#teacherPortalPage #teacherGuruV4 .tg5-stage{position:relative;border-radius:22px;overflow:hidden;background:linear-gradient(180deg,#bfe3ff 0%,#eaf6ff 100%);border:1px solid rgba(255,255,255,.8)}
+#teacherPortalPage #teacherGuruV4 .tg5-svg{display:block;width:100%;height:auto}
+#teacherPortalPage #teacherGuruV4 .tg5-lineLabel{font:800 10px Nunito,Arial,sans-serif;fill:#4b5563;letter-spacing:.12em}
+#teacherPortalPage #teacherGuruV4 .tg5-pull{transition:transform .55s cubic-bezier(.3,.8,.3,1)}
+#teacherPortalPage #teacherGuruV4 .tg5-nm{font:900 12px Nunito,Arial,sans-serif;paint-order:stroke;stroke:#fff;stroke-width:3px}
+#teacherPortalPage #teacherGuruV4 .tg5-nm.blue{fill:#1d4ed8}
+#teacherPortalPage #teacherGuruV4 .tg5-nm.red{fill:#b91c1c}
+#teacherPortalPage #teacherGuruV4 .tg5-nm.cur{font-size:14px;text-decoration:underline}
+#teacherPortalPage #teacherGuruV4 .tg5-cap{margin-top:8px;font-weight:700;color:#4b5563;font-size:.9rem}
+#teacherPortalPage #teacherGuruV4 .tg5-chips{display:flex;justify-content:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+#teacherPortalPage #teacherGuruV4 .tg5-chip{padding:7px 14px;border-radius:999px;font-weight:900;font-size:.85rem;background:#fff;box-shadow:0 4px 10px rgba(0,0,0,.08)}
+#teacherPortalPage #teacherGuruV4 .tg5-chip.blue{color:#1d4ed8}
+#teacherPortalPage #teacherGuruV4 .tg5-chip.red{color:#b91c1c}
+#teacherPortalPage #teacherGuruV4 .tg5-abort{margin-top:12px}
+/* panel kalkulator */
+#teacherPortalPage #teacherGuruV4 .tg5-pad{padding:14px;border-radius:26px;background:rgba(255,255,255,.55);box-shadow:0 10px 26px rgba(40,70,120,.18);border:1px solid rgba(255,255,255,.8)}
+#teacherPortalPage #teacherGuruV4 .tg5-who{min-height:20px;margin:0 2px 8px;font-size:.78rem;font-weight:800;color:#374151;text-align:center}
+#teacherPortalPage #teacherGuruV4 .tg5-q{padding:15px 8px;border-radius:18px;color:#fff;font-weight:1000;font-size:1.25rem;text-align:center;letter-spacing:.02em}
+#teacherPortalPage #teacherGuruV4 .tg5-pad.blue .tg5-q{background:linear-gradient(135deg,#3a3936,#1e1f1f)}
+#teacherPortalPage #teacherGuruV4 .tg5-pad.red .tg5-q{background:linear-gradient(135deg,#b01c1c,#7d0000)}
+#teacherPortalPage #teacherGuruV4 .tg5-disp{height:46px;margin:10px 0;border-radius:16px;background:#fff;display:grid;place-items:center;font-weight:1000;font-size:1.4rem;color:#2a2a29;box-shadow:inset 0 2px 6px rgba(0,0,0,.06);transition:background .2s}
+#teacherPortalPage #teacherGuruV4 .tg5-disp.ok{background:#bbf7d0}
+#teacherPortalPage #teacherGuruV4 .tg5-disp.bad{background:#fecaca}
+#teacherPortalPage #teacherGuruV4 .tg5-keys{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:10px;border-radius:20px;background:rgba(235,244,255,.8)}
+#teacherPortalPage #teacherGuruV4 .tg5-key{height:46px;border:0;border-radius:15px;background:#fff;font:900 1.1rem Nunito,Arial,sans-serif;color:#1f2937;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.1);transition:transform .08s}
+#teacherPortalPage #teacherGuruV4 .tg5-key:active{transform:scale(.93)}
+#teacherPortalPage #teacherGuruV4 .tg5-key.c{background:#ff5252;color:#fff}
+#teacherPortalPage #teacherGuruV4 .tg5-key.go{background:#3fa4f8;color:#fff}
+#teacherPortalPage #teacherGuruV4 .tg5-meta{margin-top:10px;text-align:center;font-size:.76rem;font-weight:800;color:#4b5563}
+#teacherPortalPage #teacherGuruV4 .tg5-pad.off .tg5-keys{opacity:.45;pointer-events:none}
+/* kartu hasil */
+#teacherPortalPage #teacherGuruV4 .tg5-end{margin-top:12px}
+#teacherPortalPage #teacherGuruV4 .tg5-end.hidden{display:none}
+#teacherPortalPage #teacherGuruV4 .tg5-end-card{padding:18px 24px;border-radius:22px;background:#fff;box-shadow:0 8px 22px rgba(0,0,0,.12)}
+#teacherPortalPage #teacherGuruV4 .tg5-end-ic{font-size:2.4rem}
+#teacherPortalPage #teacherGuruV4 .tg5-end-card h3{margin:4px 0}
+#teacherPortalPage #teacherGuruV4 .tg5-end-card p{margin:4px 0;color:var(--muted);font-weight:700}
+#teacherPortalPage #teacherGuruV4 .tg5-end-sc{color:var(--ink)!important}
+/* gerakan manusia kartun */
+#teacherPortalPage #teacherGuruV4 .tg5-svg g{transform-box:view-box}
+#teacherPortalPage #teacherGuruV4 .tg5-body{transform-origin:0 0;animation:tg5Strain 1.2s ease-in-out infinite alternate}
+#teacherPortalPage #teacherGuruV4 .tg5-fig.f1 .tg5-body{animation-delay:-.4s}
+#teacherPortalPage #teacherGuruV4 .tg5-fig.f2 .tg5-body{animation-delay:-.8s}
+#teacherPortalPage #teacherGuruV4 .tg5-th,#teacherPortalPage #teacherGuruV4 .tg5-sh,#teacherPortalPage #teacherGuruV4 .tg5-ua,#teacherPortalPage #teacherGuruV4 .tg5-fa{transform-origin:0 0}
+#teacherPortalPage #teacherGuruV4 .tg5-th.f{transform:rotate(-30deg);animation:tg5ThF 1.2s ease-in-out infinite alternate}
+#teacherPortalPage #teacherGuruV4 .tg5-sh.f{transform:rotate(30deg)}
+#teacherPortalPage #teacherGuruV4 .tg5-th.b{transform:rotate(18deg);animation:tg5ThB 1.2s ease-in-out infinite alternate}
+#teacherPortalPage #teacherGuruV4 .tg5-sh.b{transform:rotate(8deg)}
+#teacherPortalPage #teacherGuruV4 .tg5-ua.f{transform:rotate(-74deg);animation:tg5UaF 1.2s ease-in-out infinite alternate}
+#teacherPortalPage #teacherGuruV4 .tg5-fa.f{transform:rotate(8deg)}
+#teacherPortalPage #teacherGuruV4 .tg5-ua.b{transform:rotate(-70deg);animation:tg5UaB 1.2s ease-in-out infinite alternate}
+#teacherPortalPage #teacherGuruV4 .tg5-fa.b{transform:rotate(10deg)}
+#teacherPortalPage #teacherGuruV4 .tg5-tail{transform-origin:-14px -5px;animation:tg5Tail .5s ease-in-out infinite alternate}
+@keyframes tg5Strain{from{transform:rotate(-14deg)}to{transform:rotate(-18deg)}}
+@keyframes tg5ThF{from{transform:rotate(-31deg)}to{transform:rotate(-27deg)}}
+@keyframes tg5ThB{from{transform:rotate(18deg)}to{transform:rotate(22deg)}}
+@keyframes tg5UaF{from{transform:rotate(-74deg)}to{transform:rotate(-69deg)}}
+@keyframes tg5UaB{from{transform:rotate(-70deg)}to{transform:rotate(-65deg)}}
+@keyframes tg5Tail{from{transform:rotate(-8deg)}to{transform:rotate(14deg)}}
+/* sedang menarik: badan condong ke belakang, kaki melangkah bergantian, tangan menyentak tali */
+#teacherPortalPage #teacherGuruV4 .tg5-team.pull .tg5-body{animation:tg5PullBody .36s ease-in-out infinite alternate}
+#teacherPortalPage #teacherGuruV4 .tg5-team.pull .tg5-th.f{animation:tg5StepF .36s ease-in-out infinite alternate}
+#teacherPortalPage #teacherGuruV4 .tg5-team.pull .tg5-sh.f{animation:tg5ShinF .36s ease-in-out infinite alternate}
+#teacherPortalPage #teacherGuruV4 .tg5-team.pull .tg5-th.b{animation:tg5StepB .36s ease-in-out infinite alternate}
+#teacherPortalPage #teacherGuruV4 .tg5-team.pull .tg5-sh.b{animation:tg5ShinB .36s ease-in-out infinite alternate}
+#teacherPortalPage #teacherGuruV4 .tg5-team.pull .tg5-ua.f{animation:tg5PullUaF .36s ease-in-out infinite alternate}
+#teacherPortalPage #teacherGuruV4 .tg5-team.pull .tg5-fa.f{animation:tg5PullFa .36s ease-in-out infinite alternate}
+#teacherPortalPage #teacherGuruV4 .tg5-team.pull .tg5-ua.b{animation:tg5PullUaB .36s ease-in-out infinite alternate}
+#teacherPortalPage #teacherGuruV4 .tg5-team.pull .tg5-fa.b{animation:tg5PullFa .36s ease-in-out infinite alternate-reverse}
+@keyframes tg5PullBody{from{transform:rotate(-17deg)}to{transform:rotate(-27deg)}}
+@keyframes tg5StepF{from{transform:rotate(-40deg)}to{transform:rotate(-12deg)}}
+@keyframes tg5ShinF{from{transform:rotate(44deg)}to{transform:rotate(14deg)}}
+@keyframes tg5StepB{from{transform:rotate(6deg)}to{transform:rotate(34deg)}}
+@keyframes tg5ShinB{from{transform:rotate(2deg)}to{transform:rotate(46deg)}}
+@keyframes tg5PullUaF{from{transform:rotate(-80deg)}to{transform:rotate(-52deg)}}
+@keyframes tg5PullUaB{from{transform:rotate(-56deg)}to{transform:rotate(-80deg)}}
+@keyframes tg5PullFa{from{transform:rotate(2deg)}to{transform:rotate(40deg)}}
+/* menang / kalah */
+#teacherPortalPage #teacherGuruV4 .tg5-team.lose .tg5-fig{animation:tg5Fall .9s ease-in forwards;transform-origin:0 0}
+@keyframes tg5Fall{to{transform:rotate(68deg)}}
+#teacherPortalPage #teacherGuruV4 .tg5-team.lose .tg5-body{animation:none;transform:rotate(-4deg)}
+#teacherPortalPage #teacherGuruV4 .tg5-team.win .tg5-fig{animation:tg5Cheer .5s ease-in-out infinite alternate}
+@keyframes tg5Cheer{to{transform:translateY(-8px)}}
+/* nilai kelompok (tabel seperti contoh) */
+#teacherPortalPage #teacherGuruV4 .tg5-gt-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start}
+#teacherPortalPage #teacherGuruV4 .tg5-gt-title{font-weight:900;margin:0 0 8px}
+#teacherPortalPage #teacherGuruV4 .tg5-gt-box.red .tg5-gt-title{color:#b91c1c}
+#teacherPortalPage #teacherGuruV4 .tg5-gt-box.blue .tg5-gt-title{color:#1d4ed8}
+#teacherPortalPage #teacherGuruV4 .tg5-gt{width:100%;border-collapse:collapse}
+#teacherPortalPage #teacherGuruV4 .tg5-gt th,#teacherPortalPage #teacherGuruV4 .tg5-gt td{padding:8px 10px;border:1px solid #3a3936;text-align:left;font-weight:700;background:#fff}
+#teacherPortalPage #teacherGuruV4 .tg5-gt th{background:#f6f3ee;font-size:.8rem}
+#teacherPortalPage #teacherGuruV4 .tg5-gt tr.sc td{font-weight:1000;border-style:dashed}
+#teacherPortalPage #teacherGuruV4 .tg5-gt tr.sc td:nth-child(2){color:#16a34a;text-align:center}
+@media(max-width:1100px){
+ #teacherPortalPage #teacherGuruV4 .tg5-grid{grid-template-columns:1fr 1fr}
+ #teacherPortalPage #teacherGuruV4 .tg5-center{grid-column:1/-1;grid-row:1}
+}
+@media(max-width:700px){
+ #teacherPortalPage #teacherGuruV4 .tg5-grid{grid-template-columns:1fr}
+ #teacherPortalPage #teacherGuruV4 .tg5-gt-grid{grid-template-columns:1fr}
+}

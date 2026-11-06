@@ -1,0 +1,151 @@
+/* =====================================================================
+   UpPlay V9
+   ===================================================================== */
+
+/* ---------- notifikasi gaya Dynamic Island (atas tengah, sama di mode terang & gelap) ---------- */
+#upNotifs{top:10px!important;width:min(400px,calc(100vw - 20px))!important;align-items:center}
+.up-notif{width:100%;box-sizing:border-box;background:#0d0d0c!important;color:#f6f3ee!important;border:0!important;border-radius:30px!important;padding:10px 18px 10px 10px!important;
+  box-shadow:0 22px 44px -18px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.04)!important;backdrop-filter:none!important;
+  animation:upIsland .65s cubic-bezier(.22,1.25,.36,1) both!important;transform-origin:top center}
+.up-notif.out{animation:upIslandOut .38s cubic-bezier(.4,0,.2,1) both!important}
+@keyframes upIsland{0%{opacity:0;clip-path:inset(0 36% 58% 36% round 999px);transform:translateY(-8px)}35%{opacity:1}100%{opacity:1;clip-path:inset(0 0 0 0 round 30px);transform:none}}
+@keyframes upIslandOut{0%{clip-path:inset(0 0 0 0 round 30px)}100%{opacity:0;clip-path:inset(0 36% 58% 36% round 999px);transform:translateY(-6px)}}
+.up-notif .up-n-ic{background:#d3b99d!important;color:#1e1f1f!important}
+.up-notif .up-n-top{color:#9a948c!important}
+.up-notif .up-n-top b{color:#d3b99d!important}
+.up-notif strong{color:#ffffff!important}
+.up-notif p{color:#d9d3ca!important}
+.up-notif.kind-warn .up-n-ic,.up-notif.kind-maint .up-n-ic{background:#e8a87c!important}
+
+/* ---------- panel riwayat notifikasi ---------- */
+#upzHist{position:fixed;inset:0;z-index:100060;background:transparent;animation:upzFade .2s ease both}
+#upzHist.out{animation:upzFadeOut .18s ease both}
+#upzHist .upzh-card{position:fixed;top:72px;right:16px}
+#upzHist.sheet{background:rgba(20,20,19,.45)}
+#upzHist.sheet .upzh-card{left:10px;right:10px!important;top:auto!important;bottom:10px;width:auto;max-height:78dvh}
+.upzh-card{width:min(440px,calc(100vw - 20px));max-height:min(560px,calc(100dvh - 96px));transform-origin:top right;display:flex;flex-direction:column;border-radius:22px;background:#f6f3ee;color:#1e1f1f;border:1px solid #d8d0c5;box-shadow:0 40px 80px -40px rgba(0,0,0,.6);animation:upzPop .4s cubic-bezier(.16,1,.3,1) both;overflow:hidden}
+.upzh-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:18px 20px 12px;border-bottom:1px solid #e1d9ce}
+.upzh-head h3{margin:0;font-size:1.2rem}
+.upzh-head small{display:block;color:#84817d}
+.upzh-x{width:36px;height:36px;border-radius:50%;border:1px solid #d8d0c5;background:transparent;color:inherit;font-size:1.1rem;cursor:pointer}
+.upzh-list{overflow-y:auto;overscroll-behavior:contain;padding:8px 10px 12px;flex:1}
+.upzh-item{display:flex;gap:12px;padding:12px 10px;border-radius:14px;align-items:flex-start}
+.upzh-item+.upzh-item{border-top:1px solid #ebe4da}
+.upzh-item.unread{background:#efe9e1}
+.upzh-ic{flex:0 0 36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#1e1f1f;color:#d3b99d}
+.upzh-item.kind-maint .upzh-ic,.upzh-item.kind-warn .upzh-ic{background:#a3442f;color:#fff}
+.upzh-b{min-width:0;flex:1}
+.upzh-b strong{display:block;font-size:.95rem}
+.upzh-b p{margin:2px 0 0;color:#4a4a49;font-size:.88rem;line-height:1.45;word-break:break-word}
+.upzh-b time{display:block;margin-top:4px;font-size:.74rem;color:#84817d}
+.upzh-go{margin-top:8px;height:32px;padding:0 14px;border-radius:999px;border:0;background:#1e1f1f;color:#f6f3ee;font:inherit;font-weight:700;cursor:pointer}
+.upzh-empty{padding:34px 16px;text-align:center;color:#84817d}
+.upzh-foot{display:flex;justify-content:flex-end;gap:8px;padding:10px 14px;border-top:1px solid #e1d9ce}
+.upzh-foot button{height:38px;padding:0 16px;border-radius:12px;border:1px solid #d8d0c5;background:transparent;color:inherit;font:inherit;font-weight:700;cursor:pointer}
+html.upx-dark .upzh-card{background:#1e1f1f;color:#efe9e1;border-color:#3a3936}
+html.upx-dark .upzh-head,html.upx-dark .upzh-foot{border-color:#3a3936}
+html.upx-dark .upzh-item+.upzh-item{border-color:#2f2f2d}
+html.upx-dark .upzh-item.unread{background:#2a2a29}
+html.upx-dark .upzh-b p{color:#cfc8bf}
+html.upx-dark .upzh-b time,html.upx-dark .upzh-head small{color:#9a948c}
+html.upx-dark .upzh-ic{background:#d3b99d;color:#1e1f1f}
+html.upx-dark .upzh-go{background:#d3b99d;color:#1e1f1f}
+html.upx-dark .upzh-x,html.upx-dark .upzh-foot button{border-color:#3a3936}
+
+/* ---------- pemeliharaan: peringatan sebelum keluar otomatis ---------- */
+#upzMaint{position:fixed;inset:0;z-index:100200;display:grid;place-items:center;padding:16px;background:rgba(20,20,19,.6);backdrop-filter:blur(4px);animation:upzFade .25s ease both}
+#upzMaint .box{width:min(420px,100%);padding:28px 26px;border-radius:22px;text-align:center;background:#f6f3ee;color:#1e1f1f;border:1px solid #d8d0c5;animation:upzPop .4s cubic-bezier(.16,1,.3,1) both}
+#upzMaint .ring{width:86px;height:86px;margin:14px auto 6px;border-radius:50%;display:grid;place-items:center;background:#1e1f1f;color:#d3b99d;font-family:var(--upz-display)!important;font-size:2.3rem;font-weight:800}
+#upzMaint p{color:#4a4a49;margin:6px 0 0}
+html.upx-dark #upzMaint .box{background:#1e1f1f;color:#efe9e1;border-color:#3a3936}
+html.upx-dark #upzMaint .ring{background:#d3b99d;color:#1e1f1f}
+html.upx-dark #upzMaint p{color:#cfc8bf}
+
+/* ---------- foto profil: perbesar ---------- */
+#upxAva img,#studentDashboard .sd-avatar-wrap img,#studentSidebarAvatar img{cursor:zoom-in}
+#upzPhoto{position:fixed;inset:0;z-index:100070;display:grid;place-items:center;padding:20px;background:rgba(20,20,19,.72);backdrop-filter:blur(5px);animation:upzFade .25s ease both;cursor:zoom-out}
+#upzPhoto figure{margin:0;display:grid;gap:12px;justify-items:center;animation:upzPop .45s cubic-bezier(.16,1,.3,1) both}
+#upzPhoto img{width:min(360px,80vw);height:min(360px,80vw);object-fit:cover;border-radius:50%;border:6px solid #f6f3ee;box-shadow:0 40px 80px -30px rgba(0,0,0,.7);background:#e5e0d9}
+#upzPhoto figcaption{color:#f6f3ee;font-weight:700}
+
+/* ---------- Join Room & Daftar: palet, bukan hijau ---------- */
+html body .btn-success,html body .up-reg-btn{background:#1e1f1f!important;border-color:#1e1f1f!important;color:#f6f3ee!important;box-shadow:0 14px 28px -18px rgba(30,31,31,.7)!important}
+html body .btn-success:hover,html body .up-reg-btn:hover{background:#4a4a49!important}
+html.upx-dark body .btn-success{background:#d3b99d!important;border-color:#d3b99d!important;color:#1e1f1f!important}
+#quizRoomModalV2 .modal{border-radius:24px!important}
+#quizRoomModalV2 input:not([type=checkbox]){height:50px!important;border-radius:14px!important;border:1.5px solid #d8d0c5!important;background:#fffdf9!important;color:#1e1f1f!important;padding:0 16px!important;font-size:1.1rem!important;letter-spacing:.18em;text-transform:uppercase;outline:none;box-sizing:border-box}
+#quizRoomModalV2 input:not([type=checkbox])::placeholder{letter-spacing:.02em;text-transform:none;color:#84817d!important}
+#quizRoomModalV2 input:not([type=checkbox]):focus{border-color:#1e1f1f!important;box-shadow:0 0 0 4px rgba(211,185,157,.45)!important}
+#quizRoomPasteV2{height:50px!important;width:50px!important;border-radius:14px!important;border:1.5px solid #d8d0c5!important;background:#ede7df!important;color:#1e1f1f!important;display:grid!important;place-items:center!important}
+html.upx-dark #quizRoomModalV2 input:not([type=checkbox]){background:#2a2a29!important;border-color:#4a4a49!important;color:#f6f3ee!important}
+html.upx-dark #quizRoomModalV2 input:not([type=checkbox]):focus{border-color:#d3b99d!important;box-shadow:0 0 0 4px rgba(211,185,157,.25)!important}
+html.upx-dark #quizRoomPasteV2{background:#2a2a29!important;border-color:#4a4a49!important;color:#f6f3ee!important}
+/* ruang tunggu: tampilan stabil di mode terang & gelap (tidak bergantung pemindai) */
+#quizRoomModalV2 .avatar-grid{display:grid!important;grid-template-columns:repeat(8,minmax(0,1fr))!important;gap:8px!important}
+#quizRoomModalV2 .avatar-choice{aspect-ratio:1/1;min-height:46px;border-radius:14px!important;border:1.5px solid #d8d0c5!important;background:#fffdf9!important;font-size:1.55rem!important;line-height:1;display:grid!important;place-items:center!important;cursor:pointer;transition:transform .2s,border-color .2s,background .2s}
+#quizRoomModalV2 .avatar-choice:hover:not(:disabled){transform:translateY(-2px);border-color:#1e1f1f!important}
+#quizRoomModalV2 .avatar-choice.active{background:#1e1f1f!important;border-color:#1e1f1f!important;box-shadow:0 0 0 3px #d3b99d!important}
+#quizRoomModalV2 .avatar-choice.taken{opacity:.32;filter:grayscale(1);cursor:not-allowed}
+#quizRoomModalV2 .avatar-note{display:block;margin-top:6px;color:#84817d}
+#quizRoomModalV2 .room-player-chip{background:#ede7df!important;color:#1e1f1f!important;border:1px solid #d8d0c5!important}
+#quizRoomModalV2 .room-player-chip.me{background:#1e1f1f!important;color:#f6f3ee!important;border-color:#1e1f1f!important}
+#quizRoomModalV2 .room-vnext-status{background:#efe9e1!important;border:1px solid #d8d0c5!important;color:#1e1f1f!important}
+#quizRoomModalV2 .auth-note{background:#efe9e1!important;color:#4a4a49!important;border:1px solid #e1d9ce!important}
+html.upx-dark #quizRoomModalV2 .avatar-choice{background:#2a2a29!important;border-color:#4a4a49!important}
+html.upx-dark #quizRoomModalV2 .avatar-choice:hover:not(:disabled){border-color:#d3b99d!important}
+html.upx-dark #quizRoomModalV2 .avatar-choice.active{background:#d3b99d!important;border-color:#d3b99d!important;box-shadow:0 0 0 3px #4a4a49!important}
+html.upx-dark #quizRoomModalV2 .room-player-chip{background:#2a2a29!important;color:#efe9e1!important;border-color:#3a3936!important}
+html.upx-dark #quizRoomModalV2 .room-player-chip.me{background:#d3b99d!important;color:#1e1f1f!important}
+html.upx-dark #quizRoomModalV2 :is(.room-vnext-status,.auth-note){background:#2a2a29!important;color:#efe9e1!important;border-color:#3a3936!important}
+html.upx-dark #quizRoomModalV2 .room-vnext-code{color:#d3b99d!important}
+@media (max-width:560px){#quizRoomModalV2 .avatar-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+/* hitung mundur awal room: stabil, tidak berkedip */
+#cpRoomCount{background:rgba(20,20,19,.55)!important;backdrop-filter:blur(4px)}
+#cpRoomCount > *{background:#f6f3ee!important;color:#1e1f1f!important;border-radius:22px!important}
+html.upx-dark #cpRoomCount > *{background:#1e1f1f!important;color:#efe9e1!important}
+#cpRoomCount b,#cpRoomCount .count-num,#cpRoomCount strong{color:inherit!important}
+
+/* ---------- popup: konten panjang menggulir DI DALAM kartu ---------- */
+html body :is(.modal-overlay,.cp-ov,.level-outcome-overlay,.ad-ov){overflow:hidden!important}
+html body :is(.modal-overlay .modal,.cp-ov .cp-bubble,.level-outcome-overlay .level-outcome-card,.ad-ov .ad-md,.upz-dlg-box){max-height:calc(100dvh - 32px)!important;overflow-y:auto!important;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#b9b0a5 transparent;box-sizing:border-box}
+
+/* ---------- kartu level: ikon tidak keluar dari kotak saat sidebar dibuka ---------- */
+html body .level-card{min-width:0!important}
+html body .level-card .game-preview{overflow:hidden!important;flex-wrap:wrap!important;gap:6px clamp(4px,1vw,12px)!important;font-size:clamp(1.05rem,1.5vw,1.5rem)!important;min-width:0!important;padding:10px 8px!important}
+html body .level-card .game-preview .upz-ab{flex:0 0 auto;margin:0!important}
+
+/* ---------- kartu Tebak-Tebakan kontras di mode gelap ---------- */
+html.upx-dark body .subject-card.picture{background:#3a3936!important;border-color:#55524d!important}
+html.upx-dark body .app-view:not(#upz1):not(#upz2):not(#upz3):not(#upz4) .subject-card.picture :is(h2,p,span,small,.play-label,.card-game-tag){color:#f6f3ee!important}
+html.upx-dark body .subject-card.picture .subject-icon{background:rgba(246,243,238,.1)!important;color:#d3b99d!important}
+
+/* ---------- tombol buka/tutup sidebar: ukuran tetap, tidak berkedip ---------- */
+#upxSide .upx-tab{width:26px!important;height:26px!important;right:-27px!important;transition:none!important;transform:translateY(-50%)!important;will-change:auto}
+#upxSide .upx-tab svg{width:14px;height:14px;transition:transform .45s cubic-bezier(.16,1,.3,1);transform:rotate(0deg)}
+body.upx-open #upxSide .upx-tab{transform:translateY(-50%)!important}
+body.upx-open #upxSide .upx-tab svg{transform:rotate(180deg)}
+
+/* ---------- admin: kartu kirim pesan ---------- */
+#adminPortalPage .ad-msg{margin-bottom:16px}
+#adminPortalPage .ad-msg-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:10px}
+#adminPortalPage .ad-msg-wide{grid-column:1/-1}
+#adminPortalPage .ad-msg textarea{width:100%;box-sizing:border-box;min-height:84px;padding:12px 14px;border-radius:12px;border:1px solid var(--upx-line);background:var(--upx-surface);color:var(--upx-ink);font:inherit;resize:vertical}
+#adminPortalPage .ad-msg select,#adminPortalPage .ad-msg input{width:100%!important;max-width:none!important;box-sizing:border-box;height:44px!important;padding:0 12px!important;border-radius:12px!important;border:1px solid var(--upx-line)!important;background:var(--upx-surface)!important;color:var(--upx-ink)!important;font:inherit!important}
+#adminPortalPage .ad-msg textarea:focus,#adminPortalPage .ad-msg :is(select,input):focus{outline:none;border-color:var(--upx-ink)!important;box-shadow:0 0 0 3px rgba(211,185,157,.4)!important}
+@media (max-width:760px){#adminPortalPage .ad-msg-grid{grid-template-columns:1fr}}
+
+/* ---------- MOBILE: papan game selalu tampil ---------- */
+@media (max-width:900px){
+  html body .app-view .game-layout{grid-template-columns:1fr!important;gap:14px!important}
+  html body #snakeGamePage:not(.hidden):not(#upz1):not(#upz2) .game-layout{grid-template-columns:minmax(0,1fr)!important;width:100%!important;max-width:560px!important;margin:0 auto!important}
+  html body #snakeGamePage:not(.hidden):not(#upz1):not(#upz2) .board-shell{width:100%!important;max-width:560px!important;height:auto!important;min-width:0!important;margin:0 auto!important;aspect-ratio:1/1;flex:none!important}
+  html body #snakeGamePage:not(.hidden):not(#upz1):not(#upz2) #snakeBoard{width:100%!important;height:100%!important;grid-template-columns:repeat(5,1fr)!important;grid-template-rows:repeat(5,1fr)!important}
+  html body .app-view .page-head{gap:10px!important}
+  html body .app-view .page-head h1{font-size:clamp(1.25rem,5.4vw,1.8rem)!important;line-height:1.15}
+}
+@media (max-width:560px){
+  html body .app-view .cd-timebar{margin:8px 12px 4px!important}
+  html body .app-view :is(.lg-opts,.tt-opts){grid-template-columns:1fr 1fr!important}
+}
+/* langkah pion ular tangga seperti bidak catur */
+#playerToken{transition-property:left,top!important;transition-timing-function:cubic-bezier(.45,0,.25,1)!important}

@@ -1,0 +1,61 @@
+/* ===== Tampilan game di Room (card menu + papan/scene) ===== */
+.cp-intro{text-align:center;padding:6px 0 4px}
+.cp-intro>small{font-weight:900;color:#84817d;letter-spacing:1px}
+.subject-card.cp-card{min-height:190px;max-width:340px;margin:12px auto;padding:22px;cursor:default;transform:none!important}
+.cp-count{font-size:3rem;font-weight:1000;color:#1e1f1f;line-height:1.1}
+.cp-intro p{color:#84817d;font-weight:700;margin:6px 0 0}
+.cp-grid{margin-top:14px}
+.cp-grid.two{display:grid;grid-template-columns:270px 1fr;gap:14px;align-items:start}
+.cp-grid.one{display:grid;gap:12px}
+.cp-grid .question-box{margin-top:0!important}
+@media(max-width:700px){.cp-grid.two{grid-template-columns:1fr}}
+.cp-scene .board-shell{width:100%;max-width:270px;padding:6px;border:4px solid #4a4a49;border-radius:16px;margin:0 auto;background:#3a3936;box-sizing:border-box}
+.cp-scene .board{display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(5,1fr);aspect-ratio:1/1;position:relative;overflow:hidden;border-radius:10px;background:#fff8e8}
+.cp-scene .cell{padding:3px;font-size:.6rem;min-width:0;min-height:0;box-sizing:border-box}
+.cp-token{position:absolute;z-index:10;width:24px;height:24px;border-radius:50%;background:#1e1f1f;color:#fff;display:grid;place-items:center;font-size:.75rem;transform:translate(-50%,-50%);transition:left .25s,top .25s;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.cp-cap{text-align:center;font-size:.75rem;font-weight:800;color:#84817d;margin-top:6px}
+.cp-mem{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px;border-radius:16px;background:#3a3936}
+.cp-mem span{height:62px;display:grid;place-items:center;font-size:1.7rem;border-radius:10px;background:linear-gradient(135deg,#1e1f1f,#ba9d7f);transition:transform .4s,background .3s}
+.cp-mem.ok span{background:#fff3c4;transform:rotateY(360deg)}
+.cp-mem.bad span{background:#fee2e2}
+.cp-tts{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:12px;border-radius:16px;background:#efe9e1}
+.cp-tts span{height:34px;display:grid;place-items:center;border-radius:6px;background:#fff;font-weight:1000;color:#16a34a}
+.cp-tts span.d{background:#3a3936}
+.cp-boss{text-align:center;padding:14px;border-radius:16px;background:linear-gradient(135deg,#3a3936,#1e1f1f);color:#fff}
+.cp-boss .face{font-size:3.6rem}
+.cp-boss .hp{height:12px;border-radius:99px;background:rgba(255,255,255,.25);overflow:hidden;margin-top:6px}
+.cp-boss .hp i{display:block;height:100%;width:100%;background:#ef4444;transition:width .6s}
+.cp-shake{animation:cpShake .4s}
+@keyframes cpShake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.cp-banner{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;font-weight:900}
+.cp-banner span{font-size:2rem}.cp-banner small{display:block;font-weight:800;opacity:.8}
+.cp-banner.logic{background:linear-gradient(135deg,#67e8f9,#38bdf8);color:#173b4f}
+.cp-banner.picture{background:linear-gradient(135deg,#fcd34d,#fb923c);color:#4a2b0a}
+.cp-lobbycards strong{display:block;margin-bottom:8px}
+.cp-lc{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.cp-lc .subject-card{min-height:150px;padding:14px;cursor:default;transform:none!important}
+.cp-lc .subject-card h2{font-size:1.05rem}.cp-lc .subject-card p{font-size:.72rem}
+@media(max-width:700px){.cp-lc{grid-template-columns:1fr}}
+/* ===== Tabel Nilai Siswa (ramah UI, isi kata tetap) ===== */
+#teacherPortalPage #teacherGuruV4 .tg4-table-wrap{border:1px solid #e5e0d9;border-radius:18px;overflow-x:auto;box-shadow:0 6px 18px rgba(30,31,31,.07);background:#fff}
+#teacherPortalPage #teacherGuruV4 .tg4-table{border-collapse:separate;border-spacing:0;min-width:620px}
+#teacherPortalPage #teacherGuruV4 .tg4-table th{background:linear-gradient(135deg,#1e1f1f,#ba9d7f);color:#fff;border:0;padding:14px 16px;font-size:.74rem;letter-spacing:.7px}
+#teacherPortalPage #teacherGuruV4 .tg4-table td{border:0;border-bottom:1px solid #efe9e1;padding:13px 16px;background:#fff;vertical-align:middle}
+#teacherPortalPage #teacherGuruV4 .tg4-table tbody tr:nth-child(even) td{background:#f6f3ee}
+#teacherPortalPage #teacherGuruV4 .tg4-table tbody tr:hover td{background:#f6f3ee}
+#teacherPortalPage #teacherGuruV4 .tg4-table tbody tr:last-child td{border-bottom:0}
+#teacherPortalPage #teacherGuruV4 .tg4-rank{text-align:center;width:90px}
+.cp-rk{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#efe9e1;color:#1e1f1f;font-weight:1000}
+.cp-rk.r1{background:linear-gradient(135deg,#ffd75e,#f6a800);color:#5b3b00}
+.cp-rk.r2{background:linear-gradient(135deg,#e4e8f0,#aab3c5);color:#2f3748}
+.cp-rk.r3{background:linear-gradient(135deg,#f0b88a,#c97a3e);color:#4a2508}
+.cp-pill{display:inline-block;min-width:56px;text-align:center;padding:5px 12px;border-radius:99px;background:#dcfce7;color:#15803d;font-weight:1000}
+#teacherPortalPage #teacherGuruV4 .tg5-gt-box{border:1px solid #e5e0d9;border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 6px 18px rgba(30,31,31,.07)}
+#teacherPortalPage #teacherGuruV4 .tg5-gt-title{margin:0!important;padding:12px 16px;color:#fff!important}
+#teacherPortalPage #teacherGuruV4 .tg5-gt-box.red .tg5-gt-title{background:linear-gradient(135deg,#ef4444,#b91c1c)}
+#teacherPortalPage #teacherGuruV4 .tg5-gt-box.blue .tg5-gt-title{background:linear-gradient(135deg,#3b82f6,#1d4ed8)}
+#teacherPortalPage #teacherGuruV4 .tg5-gt{border-collapse:separate;border-spacing:0}
+#teacherPortalPage #teacherGuruV4 .tg5-gt th,#teacherPortalPage #teacherGuruV4 .tg5-gt td{border:0;border-bottom:1px solid #efe9e1;padding:12px 16px}
+#teacherPortalPage #teacherGuruV4 .tg5-gt th{background:#f6f3ee;color:#4a4a49}
+#teacherPortalPage #teacherGuruV4 .tg5-gt tr.sc td{background:#f3fff7;border-bottom:0;border-style:solid}
+#teacherPortalPage #teacherGuruV4 .cp-t th{background:linear-gradient(135deg,#1e1f1f,#ba9d7f);color:#fff;border:0}

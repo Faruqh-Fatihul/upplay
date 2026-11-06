@@ -1,0 +1,11 @@
+/* Level 4 — labirin besar (khusus #mathMazePage, portal siswa) */
+#mathMazePage .maze-grid.real-maze{width:min(100%,max(380px,calc(100vh - 250px)),720px)!important;max-width:none!important;gap:1px!important;padding:4px!important;margin:0 auto;aspect-ratio:1/1}
+#mathMazePage .maze-grid.real-maze .maze-cell{aspect-ratio:auto;min-width:0;min-height:0;border-radius:3px!important;font-size:clamp(9px,calc(520px / var(--mz,23)),18px)!important;line-height:1;display:grid;place-items:center}
+#mathMazePage .maze-grid.real-maze .maze-cell.goal{font-size:clamp(10px,calc(600px / var(--mz,23)),20px)!important}
+#mathMazePage .maze-cell.visited:not(.player):not(.goal){background:#e3e7f6!important}
+#mathMazePage .maze-cell.bonus-path:not(.player):not(.goal){background:#86efac!important;box-shadow:inset 0 0 0 1px #16a34a;animation:l4Glow .7s ease-in-out infinite alternate}
+@keyframes l4Glow{from{filter:brightness(1)}to{filter:brightness(1.18)}}
+/* hanya satu penghitung waktu yang akurat di halaman labirin (yang "Batas waktu" tidak ikut berjalan) */
+#mathMazePage .cp5-inline-timer{display:none!important}
+/* layar HP/tablet kecil: satu kolom (sebelumnya papan menimpa panel) */
+@media(max-width:900px){#mathMazePage .maze-shell{grid-template-columns:minmax(0,1fr)!important}#mathMazePage .maze-panel{order:-1}#mathMazePage .maze-grid.real-maze{width:100%!important}}

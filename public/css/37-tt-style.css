@@ -1,0 +1,491 @@
+/* menu level Tebak-Tebakan: aturan disalin dari menu Logika Sederhana */
+#ttLevelsPage #tutorial{ display: none !important; }
+#ttLevelsPage .level-grid{
+  display:flex!important; flex-wrap:nowrap!important; flex-direction:row!important;
+  align-items:stretch!important; gap:18px!important; width:100%!important;
+  max-width:1400px!important; margin:18px auto 0!important;
+  overflow-x:auto!important; overflow-y:hidden!important;
+  padding:4px 4px 16px!important; scroll-behavior:smooth!important;
+}
+#ttLevelsPage .level-grid>.level-card{
+  flex:0 0 236px!important; width:236px!important; min-width:236px!important;
+  max-width:236px!important; margin:0!important;
+}
+#ttLevelsPage .level-grid::-webkit-scrollbar{height:9px}
+#ttLevelsPage .level-grid::-webkit-scrollbar-thumb{background:#d4ccc1;border-radius:99px}
+#ttLevelsPage .level-grid::-webkit-scrollbar-track{background:#efe9e1;border-radius:99px}
+@media(min-width:1200px){#ttLevelsPage .level-grid{overflow-x:hidden!important;justify-content:center!important}#ttLevelsPage .level-grid>.level-card{
+    flex-basis:220px!important;width:220px!important;min-width:220px!important
+  }}
+#ttLevelsPage .levels-page{
+  min-height:calc(100vh - 72px)!important;
+  padding:24px 22px 32px!important;
+  overflow:hidden!important;
+}
+#ttLevelsPage .page-head{
+  max-width:1160px!important;
+  margin:0 auto 18px!important;
+}
+#ttLevelsPage .page-head h1{font-size:clamp(1.55rem,2vw,2rem)!important}
+#ttLevelsPage .level-grid{
+  display:flex!important;
+  flex-direction:row!important;
+  flex-wrap:nowrap!important;
+  align-items:stretch!important;
+  justify-content:flex-start!important;
+  gap:14px!important;
+  width:min(1160px,100%)!important;
+  max-width:1160px!important;
+  margin:0 auto!important;
+  padding:2px 2px 12px!important;
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  scroll-snap-type:x proximity!important;
+}
+#ttLevelsPage .level-grid>.level-card{
+  flex:0 0 218px!important;
+  width:218px!important;
+  min-width:218px!important;
+  min-height:322px!important;
+  height:322px!important;
+  padding:20px!important;
+  border-radius:22px!important;
+  scroll-snap-align:start!important;
+}
+#ttLevelsPage .level-card h2{
+  margin:15px 0 8px!important;
+  font-size:1.12rem!important;
+  line-height:1.25!important;
+}
+#ttLevelsPage .level-card p{
+  min-height:72px!important;
+  font-size:.82rem!important;
+  line-height:1.45!important;
+}
+#ttLevelsPage .game-preview{
+  height:72px!important;
+  margin:12px 0!important;
+  font-size:2rem!important;
+  border-radius:14px!important;
+}
+#ttLevelsPage .level-number{
+  width:45px!important;height:45px!important;border-radius:14px!important;font-size:1.08rem!important;
+}
+#ttLevelsPage .level-grid .btn{
+  width:100%!important;
+  min-height:42px!important;
+  padding:9px 12px!important;
+  font-size:.82rem!important;
+}
+#ttLevelsPage .level-grid::-webkit-scrollbar{height:8px}
+#ttLevelsPage .level-grid::-webkit-scrollbar-thumb{background:#e5e0d9;border-radius:99px}
+#ttLevelsPage .level-grid::-webkit-scrollbar-track{background:#efe9e1;border-radius:99px}
+#ttLevelsPage .level-grid{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:row!important;
+  flex-wrap:nowrap!important;
+  align-items:stretch!important;
+  gap:14px!important;
+  width:100%!important;
+  max-width:1180px!important;
+  margin:16px auto!important;
+  padding:6px 8px 14px!important;
+  overflow-x:auto!important;
+  overflow-y:visible!important;
+  position:relative!important;
+}
+#ttLevelsPage .level-grid > .level-card{
+  box-sizing:border-box!important;
+  position:relative!important;
+  flex:0 0 214px!important;
+  width:214px!important;
+  min-width:214px!important;
+  max-width:214px!important;
+  height:304px!important;
+  min-height:304px!important;
+  max-height:304px!important;
+  margin:0!important;
+  padding:18px 16px 14px!important;
+  overflow:visible!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-start!important;
+  cursor:pointer!important;
+  z-index:1!important;
+}
+#ttLevelsPage .level-grid > .level-card *{
+  box-sizing:border-box!important;
+}
+#ttLevelsPage .level-card .level-icon,#ttLevelsPage .level-card .icon,#ttLevelsPage .level-card [class*="icon"]{
+  width:52px!important;
+  height:52px!important;
+  min-width:52px!important;
+  min-height:52px!important;
+  font-size:26px!important;
+  line-height:1!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  margin:0 auto 10px!important;
+  flex-shrink:0!important;
+}
+#ttLevelsPage .level-card h3,#ttLevelsPage .level-card h4{
+  font-size:18px!important;
+  line-height:1.2!important;
+  margin:5px 0 7px!important;
+  min-height:22px!important;
+}
+#ttLevelsPage .level-card p,#ttLevelsPage .level-card .description{
+  font-size:12px!important;
+  line-height:1.45!important;
+  margin:0 0 9px!important;
+}
+#ttLevelsPage .level-card .level-number,#ttLevelsPage .level-card .number,#ttLevelsPage .level-card .badge{
+  font-size:11px!important;
+  line-height:1!important;
+}
+#ttLevelsPage .level-card button,#ttLevelsPage .level-card .btn,#ttLevelsPage .level-card a{
+  position:relative!important;
+  z-index:20!important;
+  pointer-events:auto!important;
+  flex-shrink:0!important;
+  min-height:40px!important;
+  height:40px!important;
+  width:100%!important;
+  margin-top:auto!important;
+  padding:9px 10px!important;
+  border-radius:12px!important;
+  font-size:13px!important;
+  line-height:1.1!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  cursor:pointer!important;
+}
+#ttLevelsPage .level-card.locked button{
+  pointer-events:none!important;
+}
+#ttLevelsPage .level-card::before,#ttLevelsPage .level-card::after{
+  pointer-events:none!important;
+}
+#ttLevelsPage .level-card{
+  overflow:visible!important;
+}
+#ttLevelsPage .level-grid::-webkit-scrollbar{height:8px}
+#ttLevelsPage .level-grid::-webkit-scrollbar-thumb{
+  background:#e5e0d9;border-radius:99px;
+}
+#ttLevelsPage .level-grid::-webkit-scrollbar-track{
+  background:#efe9e1;border-radius:99px;
+}
+@media (min-width:1180px){#ttLevelsPage .level-grid{
+    overflow-x:hidden!important;
+    justify-content:center!important;
+  }}
+@media (max-width:900px){#ttLevelsPage .level-grid{
+    justify-content:flex-start!important;
+  }}
+#ttLevelsPage .level-card svg,#ttLevelsPage .level-card .decorative,#ttLevelsPage .level-card .shine{
+  pointer-events:none!important;
+}
+#ttLevelsPage .level-grid{
+  overflow-y:visible!important;
+  align-items:stretch!important;
+}
+#ttLevelsPage .level-grid > .level-card{
+  height:auto!important;
+  min-height:318px!important;
+  max-height:none!important;
+  padding:18px 16px 16px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:0!important;
+}
+#ttLevelsPage .level-card .level-number{
+  width:40px!important;
+  height:40px!important;
+  min-width:40px!important;
+  min-height:40px!important;
+  border-radius:12px!important;
+  font-size:.95rem!important;
+  line-height:1!important;
+  margin:0 0 10px!important;
+  flex-shrink:0!important;
+}
+#ttLevelsPage .level-card h2{
+  font-size:.98rem!important;
+  line-height:1.28!important;
+  font-weight:800!important;
+  margin:0 0 7px!important;
+  min-height:0!important;
+  max-height:2.6em!important;
+  overflow:hidden!important;
+  display:-webkit-box!important;
+  -webkit-line-clamp:2!important;
+  -webkit-box-orient:vertical!important;
+}
+#ttLevelsPage .level-card p{
+  font-size:.74rem!important;
+  line-height:1.45!important;
+  margin:0 0 10px!important;
+  min-height:0!important;
+  max-height:3.2em!important;
+  overflow:hidden!important;
+  display:-webkit-box!important;
+  -webkit-line-clamp:3!important;
+  -webkit-box-orient:vertical!important;
+  color:var(--muted)!important;
+  flex-shrink:0!important;
+}
+#ttLevelsPage .level-card .game-preview{
+  height:60px!important;
+  min-height:60px!important;
+  margin:0 0 10px!important;
+  font-size:1.65rem!important;
+  border-radius:13px!important;
+  line-height:1!important;
+  flex-shrink:0!important;
+}
+#ttLevelsPage .level-card .lock-badge{
+  margin-top:0!important;
+  padding:6px 9px!important;
+  font-size:.66rem!important;
+  line-height:1.2!important;
+  gap:5px!important;
+}
+#ttLevelsPage .level-card .level-stars{
+  margin:0 0 6px!important;
+  font-size:.7rem!important;
+  line-height:1.3!important;
+  flex-shrink:0!important;
+}
+#ttLevelsPage .level-card .level-time{
+  margin:0 0 10px!important;
+  padding:4px 8px!important;
+  font-size:.64rem!important;
+  line-height:1.3!important;
+  flex-shrink:0!important;
+}
+#ttLevelsPage .level-card .btn{
+  margin-top:auto!important;
+  height:auto!important;
+  min-height:38px!important;
+  padding:9px 10px!important;
+  font-size:.74rem!important;
+  line-height:1.2!important;
+  font-weight:800!important;
+  white-space:normal!important;
+  text-align:center!important;
+}
+#ttLevelsPage .level-card{
+  transition:transform .16s ease, box-shadow .16s ease!important;
+}
+#ttLevelsPage .level-card:not(.locked):hover{
+  transform:translateY(-4px)!important;
+  box-shadow:0 18px 32px rgba(58,57,54,.14)!important;
+}
+#ttLevelsPage .level-card.locked:hover{
+  transform:none!important;
+}
+@media (max-width:480px){#ttLevelsPage .level-grid > .level-card{ min-height:300px!important; }#ttLevelsPage .level-card h2{ font-size:.92rem!important; }}
+#ttLevelsPage .level-grid{
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:14px!important;
+  max-width:1240px!important;
+  overflow:visible!important;
+}
+#ttLevelsPage .level-card{
+  min-width:0!important;
+  min-height:330px!important;
+  padding:18px!important;
+}
+#ttLevelsPage .level-card h2{
+  font-size:1.05rem!important;
+  line-height:1.25!important;
+  margin:15px 0 8px!important;
+}
+#ttLevelsPage .level-card p{
+  min-height:66px!important;
+  font-size:.78rem!important;
+  line-height:1.5!important;
+}
+#ttLevelsPage .game-preview{
+  height:76px!important;
+  margin:12px 0!important;
+}
+#ttLevelsPage .level-card .btn{
+  width:100%!important;
+  min-height:40px!important;
+  font-size:.78rem!important;
+}
+@media(max-width:1100px){#ttLevelsPage .level-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:760px){#ttLevelsPage .level-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:520px){#ttLevelsPage .level-grid{grid-template-columns:1fr!important}}
+html body #ttLevelsPage .level-grid{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:16px!important;width:100%!important;max-width:1240px!important;margin:18px auto 0!important;padding:4px 4px 16px!important;overflow:visible!important;box-sizing:border-box!important;align-items:stretch!important;justify-content:stretch!important}
+html body #ttLevelsPage .level-grid>.level-card{position:relative!important;display:flex!important;flex-direction:column!important;flex:none!important;width:auto!important;min-width:0!important;max-width:none!important;height:auto!important;min-height:0!important;max-height:none!important;margin:0!important;padding:18px 16px 16px!important;border-radius:22px!important;box-sizing:border-box!important;overflow:hidden!important}
+html body #ttLevelsPage .level-grid>.level-card .level-number{width:42px!important;height:42px!important;min-width:42px!important;min-height:42px!important;margin:0 0 14px!important;border-radius:13px!important;font-size:1rem!important;line-height:1!important;flex-shrink:0!important}
+html body #ttLevelsPage .level-grid>.level-card h2{margin:0 0 6px!important;font-size:1rem!important;line-height:1.3!important;font-weight:900!important;height:2.6em!important;min-height:2.6em!important;max-height:2.6em!important;overflow:hidden!important;display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important}
+html body #ttLevelsPage .level-grid>.level-card p{margin:0 0 12px!important;font-size:.76rem!important;line-height:1.45!important;height:4.35em!important;min-height:4.35em!important;max-height:4.35em!important;overflow:hidden!important;display:-webkit-box!important;-webkit-line-clamp:3!important;-webkit-box-orient:vertical!important;color:var(--muted)!important}
+html body #ttLevelsPage .level-grid>.level-card .game-preview{height:64px!important;min-height:64px!important;margin:0 0 12px!important;font-size:1.7rem!important;line-height:1!important;border-radius:14px!important;flex-shrink:0!important}
+html body #ttLevelsPage .level-grid>.level-card .level-stars{display:flex!important;align-items:center!important;gap:6px!important;margin:0 0 8px!important;font-size:.74rem!important;font-weight:900!important;letter-spacing:0!important;line-height:1.2!important;color:var(--ink)!important}
+html body #ttLevelsPage .level-grid>.level-card .level-stars .game-stars{margin:0!important;font-size:.95rem!important;letter-spacing:1px!important}
+html body #ttLevelsPage .level-grid>.level-card .level-time{display:inline-flex!important;align-self:flex-start!important;margin:0 0 14px!important;padding:4px 9px!important;border-radius:9px!important;font-size:.68rem!important;font-weight:900!important;line-height:1.2!important}
+html body #ttLevelsPage .level-grid>.level-card .btn{margin-top:auto!important;width:100%!important;height:auto!important;min-height:40px!important;padding:9px 10px!important;border-radius:12px!important;font-size:.8rem!important;line-height:1.2!important;white-space:nowrap!important}
+/* penanda status di pojok kanan atas */
+html body #ttLevelsPage .level-card .lv-status{position:absolute;top:28px;right:14px;z-index:3;display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:999px;font:900 .68rem/1 Nunito,"Segoe UI",Arial,sans-serif;white-space:nowrap;pointer-events:none}
+html body #ttLevelsPage .level-card .lv-status::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+html body #ttLevelsPage .level-card .lv-status.done{background:#dcfce7;color:#15803d;border:1px solid #86efac}
+html body #ttLevelsPage .level-card .lv-status.fail{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}
+html body #ttLevelsPage .level-grid>.level-card.lv-done{border:2px solid #86efac!important}
+html body #ttLevelsPage .level-grid>.level-card.lv-fail{border:2px solid #fca5a5!important}
+@media(max-width:1100px){html body #ttLevelsPage .level-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:760px){html body #ttLevelsPage .level-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:520px){html body #ttLevelsPage .level-grid{grid-template-columns:1fr!important}}
+/* ===== Tebak-Tebakan: halaman main (menyamai tampilan Game Logika) ===== */
+#ttPlayPage .topbar .btn{display:none!important}
+#ttPlayPage:not(.hidden){display:flex;flex-direction:column;min-height:100vh}
+#ttPlayPage>main{flex:1;width:100%;max-width:none!important;margin:0;padding:0 26px 18px!important;box-sizing:border-box}
+#ttPlayPage .page-head,#ttPlayPage .tt-layout{width:100%;max-width:1100px;margin-left:auto!important;margin-right:auto!important;box-sizing:border-box}
+#ttPlayPage:not(.hidden) .cd-timebar{display:flex;align-items:center;gap:14px;flex:none;margin:8px 26px 6px;height:24px}
+.tt-layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px;align-items:start}
+#ttPlayPage[data-mode="match"] .tt-layout{grid-template-columns:minmax(0,1fr)}
+#ttPlayPage[data-mode="match"] .game-panel{display:none}
+.tt-card{display:none;background:#fff;border:1px solid var(--line,#e5e0d9);border-radius:26px;padding:20px 22px;box-shadow:0 14px 40px rgba(30,31,31,.08);min-width:0;box-sizing:border-box}
+#ttPlayPage[data-mode="kata"] #ttKataCard,#ttPlayPage[data-mode="tempat"] #ttTempatCard,#ttPlayPage[data-mode="match"] #ttMatchCard,#ttPlayPage[data-mode="quiz"] #ttQuizCard{display:block}
+#ttPlayPage .game-panel{box-sizing:border-box}
+#ttPlayPage .lg-qhead{margin-bottom:12px}
+#ttPlayPage .lg-fb{margin-top:12px;padding:10px 14px;line-height:1.45}
+.tt-chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.tt-chip-ok{background:#dcfce7!important;color:#15803d!important}
+.tt-chip-bad{background:#fee2e2!important;color:#b91c1c!important}
+
+/* panel samping */
+.tt-hint{margin-top:12px;padding:12px 14px;border-radius:14px;background:#fff8e1;border:1px solid #fde68a}
+.tt-hint b{color:#92400e;font-size:.9rem}
+.tt-hint p{margin:4px 0 0;color:#4a4a49;font-weight:700;font-size:.86rem;line-height:1.45}
+.tt-tools{display:none;gap:8px;margin-top:12px}
+#ttPlayPage[data-mode="kata"] .tt-tools{display:grid}
+.tt-tools .btn{width:100%;padding:10px 12px;min-height:0}
+.tt-fill{margin-top:12px;padding:10px 14px;border-radius:14px;background:#f6f3ee;color:#1e1f1f;font-weight:900;font-size:.84rem;display:none}
+#ttPlayPage[data-mode="kata"] .tt-fill{display:block}
+
+/* ---- Level 1: Tebak Kata ---- */
+.tt-kata-title{text-align:center;margin:0 0 12px;font-size:1.2rem;color:#2a2a29;font-weight:900}
+.tt-pics{display:flex;justify-content:center;align-items:center;gap:12px}
+.tt-pic{flex:0 1 170px;min-width:0;height:112px;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:#efe9e1}
+.tt-pic.c1{background:#fff7d6}.tt-pic.c2{background:#e0f7ee}.tt-pic.c3{background:#ffe8ef}
+.tt-pic span{font-size:2.9rem;line-height:1}
+.tt-pic small{font-weight:900;color:#4a4a49;font-size:.76rem;letter-spacing:.5px}
+.tt-plus{font-size:1.7rem;font-weight:1000;color:#1e1f1f;flex:none}
+.tt-slots{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 16px;margin:16px 0 4px}
+.tt-word{display:flex;gap:5px}
+.tt-slot{width:var(--s,44px);height:calc(var(--s,44px) + 4px);box-sizing:border-box;border-radius:11px;border:2px solid #e5e0d9;background:#f6f3ee;display:grid;place-items:center;font-weight:1000;font-size:calc(var(--s,44px)*.46);color:#1e1f1f}
+.tt-slot.pre{background:#efe9e1}
+.tt-slot.typed{background:#fff;border-color:#ba9d7f;color:#2a2a29}
+.tt-slot.cur{border-style:dashed;border-color:#1e1f1f;box-shadow:0 0 0 3px rgba(30,31,31,.14)}
+.tt-slots.bad{animation:lgShake .35s}
+.tt-slots.bad .tt-slot.typed{border-color:#ef4444;background:#fff0f0;color:#dc2626}
+.tt-slots.ok .tt-slot{background:#e9fbf0;border-color:#22c55e;color:#15803d}
+.tt-sub{text-align:center;color:#84817d;font-weight:700;font-size:.8rem;margin:8px 0 10px}
+.tt-bank{display:flex;justify-content:center;flex-wrap:wrap;gap:8px}
+.tt-key{width:46px;height:50px;border-radius:12px;border:2px solid #e5e0d9;background:#fff;font:inherit;font-weight:1000;font-size:1.3rem;color:#2a2a29;cursor:pointer;box-shadow:0 3px 0 #e5e0d9;transition:transform .12s,border-color .12s}
+.tt-key:hover:not(:disabled){border-color:#ba9d7f;transform:translateY(-2px)}
+.tt-key:disabled{opacity:.3;cursor:default;box-shadow:none}
+
+/* ---- Level 2: Tebak Tempat ---- */
+.tt-banner{display:flex;align-items:center;gap:18px;padding:16px 20px;border-radius:20px;background:#f6f3ee;margin-bottom:14px}
+.tt-clues{display:flex;align-items:center;gap:8px;font-size:2.6rem;line-height:1;flex:none}
+.tt-clues i{font-style:normal;font-size:1.3rem;color:#1e1f1f;font-weight:1000}
+.tt-banner small{font-weight:1000;color:#1e1f1f;letter-spacing:.6px;font-size:.72rem}
+.tt-banner h3{margin:4px 0;font-size:1.2rem;color:#2a2a29;line-height:1.3}
+.tt-banner p{margin:0;color:#4a4a49;font-weight:700;font-size:.88rem}
+.tt-pick{font-weight:900;color:#2a2a29;margin:0 0 10px}
+.tt-places{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tt-place{position:relative;display:flex;flex-direction:column;padding:10px 10px 12px;border-radius:18px;border:2px solid #e5e0d9;background:#fff;cursor:pointer;font:inherit;text-align:center;transition:transform .15s,border-color .15s,box-shadow .15s;min-width:0}
+.tt-place:hover:not(:disabled){border-color:#ba9d7f;transform:translateY(-2px);box-shadow:0 8px 18px rgba(30,31,31,.15)}
+.tt-place .tt-ltr{position:absolute;top:8px;left:12px;font-weight:1000;font-size:.78rem;color:#2a2a29}
+.tt-place .tt-radio{position:absolute;top:9px;right:11px;width:12px;height:12px;border-radius:50%;border:2px solid #1e1f1f;box-sizing:border-box}
+.tt-photo{height:104px;border-radius:13px;display:grid;place-items:center;font-size:3.3rem;line-height:1;margin-top:20px;overflow:hidden}
+.tt-photo.bg-city{background:linear-gradient(180deg,#dbeafe 0 68%,#cbd5e1 68%)}
+.tt-photo.bg-nature{background:linear-gradient(180deg,#e0f2fe 0 66%,#bbf7d0 66%)}
+.tt-photo.bg-sea{background:linear-gradient(180deg,#e0f2fe 0 50%,#7dd3fc 50% 72%,#fde68a 72%)}
+.tt-photo.bg-in{background:linear-gradient(180deg,#f6f3ee,#efe9e1)}
+.tt-place b{display:block;margin-top:8px;font-size:.96rem;color:#2a2a29;line-height:1.25}
+.tt-place.ok{border-color:#22c55e;background:#e9fbf0}
+.tt-place.ok .tt-radio{background:#22c55e;border-color:#22c55e}
+.tt-place.bad{border-color:#ef4444;background:#fff0f0;animation:lgShake .35s}
+.tt-place.bad .tt-radio{background:#ef4444;border-color:#ef4444}
+.tt-place.bad .tt-photo{filter:grayscale(.7);opacity:.55}
+.tt-place:disabled{cursor:default}
+
+/* ---- Level 3: Tebak Ungkapan (cocokkan) ---- */
+.tt-sec{font-weight:900;color:#4a4a49;font-size:.74rem;letter-spacing:.8px;margin:2px 0 8px}
+.tt-clue-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.tt-clue{position:relative;height:58px;border-radius:16px;border:2px solid #e5e0d9;background:#f6f3ee;font:inherit;font-size:1.65rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:transform .15s,border-color .15s,background .15s}
+.tt-clue i{font-style:normal;font-size:.9rem;color:#84817d;font-weight:1000}
+.tt-clue:hover:not(:disabled),.tt-phr:hover:not(:disabled){border-color:#ba9d7f;transform:translateY(-2px)}
+.tt-clue.sel,.tt-phr.sel{border-color:#1e1f1f;background:#efe9e1;box-shadow:0 0 0 3px rgba(30,31,31,.18)}
+.tt-num{position:absolute;top:-8px;right:-8px;width:24px;height:24px;border-radius:50%;background:#22c55e;color:#fff;font-size:.72rem;font-weight:1000;display:grid;place-items:center;box-shadow:0 2px 6px rgba(34,197,94,.4)}
+.tt-phr-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.tt-phr{position:relative;min-height:84px;padding:9px 11px;border-radius:16px;border:2px solid #e5e0d9;background:#fff;text-align:left;cursor:pointer;font:inherit;display:flex;flex-direction:column;gap:4px;transition:transform .15s,border-color .15s,background .15s}
+.tt-phr b{font-size:.84rem;color:#2a2a29;line-height:1.3}
+.tt-phr small{font-size:.7rem;color:#84817d;font-weight:700;line-height:1.35}
+.tt-phr .tt-tag{position:absolute;bottom:7px;right:9px;font-size:.58rem;font-weight:1000;letter-spacing:.4px;color:#a9a49e}
+.tt-clue.done,.tt-phr.done{border-color:#22c55e;background:#e9fbf0;cursor:default;transform:none}
+.tt-clue.bad,.tt-phr.bad{border-color:#ef4444;background:#fff0f0;animation:lgShake .35s}
+#ttMatchCard .lg-fb{margin-top:12px}
+
+/* ---- Level 4 & 5: Teka-teki & Siapakah Aku ---- */
+.tt-riddle{padding:16px 22px;border-radius:20px;background:#f6f3ee;border:1px solid #efe9e1;margin-bottom:14px;text-align:center}
+.tt-big{font-size:2.3rem;line-height:1.1}
+.tt-riddle p{margin:6px 0 0;font-size:clamp(1.05rem,1.7vw,1.25rem);font-weight:900;color:#2a2a29;line-height:1.5}
+.tt-clist{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:7px;text-align:left}
+.tt-clist li{padding:9px 14px;border-radius:12px;background:#fff;border:1px solid #e5e0d9;font-weight:800;color:#3a3936;line-height:1.4}
+.tt-clist li b{color:#1e1f1f;margin-right:6px}
+.tt-clist li.lock{color:#a9a49e;border-style:dashed;background:transparent}
+.tt-more{margin-top:10px;padding:8px 14px!important;min-height:0!important;font-size:.85rem!important}
+.tt-opts4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tt-optc{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 10px 12px;border-radius:18px;border:2px solid #e5e0d9;background:#fff;cursor:pointer;font:inherit;transition:transform .15s,border-color .15s,box-shadow .15s;min-width:0}
+.tt-optc:hover:not(:disabled){border-color:#ba9d7f;transform:translateY(-2px);box-shadow:0 8px 18px rgba(30,31,31,.15)}
+.tt-optc em{position:absolute;top:8px;left:12px;font-style:normal;font-weight:1000;font-size:.76rem;color:#1e1f1f}
+.tt-optc span{font-size:2.5rem;line-height:1.15}
+.tt-optc b{font-size:.92rem;color:#2a2a29;text-align:center;line-height:1.25}
+.tt-optc.ok{border-color:#22c55e;background:#e9fbf0}
+.tt-optc.bad{border-color:#ef4444;background:#fff0f0;animation:lgShake .35s}
+.tt-optc.bad span{filter:grayscale(.7);opacity:.55}
+.tt-optc:disabled{cursor:default}
+
+#ttOutcome{z-index:100000}
+#ttOutcome .lg-score{margin:14px auto 4px;padding:12px 16px;max-width:380px;border-radius:14px;background:#fff4e8;color:#b45309;font-weight:900;font-size:1.05rem}
+#ttOutcome .lg-level{color:#84817d;font-weight:800;font-size:.85rem;margin-top:6px}
+#ttOutcome .level-outcome-stars{font-size:2rem;color:#f5a000;letter-spacing:4px;margin:12px 0 2px}
+
+@media(max-width:860px){
+  .tt-layout{grid-template-columns:1fr}
+  .tt-places,.tt-opts4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tt-clue-grid,.tt-phr-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tt-pic span{font-size:2.2rem}.tt-pic{height:92px}
+  .tt-banner{flex-direction:column;text-align:center}
+}
+/* muat layar laptop tanpa scroll halaman */
+@media(min-width:900px) and (min-height:470px){
+  #ttPlayPage:not(.hidden){height:100vh;overflow:hidden}
+  #ttPlayPage:not(.hidden) .topbar{flex:none;height:52px;min-height:0;padding-top:0;padding-bottom:0;box-sizing:border-box;position:relative}
+  #ttPlayPage:not(.hidden) .topbar .brand-icon{width:32px;height:32px;font-size:1rem;border-radius:10px}
+  #ttPlayPage:not(.hidden)>main{overflow:auto;min-height:0}
+  #ttPlayPage:not(.hidden) .page-head{margin:0 0 8px!important;gap:10px;align-items:center;padding:0}
+  #ttPlayPage:not(.hidden) .page-head h1{margin:0;font-size:1.3rem;line-height:1.2}
+  #ttPlayPage:not(.hidden) .page-head p{display:none}
+  #ttPlayPage:not(.hidden) .page-head .back-btn{width:34px;height:34px;min-width:34px;font-size:1rem}
+}
+@media(min-width:900px) and (max-height:720px){
+  .tt-pic{height:92px}.tt-pic span{font-size:2.4rem}
+  .tt-photo{height:84px;font-size:2.8rem}
+  .tt-banner{padding:12px 18px;margin-bottom:10px}.tt-clues{font-size:2.2rem}
+  .tt-clue{height:50px;font-size:1.45rem}
+  .tt-phr{min-height:74px;padding:8px 10px}
+  .tt-clue-grid{margin-bottom:10px}
+  .tt-riddle{padding:12px 18px}
+}

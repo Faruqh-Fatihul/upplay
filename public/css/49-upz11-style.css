@@ -1,0 +1,111 @@
+/* =====================================================================
+   UpPlay V11
+   1. Logo baru U → P (tanpa latar), seluruh pengguna + landing
+   2. Grafik kurva 2 garis (siswa & guru/wali kelas) — sama di 4 pengguna
+   3. Transisi tema: bulan sabit & matahari berputar seperti roda
+   4. Ruang di HP: penanda ronde tidak menutupi judul permainan
+   Token warna: lihat docs/DESIGN-TOKENS.md di repo.
+   ===================================================================== */
+:root{
+  --up-c1:#d3b99d;--up-accent:#ba9d7f;--up-ground:#e5e0d9;--up-ink:#1e1f1f;--up-c5:#4a4a49;--up-c6:#84817d;
+  /* turunan palet (lebih gelap / lebih terang) untuk kontras */
+  --up-accent-deep:#8a6d50;--up-paper:#f6f3ee;--up-night:#141413;--up-ink-2:#2a2a29;--up-line-d:#3a3936;--up-mist:#efe9e1;
+  /* logo */
+  --up-logo-main:var(--up-ink);--up-logo-tab:var(--up-accent-deep);
+  /* grafik */
+  --upcc-siswa:var(--up-accent-deep);--upcc-guru:var(--up-ink);--upcc-grid:#dcd4c9;--upcc-grid-2:#e8e2d9;--upcc-axis:#cfc6ba;
+  --upcc-text:#5f5c58;--upcc-text-2:#84817d;--upcc-tip-bg:#1e1f1f;--upcc-tip-ink:#f6f3ee;--upcc-dot-bg:#f6f3ee;
+}
+html.upx-dark{
+  --up-logo-main:var(--up-ground);--up-logo-tab:var(--up-c1);
+  --upcc-siswa:#d3b99d;--upcc-guru:#efe9e1;--upcc-grid:#3a3936;--upcc-grid-2:#302f2d;--upcc-axis:#4a4a49;
+  --upcc-text:#c9c2b8;--upcc-text-2:#a9a49e;--upcc-tip-bg:#efe9e1;--upcc-tip-ink:#1e1f1f;--upcc-dot-bg:#1e1f1f;
+}
+
+/* ---------- 1. logo ---------- */
+svg.up-logo{display:block;width:74%;height:74%;overflow:visible}
+svg.up-logo .ul-main{stroke:var(--up-logo-main)}
+svg.up-logo .ul-tab{stroke:var(--up-logo-tab)}
+svg.up-logo g{transform-origin:12px 12px;transition:transform .7s cubic-bezier(.34,1.4,.5,1)}
+html body :is(.upx-logo,.upx-mlogo,.brand-icon){background:transparent!important;background-image:none!important;box-shadow:none!important;border:0!important;color:var(--up-logo-main)!important}
+html.upx-dark body :is(.upx-logo,.upx-mlogo,.brand-icon),html body.upx-app :is(.upx-logo,.upx-mlogo),html.upx-dark body.upx-app :is(.upx-logo,.upx-mlogo){background:transparent!important;background-image:none!important;box-shadow:none!important;border:0!important}
+html body .upx-logo span{display:grid!important;place-items:center;width:100%;height:100%;transform:none!important}
+html body .upx-logo:hover{transform:none!important}
+html body .upx-logo:hover svg.up-logo{filter:drop-shadow(0 4px 8px rgba(30,31,31,.18))}
+body.upx-open .upx-logo svg.up-logo g{transform:rotate(-90deg)}
+html body .brand-icon{display:inline-grid!important;place-items:center}
+html body .brand-icon svg.up-logo{width:78%;height:78%}
+html body .brand:hover .brand-icon svg.up-logo g{transform:rotate(-90deg)}
+html body .upx-mlogo svg.up-logo{width:70%;height:70%}
+/* topbar gelap (brankas): tetap terbaca */
+#safeCrackerPage .brand-icon svg.up-logo .ul-main{stroke:#eef5ff}
+
+/* ---------- 2. grafik kurva ---------- */
+.upcc{position:relative;box-sizing:border-box;width:100%;padding:22px 22px 18px;border-radius:22px;background:var(--upx-surface,#f6f3ee);border:1px solid var(--upx-line,#d8d0c5);color:var(--upx-ink,#1e1f1f);box-shadow:var(--upx-shadow,none);text-align:left}
+.upcc-kick{display:flex;align-items:center;gap:7px;font-size:.7rem!important;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--upcc-text-2)}
+.upcc-kick svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+.upcc-title{margin:6px 0 14px!important;font-size:1.12rem!important;line-height:1.3!important;font-weight:700!important;color:var(--upx-ink,#1e1f1f)!important}
+.upcc-plot{position:relative;width:100%;height:330px;user-select:none;-webkit-user-select:none;touch-action:pan-y}
+.upcc-plot svg{position:absolute;inset:0;display:block;width:100%;height:100%;overflow:visible}
+.upcc-plot text{font-family:var(--upz-serif,'Lora',Georgia,serif)!important}
+.upcc-legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:12px;font-size:.8rem;font-weight:700;color:var(--upcc-text)}
+.upcc-legend span{display:inline-flex;align-items:center;gap:8px}
+.upcc-legend i{display:inline-block;width:22px;height:0;border-top:2px solid var(--upcc-siswa)}
+.upcc-legend i.g{border-top-color:var(--upcc-guru)}
+.upcc-legend i::after{content:"";display:block;width:7px;height:7px;margin:-4.5px auto 0;border-radius:50%;background:var(--upcc-dot-bg);border:2px solid var(--upcc-siswa);box-sizing:border-box}
+.upcc-legend i.g::after{border-radius:2px;border-color:var(--upcc-guru)}
+.upcc-hair{position:absolute;top:0;width:0;border-left:1px dashed var(--upcc-text-2);opacity:0;pointer-events:none;transition:opacity .15s}
+.upcc-tip{position:absolute;top:0;display:flex;flex-direction:column;gap:4px;pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s;z-index:3}
+.upcc-tip b{display:block;padding:5px 9px;border-radius:8px;background:var(--upcc-tip-bg);color:var(--upcc-tip-ink);font-size:.74rem;font-weight:700;white-space:nowrap;line-height:1.25;box-shadow:0 8px 18px -10px rgba(0,0,0,.5)}
+.upcc-tip b small{display:block;font-size:.62rem;font-weight:700;letter-spacing:.08em;opacity:.7;text-transform:uppercase}
+.upcc-tip b span{display:inline-block;width:8px;height:8px;margin-right:6px;border-radius:50%;background:var(--upcc-siswa);box-shadow:0 0 0 1.5px var(--upcc-tip-ink)}
+.upcc-tip b.g span{border-radius:2px;background:var(--upcc-guru)}
+.upcc.hover .upcc-hair,.upcc.hover .upcc-tip{opacity:1;transform:none}
+.upcc-plot .upcc-pt{transition:r .15s}
+@media (max-width:560px){.upcc{padding:18px 14px 14px;border-radius:20px}.upcc-plot{height:270px}.upcc-title{font-size:1rem!important}}
+/* wadah lama dibuat polos agar keempat pengguna memakai kartu grafik yang sama persis */
+html body #sdClassChartCard{padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+html body #sdClassChartCard > :not(#sdClassChart){display:none!important}
+html body #teacherGuruV4 .up-chart-card{padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+html body #teacherGuruV4 .up-chart-card > :not(.tg4-chart-wrap){display:none!important}
+html body :is(#sdClassChart,#teacherGuruV4 .tg4-chart-wrap){overflow:visible!important;min-height:0!important;height:auto!important;padding:0!important;background:transparent!important;border:0!important}
+#adMain .upcc{margin:0 0 18px}
+/* kunci tampilan blok grafik dari aturan lama tiap portal */
+html body .upcc{display:block!important;width:100%!important;max-width:none!important;height:auto!important;min-height:0!important;grid-template-columns:none!important}
+html body .upcc > .upcc-kick{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;gap:7px!important;width:auto!important;height:auto!important;margin:0!important;padding:0!important;background:none!important;border:0!important}
+html body .upcc > .upcc-kick > svg{display:block!important;width:14px!important;height:14px!important;min-width:14px!important;flex:0 0 14px!important;margin:0!important}
+html body .upcc .upcc-plot{display:block!important;width:100%!important;height:330px!important;min-height:0!important;max-height:none!important;padding:0!important;margin:0!important;background:none!important;border:0!important;box-shadow:none!important}
+html body .upcc .upcc-plot > svg{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-width:0!important;max-width:none!important}
+html body .upcc .upcc-legend{display:flex!important;flex-direction:row!important}
+@media (max-width:560px){html body .upcc .upcc-plot{height:270px!important}}
+
+/* ---------- 3. langit transisi tema ---------- */
+#upSky{position:fixed;inset:0;z-index:100300;pointer-events:none;overflow:hidden}
+#upSky .uk-veil{position:absolute;inset:0;opacity:0}
+#upSky .uk-orbit{position:absolute;inset:0;opacity:0;overflow:visible}
+#upSky .uk-body{position:absolute;left:0;top:0;will-change:transform,opacity}
+#upSky .uk-moon{width:150px;height:150px;margin:-75px 0 0 -75px}
+#upSky .uk-moon svg{display:block;width:100%;height:100%;overflow:visible}
+#upSky .uk-sun{width:420px;height:420px;margin:-210px 0 0 -210px;border-radius:50%;
+  background:radial-gradient(circle at 50% 50%,#ffffff 0 9%,#fff6df 13%,rgba(255,226,160,.85) 19%,rgba(244,200,120,.45) 30%,rgba(211,185,157,.18) 46%,rgba(211,185,157,0) 66%);
+  mix-blend-mode:normal}
+#upSky .uk-sun::before{content:"";position:absolute;inset:6%;border-radius:50%;
+  background:repeating-conic-gradient(from 0deg,rgba(255,236,190,.55) 0deg 3deg,rgba(255,236,190,0) 3deg 15deg);
+  -webkit-mask:radial-gradient(circle,#000 14%,rgba(0,0,0,.5) 34%,transparent 66%);mask:radial-gradient(circle,#000 14%,rgba(0,0,0,.5) 34%,transparent 66%);
+  animation:ukSpin 6s linear infinite}
+#upSky .uk-sun::after{content:"";position:absolute;inset:38%;border-radius:50%;background:radial-gradient(circle,#fff 0 40%,rgba(255,250,235,0) 72%);filter:blur(2px)}
+@keyframes ukSpin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){#upSky{display:none!important}}
+
+/* ---------- 4. Ruang di HP: HUD ronde di bawah garis waktu ---------- */
+@media (max-width:760px){
+  body.cp-room-mode #cpRoomHud{left:50%!important;right:auto!important;transform:translateX(-50%);max-width:calc(100vw - 20px);box-sizing:border-box;justify-content:center;white-space:nowrap;font-size:.76rem;padding:7px 12px;gap:7px}
+  body.cp-room-mode.up-hud-flow .app-view:not(.hidden) .cd-timebar{margin-bottom:var(--up-hud-gap,46px)!important}
+  body.cp-room-mode.up-hud-flow .app-view:not(.hidden):not(:has(.cd-timebar)) > :is(main,.game-page,.levels-page):first-of-type{padding-top:var(--up-hud-gap,46px)!important}
+  body.cp-room-mode .app-view:not(.hidden) :is(.lg-qz-opts.tf,.lg-opts){grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  body.cp-room-mode .app-view:not(.hidden) .lg-opt{min-width:0!important;box-sizing:border-box}
+  body.cp-room-mode .app-view:not(.hidden) .lg-qz-opts .lg-opt.tfb{font-size:1.05rem!important;padding:14px 8px!important;gap:8px!important}
+  html body #crosswordGamePage:not(.hidden) .cw3-board{width:100%!important;max-width:100%!important;box-sizing:border-box!important;gap:2px!important;padding:5px!important}
+  html body #crosswordGamePage:not(.hidden) .cw3-board > *{min-width:0!important;min-height:0!important}
+  html body #crosswordGamePage:not(.hidden) .cw3-board input{font-size:.8rem!important;padding:0!important;min-width:0!important;width:100%!important}
+}

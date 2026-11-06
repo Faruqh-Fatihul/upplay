@@ -1,0 +1,46 @@
+/* Level 3 — TTS (khusus #crosswordGamePage, portal siswa) */
+#crosswordGamePage .cw3-board{--cols:7;display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));gap:3px;padding:6px;width:min(100%,calc(var(--cols)*54px + 12px));margin:auto;background:#2a2a29;border-radius:16px;box-sizing:border-box}
+#crosswordGamePage .cw3-block{aspect-ratio:1}
+#crosswordGamePage .cw3-cell{position:relative;aspect-ratio:1;background:#fff;border-radius:6px;overflow:hidden;transition:background .15s,transform .15s}
+#crosswordGamePage .cw3-cell input{display:block;width:100%;height:100%;box-sizing:border-box;padding:6px 0 0;border:0;outline:0;background:transparent;text-align:center;text-transform:uppercase;color:#3a3936;font:1000 clamp(1.05rem,3.6vw,1.65rem) Nunito,Arial,sans-serif;cursor:pointer;caret-color:transparent}
+#crosswordGamePage .cw3-num{position:absolute;top:2px;left:4px;font-size:.62rem;font-weight:1000;color:#84817d;pointer-events:none;z-index:1}
+#crosswordGamePage .cw3-cell.cw3-active{background:#fff3c4}
+#crosswordGamePage .cw3-cell.cw3-cur{background:#ffe08a;box-shadow:inset 0 0 0 3px #f59e0b}
+#crosswordGamePage .cw3-cell.cw3-chk-ok{background:#e9faef}
+#crosswordGamePage .cw3-cell.cw3-chk-bad{background:#fee2e2}
+#crosswordGamePage .cw3-cell.cw3-hint{background:#dbeafe}
+#crosswordGamePage .cw3-cell.cw3-hint input{color:#1d4ed8}
+#crosswordGamePage .cw3-cell.cw3-ok{background:#dcfce7}
+#crosswordGamePage .cw3-cell.cw3-ok input{color:#15803d}
+#crosswordGamePage .cw3-cell.cw3-ok.cw3-cur{box-shadow:inset 0 0 0 3px #22c55e}
+#crosswordGamePage .cw3-cell.cw3-bad{background:#fee2e2;animation:cw3Shake .4s}
+#crosswordGamePage .cw3-cell.cw3-bad input{color:#b4232b}
+#crosswordGamePage .cw3-board.cw3-win .cw3-cell{animation:cw3Pop .5s ease both;animation-delay:calc(var(--i)*45ms);background:#bbf7d0}
+@keyframes cw3Shake{20%{transform:translateX(-4px)}45%{transform:translateX(4px)}70%{transform:translateX(-3px)}100%{transform:none}}
+@keyframes cw3Pop{0%{transform:scale(1)}50%{transform:scale(1.14)}100%{transform:scale(1)}}
+/* panel */
+#crosswordGamePage .cw3-timer{margin-bottom:8px}
+#crosswordGamePage .cw3-bar{height:10px;margin:0 0 14px;border-radius:99px;background:#efe9e1;overflow:hidden}
+#crosswordGamePage .cw3-bar i{display:block;width:100%;height:100%;border-radius:inherit;background:linear-gradient(90deg,#22c55e,#84cc16);transition:width 1s linear}
+#crosswordGamePage .cw3-timer.warning+.cw3-bar i{background:linear-gradient(90deg,#f59e0b,#fbbf24)}
+#crosswordGamePage .cw3-timer.danger+.cw3-bar i{background:linear-gradient(90deg,#ef4444,#f87171)}
+#crosswordGamePage .cw3-help{margin:12px 0 0;font-size:.82rem;line-height:1.5}
+#crosswordGamePage .cw3-clues{margin:12px 0;padding:12px 14px;border-radius:15px;background:#f6f3ee}
+#crosswordGamePage .cw3-clues h3{margin:0 0 8px;color:#1e1f1f;font-size:1rem}
+#crosswordGamePage .cw3-clues ol{margin:0;padding:0;list-style:none;display:grid;gap:4px}
+#crosswordGamePage .cw3-clue{display:flex;align-items:baseline;gap:8px;padding:8px 10px;border-radius:10px;cursor:pointer;font-weight:800;color:#4a4a49;line-height:1.35}
+#crosswordGamePage .cw3-clue:hover{background:#efe9e1}
+#crosswordGamePage .cw3-clue:focus-visible{outline:2px solid #1e1f1f}
+#crosswordGamePage .cw3-clue.on{background:#ffe9a8;color:#4a3300}
+#crosswordGamePage .cw3-clue em{color:#84817d;font-style:normal;font-weight:600;font-size:.82rem}
+#crosswordGamePage .cw3-ck{margin-left:auto;visibility:hidden;color:#16a34a;font-weight:1000}
+#crosswordGamePage .cw3-clue.done{background:#dcfce7;color:#14723c}
+#crosswordGamePage .cw3-clue.done .cw3-ck{visibility:visible}
+#crosswordGamePage .cw3-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+#crosswordGamePage .cw3-actions .btn{flex:1;min-width:140px}
+#crosswordGamePage .cw3-fb{margin:0 0 12px}
+#crosswordGamePage .cw3-fb[data-kind="ok"]{background:#e8faef;color:#16713c}
+#crosswordGamePage .cw3-fb[data-kind="bad"]{background:#fff0f0;color:#b4232b}
+#crosswordGamePage .cw3-fb[data-kind="hint"]{background:#eaf2ff;color:#1d4ed8}
+/* timer mengambang tidak dipakai di TTS: sudah ada timer + bar di panel (di layar sempit sebelumnya bertumpuk) */
+body:has(#crosswordGamePage:not(.hidden)) #cp5Timer{display:none!important}

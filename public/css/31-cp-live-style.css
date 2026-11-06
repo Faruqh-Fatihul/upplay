@@ -1,0 +1,30 @@
+.cp-btnrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.cp-sent{font-size:.82rem;font-weight:800;color:#15803d}
+.cp-sum{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+.cp-sum div{padding:12px;border-radius:14px;background:#f6f3ee;border:1px solid #e5e0d9}
+.cp-sum small{display:block;font-weight:800;color:#84817d;font-size:.72rem}
+.cp-sum b{font-size:1.35rem}
+.cp-tw{overflow-x:auto;border:1px solid #e5e0d9;border-radius:16px;margin-top:6px}
+.cp-t{width:100%;border-collapse:collapse;font-size:.86rem;min-width:640px}
+.cp-t th{background:#f6f3ee;text-align:left;padding:10px 12px;font-size:.72rem;text-transform:uppercase;color:#84817d}
+.cp-t td{padding:10px 12px;border-top:1px solid #efe9e1;font-weight:700}
+.cp-t tr.top td{background:#fff8e1}
+.cp-bar{height:8px;border-radius:99px;background:#efe9e1;overflow:hidden;min-width:90px}
+.cp-bar i{display:block;height:100%;background:linear-gradient(90deg,#1e1f1f,#22c55e);transition:width .4s}
+.cp-badge{padding:4px 9px;border-radius:99px;font-size:.72rem;font-weight:900;background:#dcfce7;color:#15803d}
+.cp-badge.done{background:#e0e7ff;color:#1e1f1f}
+.cp-sc{font-weight:1000;color:#16a34a;text-align:right}
+.cp-podium{display:flex;gap:12px;justify-content:center;align-items:flex-end;margin:14px 0}
+.cp-podium div{flex:1;max-width:190px;text-align:center;padding:14px 8px;border-radius:16px;background:#f6f3ee}
+.cp-podium div:nth-child(2){background:#fff3c4;padding-top:26px}
+.cp-podium span{font-size:2rem;display:block}
+@media(max-width:700px){.cp-sum{grid-template-columns:1fr 1fr}}
+#cpNotifPanel{position:fixed;z-index:99999;width:min(360px,92vw);max-height:70vh;overflow:auto;background:#fff;border:1px solid #e5e0d9;border-radius:18px;box-shadow:0 18px 50px rgba(42,42,41,.25);padding:14px}
+#cpNotifPanel h4{margin:0 0 10px}
+.cp-n{padding:12px;border-radius:14px;background:#f6f3ee;border:1px solid #e5e0d9;margin-bottom:10px}
+.cp-n.old{background:#f6f3ee;border-color:#e5e0d9;opacity:.7}
+.cp-n .code{font-size:1.6rem;font-weight:1000;letter-spacing:4px;color:#f97316}
+.cp-n small{display:block;color:#84817d;font-weight:700;margin:2px 0 8px}
+.cp-n button{padding:8px 12px;border-radius:10px;border:2px solid #1e1f1f;background:#fff;color:#1e1f1f;font-weight:900;cursor:pointer;margin-right:6px}
+.cp-n button.p{background:#1e1f1f;color:#fff}
+#cpToast{position:fixed;top:16px;right:16px;z-index:100000;background:#1e1f1f;color:#fff;padding:14px 18px;border-radius:14px;font-weight:900;box-shadow:0 12px 30px rgba(30,31,31,.4);cursor:pointer;max-width:90vw}

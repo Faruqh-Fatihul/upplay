@@ -1,0 +1,19 @@
+#ttPlayPage .tt-rtitle{margin:8px 0 10px;font-size:1.25rem;color:#2a2a29;font-weight:900;text-align:left}
+#ttPlayPage .tt-riddle{text-align:left}
+#ttPlayPage .tt-blurbox{display:grid;place-items:center;height:180px;border-radius:18px;background:#f6f3ee;overflow:hidden}
+#ttPlayPage .tt-blurem{font-size:8.5rem;line-height:1;transition:filter .5s;user-select:none}
+#ttPlayPage .tt-rsub{margin:10px 0 0!important;text-align:center;font-size:.9rem!important;color:#4a4a49!important;font-weight:800!important}
+#ttPlayPage .tt-scene{display:grid;gap:4px;place-items:center;padding:14px 12px;border-radius:18px;text-align:center;font-size:2.7rem;line-height:1.15;letter-spacing:4px}
+#ttPlayPage .tt-cap{margin-top:10px;padding:12px 16px;border-radius:14px;background:#fff8e1;display:grid;gap:2px}
+#ttPlayPage .tt-cap b{color:#2a2a29;font-size:1rem}
+#ttPlayPage .tt-cap span{color:#4a4a49;font-weight:700;font-size:.9rem}
+#ttPlayPage .tt-optsP{display:grid;gap:10px}
+#ttPlayPage .tt-optp{position:relative;display:flex;align-items:center;gap:14px;padding:13px 16px;border-radius:16px;border:2px solid #e5e0d9;background:#fff;font:inherit;cursor:pointer;text-align:left;transition:.15s}
+#ttPlayPage .tt-optp:hover:not(:disabled){border-color:#ba9d7f;transform:translateY(-2px);box-shadow:0 8px 18px rgba(30,31,31,.15)}
+#ttPlayPage .tt-optp em{flex:none;width:30px;height:30px;display:grid;place-items:center;border-radius:9px;background:#efe9e1;color:#1e1f1f;font-style:normal;font-weight:1000;font-size:.8rem}
+#ttPlayPage .tt-optp span{font-weight:900;color:#2a2a29;font-size:1rem;line-height:1.35}
+#ttPlayPage .tt-optp.ok{border-color:#22c55e;background:#e9fbf0}#ttPlayPage .tt-optp.ok em{background:#22c55e;color:#fff}
+#ttPlayPage .tt-optp.bad{border-color:#ef4444;background:#fff0f0;animation:lgShake .35s}#ttPlayPage .tt-optp.bad em{background:#ef4444;color:#fff}
+#ttPlayPage .tt-optp:disabled{cursor:default}
+#ttPlayPage .tt-optc span{font-size:3rem}
+@media(max-width:860px){#ttPlayPage .tt-blurem{font-size:6.5rem}#ttPlayPage .tt-blurbox{height:150px}#ttPlayPage .tt-scene{font-size:2.1rem}}

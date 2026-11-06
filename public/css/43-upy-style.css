@@ -1,0 +1,121 @@
+/* =====================================================================
+   V5 — game layar penuh, podium 1-2-3, menu Game admin, perbaikan mode gelap
+   ===================================================================== */
+
+/* ---------- MODE MAIN: tanpa sidebar, tanggal, dan garis tiga ---------- */
+body.upx-play #upxSide,body.cp-room-mode #upxSide,
+body.upx-play .upx-head,body.cp-room-mode .upx-head,
+body.upx-play .upx-scrim,body.cp-room-mode .upx-scrim,
+body.upx-play #upxMenu,body.cp-room-mode #upxMenu{display:none!important}
+body.upx-app.upx-play .app-view:not(#landingPage),
+body.upx-app.cp-room-mode .app-view:not(#landingPage){margin-left:0!important}
+body.upx-play .app-view .back-btn{display:none!important}
+#upxFback{
+  position:fixed;top:6px;left:8px;z-index:80;display:none;align-items:center;justify-content:center;width:34px;height:34px;padding:0;
+  border-radius:50%;border:1px solid var(--upx-line,#e5e0d9);background:var(--upx-surface,#fff);color:var(--upx-ink,#2a2a29);
+  cursor:pointer;box-shadow:0 8px 20px -10px rgba(58,57,54,.55);
+  transition:transform .25s cubic-bezier(.16,1,.3,1),border-color .25s
+}
+#upxFback span{display:none}
+#upxFback:hover{transform:scale(1.08);border-color:var(--upx-brand,#1e1f1f)}
+#upxFback:focus-visible{outline:3px solid #d4ccc1;outline-offset:2px}
+body.upx-play:not(.cp-room-mode) #upxFback{display:inline-flex}
+
+/* ---------- PODIUM: hanya peringkat 1, 2, 3 (kartu persegi) di atas tabel ---------- */
+.cp-medals{display:flex!important;flex-wrap:nowrap;justify-content:center;align-items:stretch;gap:16px;margin:18px 0 16px!important}
+.cp-medals:empty{display:none!important}
+.cp-medals .cp-medal{
+  position:relative;flex:0 1 190px!important;max-width:190px!important;min-width:0;aspect-ratio:1/1;box-sizing:border-box;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  padding:34px 10px 12px!important;border-radius:22px;border:2px solid #e5e0d9;text-align:center;
+  background:linear-gradient(160deg,#f6f3ee,#eceff8);box-shadow:0 10px 24px -16px rgba(58,57,54,.35)
+}
+.cp-medals .cp-medal .cp-rk{
+  position:absolute;top:10px;left:10px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+  font-style:normal;font-weight:1000;font-size:.95rem;color:#fff;background:#8a94a6;box-shadow:0 4px 10px -3px rgba(0,0,0,.3)
+}
+.cp-medals .cp-medal .cp-av{
+  display:grid!important;place-items:center;width:62px;height:62px;border-radius:50%;font-size:2.2rem!important;line-height:1;
+  background:#fff;box-shadow:inset 0 0 0 2px rgba(74,74,73,.08)
+}
+.cp-medals .cp-medal b{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:1rem;color:#2a2a29}
+.cp-medals .cp-medal small{font-weight:900;font-size:.85rem;color:#4a4a49}
+.cp-medals .cp-medal.m1{background:linear-gradient(160deg,#fff6cf,#ffe28a);border-color:#f3c33f}
+.cp-medals .cp-medal.m1 .cp-rk{background:linear-gradient(135deg,#f7c948,#d99a00)}
+.cp-medals .cp-medal.m2{background:linear-gradient(160deg,#f6f8fc,#dde3ee);border-color:#c5cddd}
+.cp-medals .cp-medal.m2 .cp-rk{background:linear-gradient(135deg,#a9b3c6,#7b879b)}
+.cp-medals .cp-medal.m3{background:linear-gradient(160deg,#fff0e2,#f6cfaa);border-color:#e8b88a}
+.cp-medals .cp-medal.m3 .cp-rk{background:linear-gradient(135deg,#dd9355,#b8692f)}
+.cp-av{font-style:normal}
+.cp-brow .cp-av{display:inline-block}
+@media(max-width:560px){.cp-medals{gap:8px}.cp-medals .cp-medal{padding-top:30px!important}.cp-medals .cp-medal .cp-av{width:46px;height:46px;font-size:1.6rem!important}}
+
+/* ---------- menu Game (Master & Admin) ---------- */
+#adminPortalPage .ad-games{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px;align-items:start}
+#adminPortalPage .ad-gm{margin:0;border-top:5px solid #1e1f1f}
+#adminPortalPage .ad-gm.logic{border-top-color:#0ea5e9}
+#adminPortalPage .ad-gm.picture{border-top-color:#f59e0b}
+#adminPortalPage .ad-gm-h{display:flex;justify-content:space-between;align-items:center;gap:10px}
+#adminPortalPage .ad-gm-h h2{margin:0}
+#adminPortalPage .ad-gm .ad-sub{margin:6px 0 0}
+#adminPortalPage .ad-lv{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:9px}
+#adminPortalPage .ad-lv li{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border-radius:14px;background:var(--upx-surface-2,#f6f3ee)}
+#adminPortalPage .ad-lv i{flex:0 0 28px;width:28px;height:28px;border-radius:9px;display:grid;place-items:center;font-style:normal;font-weight:900;font-size:.85rem;color:#fff;background:var(--upx-brand,#1e1f1f)}
+#adminPortalPage .ad-lv b{display:block;font-size:.92rem;color:var(--upx-ink,#2a2a29)}
+#adminPortalPage .ad-lv small{display:block;margin-top:2px;font-size:.78rem;font-weight:700;color:var(--upx-muted,#84817d);line-height:1.35}
+#adminPortalPage .ad-card + .ad-card{margin-top:16px}
+
+/* ---------- MODE GELAP: lengkapi elemen yang masih terang ---------- */
+html.upx-dark body.upx-app :is(.ad-bd){background:rgba(186,157,127,.22)!important;color:#e5e0d9!important}
+html.upx-dark body.upx-app :is(.ad-bd.g){background:rgba(34,197,94,.2)!important;color:#86efac!important}
+html.upx-dark body.upx-app :is(.ad-bd.o){background:rgba(245,158,11,.2)!important;color:#fcd34d!important}
+html.upx-dark body.upx-app :is(.ad-bd.r){background:rgba(239,68,68,.2)!important;color:#fca5a5!important}
+html.upx-dark body.upx-app :is(.cp-pill,.tg4-level,.cp-st,.tg4-status){background:rgba(186,157,127,.22)!important;color:#e5e0d9!important}
+html.upx-dark body.upx-app :is(.cp-st.live,.tg4-status.live){background:rgba(34,197,94,.2)!important;color:#86efac!important}
+html.upx-dark body.upx-app :is(.tg4-team){background:var(--upx-surface)!important;border-color:var(--upx-line)!important;color:var(--upx-ink)!important}
+html.upx-dark body.upx-app :is(.tg4-team.red){border-top-color:#ef4444!important}
+html.upx-dark body.upx-app :is(.tg4-team.blue){border-top-color:#3b82f6!important}
+html.upx-dark body.upx-app :is(.tg4-team) :is(h3,h4,label,span,b,strong){color:var(--upx-ink)!important}
+html.upx-dark body.upx-app :is(.tg4-member-num){background:var(--upx-surface-2)!important;color:#e5e0d9!important}
+html.upx-dark body.upx-app :is(.ad-b.red){background:rgba(239,68,68,.14)!important;color:#fca5a5!important;border-color:rgba(239,68,68,.4)!important}
+html.upx-dark body.upx-app :is(.ad-b.pri,.ad-b.red.pri){color:#fff!important}
+html.upx-dark body.upx-app :is(.ad-b.red.pri){background:#dc2626!important;border-color:#dc2626!important}
+html.upx-dark body.upx-app .cp-board{background:var(--upx-surface)!important;border-color:var(--upx-line)!important}
+html.upx-dark body.upx-app .cp-brow{background:var(--upx-surface)!important;border-color:var(--upx-line)!important;color:var(--upx-ink)!important}
+html.upx-dark body.upx-app .cp-brow.cp-up{background:rgba(34,197,94,.14)!important}
+html.upx-dark body.upx-app .cp-brow.cp-down{background:rgba(245,158,11,.14)!important}
+html.upx-dark body.upx-app .cp-brow small{color:var(--upx-muted)!important}
+html.upx-dark body.upx-app .cp-brow .pos{color:#ba9d7f}
+html.upx-dark body.upx-app .cp-brow.r1 .pos,html.upx-dark body.upx-app .cp-brow.r2 .pos,html.upx-dark body.upx-app .cp-brow.r3 .pos{color:#fbbf24}
+html.upx-dark body.upx-app .cp-pbar{background:var(--upx-surface-2)!important}
+html.upx-dark body.upx-app .cp-sum>div{background:var(--upx-surface-2)!important;color:var(--upx-ink)!important}
+html.upx-dark body.upx-app .cp-sum small{color:var(--upx-muted)!important}
+html.upx-dark body.upx-app .cp-medals .cp-medal{background:linear-gradient(160deg,#2a2a29,#2a2a29)!important;border-color:var(--upx-line)!important;box-shadow:none}
+html.upx-dark body.upx-app .cp-medals .cp-medal.m1{background:linear-gradient(160deg,#4a3d12,#2f2810)!important;border-color:#8a6d16!important}
+html.upx-dark body.upx-app .cp-medals .cp-medal.m2{background:linear-gradient(160deg,#3a3936,#2a2a29)!important;border-color:#5a6280!important}
+html.upx-dark body.upx-app .cp-medals .cp-medal.m3{background:linear-gradient(160deg,#4a3320,#33241a)!important;border-color:#8a5a33!important}
+html.upx-dark body.upx-app .cp-medals .cp-medal b{color:var(--upx-ink)!important}
+html.upx-dark body.upx-app .cp-medals .cp-medal small{color:var(--upx-muted)!important}
+html.upx-dark body.upx-app .cp-medals .cp-medal .cp-av{background:var(--upx-surface-2)!important}
+html.upx-dark body.upx-app :is(.tg4-room-code){color:#ffb454!important}
+html.upx-dark body.upx-app :is(.tg4-room-top){background:var(--upx-surface-2)!important;border-color:var(--upx-line)!important}
+html.upx-dark body.upx-app :is(.tg4-room-top) small{color:var(--upx-muted)!important}
+html.upx-dark body.upx-app :is(.tg4-note,.teacher-score-note,.security-banner){background:var(--upx-surface-2)!important;color:var(--upx-ink)!important;border-color:var(--upx-line)!important}
+html.upx-dark body.upx-app :is(.ad-lv li){background:var(--upx-surface-2)!important}
+html.upx-dark body.upx-app :is(.tg5-wrap,.tg5-grid) :is(h2,h3,b,strong,span,div){color:inherit}
+html.upx-dark body.upx-app :is(a){color:#d4ccc1}
+html.upx-dark body.upx-app :is(.ad-log) div{color:var(--upx-ink)!important;border-color:var(--upx-line)!important}
+html.upx-dark body.upx-app :is(.ad-empty){color:var(--upx-muted)!important}
+html.upx-dark body.upx-app :is(.upx-ic){opacity:1}
+html.upx-dark body.upx-app :is(h1,h2,h3,h4,h5,label,legend){color:var(--upx-ink)}
+html.upx-dark body.upx-app :is(th){color:#fff!important}
+html.upx-dark .ad-md{background:var(--upx-surface)!important;color:var(--upx-ink)!important;border:1px solid var(--upx-line)!important}
+html.upx-dark .ad-md :is(h3,label,p,small){color:var(--upx-ink)!important}
+html.upx-dark .ad-md :is(input,select){background:var(--upx-surface-2)!important;color:var(--upx-ink)!important;border-color:var(--upx-line)!important}
+html.upx-dark #cpNotifPanel{background:var(--upx-surface)!important;color:var(--upx-ink)!important;border-color:var(--upx-line)!important}
+html.upx-dark #cpNotifPanel *{border-color:var(--upx-line)!important}
+html.upx-dark #cpNotifPanel :is(div,p,span,small,h4,b,strong){color:inherit}
+html.upx-dark .ad-toast{background:var(--upx-surface-2)!important;color:var(--upx-ink)!important}
+html.upx-dark .modal,html.upx-dark .modal *:not(button):not(.btn){color:var(--upx-ink)}
+html.upx-dark .modal :is(input,select){background:var(--upx-surface-2)!important;border-color:var(--upx-line)!important}
+html.upx-dark #upxFback{box-shadow:0 10px 24px -12px rgba(0,0,0,.6)}

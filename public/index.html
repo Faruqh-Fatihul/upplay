@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<!-- Sinkron realtime ke server lokal (npm start). Dibuka sebagai file biasa: otomatis nonaktif. -->
+<script src="js/upplay-sync.js"></script>
+<link rel="stylesheet" href="css/01-upz-boot-style.css" data-layer="upz-boot-style">
+<script src="js/01-upz-boot.js" data-layer="upz-boot"></script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UpPlay — Belajar Sambil Bermain</title>
+
+  <link rel="stylesheet" href="css/02-base.css">
+
+<link rel="stylesheet" href="css/03-snake-final-visual-fix-v2.css" data-layer="snake-final-visual-fix-v2">
+
+
+<link rel="stylesheet" href="css/04-level-outcome-and-prototype-css.css" data-layer="level-outcome-and-prototype-css">
+<script src="js/02-upz14-dur.js" data-layer="upz14-dur"></script>
+<script src="js/03-upz14-pw.js" data-layer="upz14-pw"></script>
+</head>
+
+<body>
+<div id="upBoot" class="ub-land" aria-hidden="true">
+<link rel="stylesheet" href="css/05-upz14-boot-style.css" data-layer="upz14-boot-style">
+<div class="ub-a"><div class="ub-rail"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="ub-main"><div class="ub-top"><i></i><div class="ub-col"><i></i><i></i></div><i></i></div><i class="ub-title"></i><i class="ub-sub"></i>
+<div class="ub-cards"><div class="ub-card"><i></i><i></i><i></i></div><div class="ub-card"><i></i><i></i><i></i></div><div class="ub-card"><i></i><i></i><i></i></div></div>
+<div class="ub-list"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>
+<div class="ub-l"><div class="ub-nav"><i></i><i></i><i></i></div><div class="ub-hero"><div class="ub-hl"><i></i><i></i><i></i><i></i><i></i><div class="ub-row"><i></i><i></i><i></i></div></div><i class="ub-hr"></i></div></div>
+<div class="ub-msg" role="status"><b></b>Memuat UpPlay…</div>
+</div>
+<script src="js/04-upz14-boot.js" data-layer="upz14-boot"></script>
+  <!-- ==================================================
+       LANDING PAGE
+  =================================================== -->
+  <section id="landingPage" class="app-view">
+    <header class="topbar">
+      <a href="#" class="brand" aria-label="UpPlay Beranda">
+        <span class="brand-icon">✦</span>
+        UpPlay
+      </a>
+
+      <nav class="nav-links" aria-label="Navigasi utama">
+        <a href="#tentang">Tentang</a>
+        <a href="#fitur">Fitur</a>
+        <a href="#tutorial">Cara Bermain</a>
+      </nav>
+
+      <div class="auth-actions">
+        <button id="openRegisterBtn" class="btn btn-link">Daftar</button>
+        <span class="auth-divider">|</span>
+        <button id="openLoginBtn" class="btn btn-primary">Masuk</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="tentang">
+        <div class="hero-content">
+          <span class="badge"><span class="up-abs" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="6"/><rect x="11" y="6" width="10" height="12" rx="3" fill="currentColor" fill-opacity=".18"/></svg></span>Belajar jadi lebih menyenangkan</span>
+
+          <h1>
+            Ayo Belajar dan
+            <span>Bermain!</span>
+          </h1>
+
+          <p>
+            UpPlay adalah media pembelajaran interaktif berbasis game
+            untuk siswa kelas 5 dan 6 SD. Jawab soal, kumpulkan poin,
+            buka level baru, dan jadilah juara belajar.
+          </p>
+
+          <div class="hero-stats">
+            <div class="stat">
+              <strong>3</strong>
+              <span>Game Interaktif</span>
+            </div>
+
+            <div class="stat">
+              <strong>5</strong>
+              <span>Level Tantangan / Game</span>
+            </div>
+
+            <div class="stat">
+              <strong>100%</strong>
+              <span>Belajar Interaktif</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Ilustrasi siswa sedang belajar">
+          <div class="upz-show" tabindex="0" aria-roledescription="carousel"><div class="upz-track"><div class="upz-slide on" data-k="snake"><div class="upz-scene"><div class="sc-snake"><div class="sc-grid"><i>21</i><i>22</i><i>23</i><i>24</i><i>25</i><i>20</i><i>19</i><i>18</i><i>17</i><i>16</i><i>11</i><i>12</i><i>13</i><i>14</i><i>15</i><i>10</i><i>9</i><i>8</i><i>7</i><i>6</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i></div><svg class="sc-lad" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M30 92 L50 52 M38 92 L58 52"></path><path d="M33 86 L41 86 M36 78 L44 78 M40 70 L48 70 M44 62 L52 62"></path></svg><svg class="sc-sn" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M78 18 C60 30 92 44 70 58 C52 70 70 80 58 90"></path></svg><span class="sc-pawn" style=""></span><span class="sc-dice"><span class="up-abs" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5" transform="rotate(10 12 12)"/><circle cx="9" cy="9" r="1.5" fill="currentColor" stroke="none"/><circle cx="15" cy="15" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" opacity=".45"/></svg></span></span></div></div><div class="upz-cap"><small>Perhitungan · Level 1</small><b>Ular Tangga Pintar</b></div></div><div class="upz-slide" data-k="pola"><div class="upz-scene"><div class="sc-pola"><div class="row"><b>3</b><b>6</b><b>9</b><b>12</b><b class="q"><span>?</span><span class="a">15</span></b></div><div class="opt"><span>14</span><span class="ok">15</span><span>18</span></div></div></div><div class="upz-cap"><small>Logika Sederhana · Level 1</small><b>Tebak Pola</b></div></div><div class="upz-slide" data-k="kata"><div class="upz-scene"><div class="sc-kata"><div class="em"><span class="up-abs" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M2.5 12c3-5 6-7 9.5-7s6.5 2 9.5 7c-3 5-6 7-9.5 7s-6.5-2-9.5-7z"/><circle cx="12" cy="12" r="3.6" fill="currentColor" fill-opacity=".35"/></svg></span><em>+</em><span class="up-abs" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4.6" fill="currentColor" fill-opacity=".3"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg></span></div><div class="lt"><b style="animation-delay:0s">M</b><b style="animation-delay:0.22s">A</b><b style="animation-delay:0.44s">T</b><b style="animation-delay:0.66s">A</b><b style="animation-delay:0.88s">H</b><b style="animation-delay:1.1s">A</b><b style="animation-delay:1.32s">R</b><b style="animation-delay:1.54s">I</b></div></div></div><div class="upz-cap"><small>Tebak-Tebakan · Level 1</small><b>Tebak Kata</b></div></div></div><div class="upz-dots"></div><span class="upz-live">LANGSUNG</span></div>
+        </div>
+      </section>
+
+      <section class="feature-section" id="fitur">
+        <div class="section-heading">
+          <h2>Belajar dengan cara yang tidak membosankan</h2>
+          <p>
+            Materi pembelajaran dibuat dalam bentuk permainan agar siswa
+            lebih aktif, termotivasi, dan mudah memahami materi.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-icon"><span class="up-abs" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="11" height="11" rx="3" transform="rotate(-8 8.5 12.5)"/><circle cx="16.5" cy="9" r="4.5" fill="currentColor" fill-opacity=".2"/></svg></span></div>
+            <h3>Game Edukatif</h3>
+            <p>
+              Tiga game interaktif membantu siswa belajar melalui tantangan yang dekat dengan materi kelas 5–6 SD.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><span class="up-abs" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="14" width="4.5" height="7" rx="1.5"/><rect x="9.75" y="9" width="4.5" height="12" rx="1.5"/><rect x="16.5" y="3" width="4.5" height="18" rx="1.5" fill="currentColor" fill-opacity=".2"/></svg></span></div>
+            <h3>Level Bertahap</h3>
+            <p>
+              Setiap game memiliki 5 level. Level berikutnya terbuka setelah tantangan sebelumnya diselesaikan.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon"><span class="up-abs" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17c3.5 0 4-7 7.5-7s3.5 4 6 4 2.5-6 4.5-8"/><circle cx="21" cy="6" r="1.6" fill="currentColor"/></svg></span></div>
+            <h3>Progres Belajar</h3>
+            <p>
+              Siswa dapat melihat perkembangan belajar dan pencapaian
+              permainan mereka.
+            </p>
+          </article>
+        </div>
+      </section>
+    
+
+  <section class="tutorial-section" id="tutorial">
+<div class="section-heading"><h2><span class="up-abs" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6c3-1.5 6-1.5 9 1v12c-3-2.5-6-2.5-9-1z"/><path d="M21 6c-3-1.5-6-1.5-9 1v12c3-2.5 6-2.5 9-1z" fill="currentColor" fill-opacity=".15"/></svg></span>Cara Bermain</h2><p>Ikuti langkah berikut di setiap permainan UpPlay.</p></div>
+<div class="tutorial-grid"><article class="tutorial-card"><div class="tutorial-number" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2"/></svg></div><h3>Perhitungan</h3><p class="up-tc-sub">Selesaikan 5 level berurutan. Setiap level dimainkan dalam 3 menit.</p><ol><li>Pilih level yang terbuka, baca aturannya, lalu tunggu hitung mundur 3, 2, 1.</li><li><b>Level 1 Ular Tangga:</b> jawab soal hitung agar dadu terbuka, lalu jalankan pion ke kotak 25.</li><li><b>Level 2–3:</b> pasangkan kartu soal dengan hasilnya, lalu isi TTS dengan kata bilangan.</li><li><b>Level 4–5:</b> tembus labirin angka sampai harta, lalu pecahkan 5 kode brankas.</li><li>Selesai sebelum waktu habis = 4 bintang dan level berikutnya terbuka.</li></ol></article><article class="tutorial-card"><div class="tutorial-number" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5.2v14"/><path d="M12 5.2a2.9 2.9 0 0 0-5-1.4A3.1 3.1 0 0 0 4.2 7.6a3.3 3.3 0 0 0 .3 5.5 3.2 3.2 0 0 0 2.7 5.2A2.9 2.9 0 0 0 12 19.2"/><path d="M12 5.2a2.9 2.9 0 0 1 5-1.4 3.1 3.1 0 0 1 2.8 3.8 3.3 3.3 0 0 1-.3 5.5 3.2 3.2 0 0 1-2.7 5.2A2.9 2.9 0 0 1 12 19.2"/><path d="M7.6 9.4c1.1.2 1.9 1 2.1 2.1M16.4 9.4c-1.1.2-1.9 1-2.1 2.1M7.4 14.6c.9-.6 2.1-.6 3 .1M16.6 14.6c-.9-.6-2.1-.6-3 .1"/></svg></div><h3>Logika Sederhana</h3><p class="up-tc-sub">Selesaikan 5 level berurutan. Setiap level dimainkan dalam 3 menit.</p><ol><li>Baca aturan level, lalu tunggu hitung mundur 3, 2, 1.</li><li><b>Level 1 Tebak Pola:</b> lengkapi pola angka, warna, bentuk, dan gambar.</li><li><b>Level 2 Cocokkan Ingatan:</b> buka dua kartu dan temukan semua pasangannya.</li><li><b>Level 3 Balok Logika:</b> seret dan putar kepingan sampai siluet terisi penuh.</li><li><b>Level 4–5:</b> tentukan BENAR atau SALAH, lalu pecahkan kasus detektif dari petunjuknya.</li></ol></article><article class="tutorial-card"><div class="tutorial-number" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.2"/><path d="m15.2 15.2 5.3 5.3"/><path d="M7.6 9.2a3.2 3.2 0 0 1 2.6-1.9"/></svg></div><h3>Tebak-Tebakan</h3><p class="up-tc-sub">Selesaikan 5 level berurutan. Setiap level dimainkan dalam 2 menit.</p><ol><li>Baca aturan level, lalu tunggu hitung mundur 3, 2, 1.</li><li><b>Level 1 Tebak Kata:</b> gabungkan nama gambar, lalu susun hurufnya menjadi kata.</li><li><b>Level 2 Tebak Tempat:</b> amati petunjuk, lalu pilih foto lokasi yang paling cocok.</li><li><b>Level 3 Tebak Ungkapan:</b> pasangkan petunjuk emoji dengan ungkapan atau peribahasanya.</li><li><b>Level 4–5:</b> tebak benda yang buram, lalu pilih peribahasa yang sesuai dengan cerita gambar.</li></ol></article></div></section>
+</main>
+  </section>
+
+  <!-- ==================================================
+       PORTAL SISWA
+  =================================================== -->
+  <section id="studentDashboard" class="app-view hidden">
+    <header class="topbar student-topbar">
+      <a href="#" class="brand" id="dashboardHome">
+        <span class="brand-icon">✦</span>
+        <span>UpPlay</span>
+      </a>
+      <div class="student-top-actions">
+        <div class="student-search">⌕ <input id="studentSearchInput" type="search" placeholder="Cari game atau materi"></div>
+        <button class="student-notification" id="studentNotificationBtn" type="button" title="Notifikasi">♧<i></i></button>
+        <button id="joinRoomBtn" class="btn btn-success join-room-btn student-header-join">🎮 Join Room</button>
+        <button id="logoutBtn" class="btn btn-outline">⇥ Keluar</button>
+      </div>
+    </header>
+
+    <div class="portal-shell">
+      <aside class="portal-sidebar student-sidebar-modern">
+        <div class="sidebar-brand">
+          <span class="brand-icon">✦</span>
+          <div><strong>UpPlay</strong><small>Dashboard Siswa</small></div>
+        </div>
+        <div class="sidebar-user">
+          <div class="sidebar-avatar" id="studentSidebarAvatar"><img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Ccircle cx='50' cy='50' r='50'/%3E%3C/clipPath%3E%3C/defs%3E%3Cg clip-path='url(%23a)'%3E%3Crect width='100' height='100' fill='%23e5e0d9'/%3E%3Ccircle cx='50' cy='39' r='18' fill='%23a8a29b'/%3E%3Cpath d='M13 104c1.6-21.5 17.4-37 37-37s35.4 15.5 37 37z' fill='%23a8a29b'/%3E%3C/g%3E%3C/svg%3E" alt="Foto profil"></div>
+          <div>
+            <small>Siswa aktif</small>
+            <strong id="studentSidebarName">Nama Siswa</strong>
+            <small id="studentSidebarClass">Kelas 5A</small>
+          </div>
+        </div>
+        <nav class="side-nav" aria-label="Menu siswa">
+          <button class="student-menu active" data-student-view="dashboard"><span class="sm-ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>Dashboard</button>
+          <button class="student-menu" data-student-view="profile"><span class="sm-ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7"/></svg></span>Profil</button>
+          <button class="student-menu" data-student-view="game"><span class="sm-ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 11h4M8 9v4"/><circle cx="15.5" cy="10.5" r=".6" fill="currentColor"/><circle cx="18" cy="13" r=".6" fill="currentColor"/><path d="M17.3 5H6.7a4 4 0 0 0-3.9 3.2l-1.3 6.2A3 3 0 0 0 4.4 18c.8 0 1.5-.4 2-1l1.6-2h8l1.6 2c.5.6 1.2 1 2 1a3 3 0 0 0 2.9-3.6l-1.3-6.2A4 4 0 0 0 17.3 5z"/></svg></span>Game</button>
+        </nav>
+        <div class="sidebar-help">
+          <span>?</span><div><strong>Butuh bantuan?</strong><small>Hubungi guru atau admin</small></div>
+        </div>
+      </aside>
+
+      <main class="portal-content" id="belajar">
+        <div class="portal-top">
+          <div>
+            <span class="badge">👋 Halo, <span id="studentGreetingName">Siswa Hebat</span>!</span>
+            <h1 id="studentPageTitle">Dashboard</h1>
+            <p id="studentPageSubtitle">Selamat datang di dashboard belajarmu.</p>
+          </div>
+
+        </div>
+
+        <div id="studentViewDashboard" class="portal-view student-view">
+          <span id="studentClassStat" hidden></span><span id="studentScoreStat" hidden></span>
+          <div class="portal-cards dashboard-summary-cards sd-stat-cards">
+            <div class="portal-stat dashboard-total-games">
+              <span>Total Game</span>
+              <strong id="studentTotalGameStat">3</strong>
+              <small>Game pembelajaran tersedia</small>
+            </div>
+            <div class="portal-stat dashboard-level-games">
+              <span>5 Level per Game</span>
+              <strong id="studentLevelPerGameStat">5</strong>
+              <small>Level di setiap game</small>
+            </div>
+            <div class="portal-stat dashboard-completed-games">
+              <span>Game Selesai</span>
+              <strong id="studentGameStat">0</strong>
+              <small id="studentGameStatNote">dari 15 level (3 game × 5 level)</small>
+            </div>
+          </div>
+
+          <section class="sd-chart-card" id="sdClassChartCard">
+            <div class="sd-chart-head">
+              <span class="section-kicker">📊 GRAFIK SELURUH KELAS</span>
+              <h3>Jumlah Siswa per Kelas (5A–6D)</h3>
+            </div>
+            <div class="sd-chart-box" id="sdClassChart" role="img" aria-label="Grafik jumlah siswa per kelas"></div>
+            <div class="sd-legend"><span class="sd-dot" style="background:#1e1f1f"></span>Jumlah Siswa Terdaftar</div>
+          </section>
+        </div>
+
+
+        <div id="studentViewProfile" class="portal-view student-view hidden">
+          <div class="profile-layout sd-profile-layout">
+            <form id="studentProfileForm" class="profile-form sd-profile-form">
+              <section class="portal-panel profile-card sd-card">
+                <div class="profile-card-head">
+                  <span class="section-kicker">👤 PROFIL SISWA</span>
+                  <h2>Data akun saya</h2>
+                  <p>Kelola foto, nama, email/Gmail, kelas, nomor absen, dan password website.</p>
+                </div>
+                <div class="profile-photo-area">
+                  <div class="sd-avatar-wrap">
+                    <div class="profile-avatar-large" id="profileAvatarPreview"><img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Ccircle cx='50' cy='50' r='50'/%3E%3C/clipPath%3E%3C/defs%3E%3Cg clip-path='url(%23a)'%3E%3Crect width='100' height='100' fill='%23e5e0d9'/%3E%3Ccircle cx='50' cy='39' r='18' fill='%23a8a29b'/%3E%3Cpath d='M13 104c1.6-21.5 17.4-37 37-37s35.4 15.5 37 37z' fill='%23a8a29b'/%3E%3C/g%3E%3C/svg%3E" alt="Foto profil"></div>
+                    <label class="sd-cam" for="profilePhotoInput" title="Ganti foto" aria-label="Ganti foto"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></label>
+                  </div>
+                  <div class="sd-photo-text">
+                    <strong>Foto profil</strong>
+                    <p>Gunakan foto JPG/PNG. Foto disimpan pada perangkat ini.</p>
+                    <div class="sd-photo-actions">
+                      <label class="btn btn-primary profile-upload" for="profilePhotoInput">Ganti Foto</label>
+                      <input id="profilePhotoInput" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+                      <button id="removeProfilePhotoBtn" class="btn btn-outline" type="button">Hapus Foto</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="profile-grid">
+                  <div class="field-group">
+                    <label for="profileName">Nama Lengkap</label>
+                    <input id="profileName" type="text" placeholder="Nama Siswa" required>
+                  </div>
+                  <div class="field-group">
+                    <label for="profileEmail">Email / Gmail</label>
+                    <input id="profileEmail" type="email" placeholder="siswa.hebat@gmail.com" required>
+                  </div>
+                  <div class="field-group">
+                    <label for="profileClass">Kelas</label>
+                    <select id="profileClass" required>
+                      <option value="5A">5A</option><option value="5B">5B</option><option value="5C">5C</option><option value="5D">5D</option>
+                      <option value="6A">6A</option><option value="6B">6B</option><option value="6C">6C</option><option value="6D">6D</option>
+                    </select>
+                  </div>
+                  <div class="field-group">
+                    <label for="profileAbsen">No. Absen</label>
+                    <input id="profileAbsen" type="number" min="1" max="50" placeholder="Contoh: 12">
+                  </div>
+                </div>
+              </section>
+
+              <section class="portal-panel profile-card sd-card sd-card-pass">
+                <div class="password-section-head">
+                  <span class="section-kicker sd-kicker-gold">🔒 KEAMANAN AKUN</span>
+                  <h3>Ubah Password Website</h3>
+                  <p>Masukkan password saat ini, lalu buat password baru dan konfirmasikan.</p>
+                </div>
+                <div class="password-stack">
+              <div class="field-group">
+                <label for="profileCurrentPassword">Password Saat Ini</label>
+                <div class="password-field">
+                  <input id="profileCurrentPassword" type="password" autocomplete="current-password" placeholder="Masukkan password saat ini">
+                  <button type="button" class="password-toggle" data-target="profileCurrentPassword" aria-label="Tampilkan password" title="Tampilkan password"><svg class="eye-on" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                </div>
+              </div>
+              <div class="field-group">
+                <label for="profileNewPassword">Ganti Password</label>
+                <div class="password-field">
+                  <input id="profileNewPassword" type="password" minlength="6" autocomplete="new-password" placeholder="Masukkan password baru">
+                  <button type="button" class="password-toggle" data-target="profileNewPassword" aria-label="Tampilkan password" title="Tampilkan password"><svg class="eye-on" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                </div>
+                <small class="password-hint">Minimal 6 karakter.</small>
+              </div>
+              <div class="field-group">
+                <label for="profileConfirmPassword">Konfirmasi Password Baru</label>
+                <div class="password-field">
+                  <input id="profileConfirmPassword" type="password" minlength="6" autocomplete="new-password" placeholder="Ulangi password baru">
+                  <button type="button" class="password-toggle" data-target="profileConfirmPassword" aria-label="Tampilkan password" title="Tampilkan password"><svg class="eye-on" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                </div>
+              </div>
+                </div>
+                <div id="profileFormMessage" class="profile-message" role="status"></div>
+                <div class="profile-actions">
+                  <button type="reset" id="profileResetBtn" class="btn btn-outline">Batal</button>
+                  <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </div>
+              </section>
+            </form>
+
+            <aside class="portal-panel profile-summary" aria-hidden="true">
+              <div class="summary-avatar" id="profileSummaryAvatar"><img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Ccircle cx='50' cy='50' r='50'/%3E%3C/clipPath%3E%3C/defs%3E%3Cg clip-path='url(%23a)'%3E%3Crect width='100' height='100' fill='%23e5e0d9'/%3E%3Ccircle cx='50' cy='39' r='18' fill='%23a8a29b'/%3E%3Cpath d='M13 104c1.6-21.5 17.4-37 37-37s35.4 15.5 37 37z' fill='%23a8a29b'/%3E%3C/g%3E%3C/svg%3E" alt="Foto profil"></div>
+              <h3 id="profileSummaryName">Nama Siswa</h3>
+              <p id="profileSummaryEmail">email@gmail.com</p>
+              <div class="summary-list">
+                <div><span>Kelas</span><strong id="profileSummaryClass">-</strong></div>
+                <div><span>No. Absen</span><strong id="profileSummaryAbsen">-</strong></div>
+                <div><span>Status</span><strong>● Aktif</strong></div>
+              </div>
+            </aside>
+          </div>
+        </div>
+
+        <div id="studentViewGame" class="portal-view student-view hidden" hidden></div>
+        <div id="studentViewGames" class="portal-view student-view hidden">
+          <div class="dashboard-games-panel portal-panel">
+            <div class="dashboard-section-head">
+              <div>
+                <span class="section-kicker">🎮 GAME PEMBELAJARAN</span>
+                <h2>Game yang tersedia untukmu</h2>
+                <p>Mainkan game yang sudah diatur guru. Semua progres dan nilai tersimpan di akunmu.</p>
+              </div>
+            </div>
+            <div id="dashboardGameGrid" class="game-mini-grid dashboard-game-grid">
+              <button id="openMathBtn" class="subject-card math">
+                <div class="subject-card-content"><div class="subject-icon">🔢</div><span class="card-game-tag">GAME INTERAKTIF</span><h2>Perhitungan</h2><p>Berhitung sambil bermain: ular tangga, kartu memori, TTS angka, labirin, dan brankas kode.</p><span class="play-label">Mainkan Sekarang →</span></div>
+              </button>
+              <button id="openLogicBtn" class="subject-card logic">
+                <div class="subject-card-content"><div class="subject-icon">🧠</div><span class="card-game-tag">GAME INTERAKTIF</span><h2>Logika Sederhana</h2><p>Jawab soal pola, urutan, dan pemecahan masalah secara langsung.</p><span class="play-label">Main Sekarang →</span></div>
+              </button>
+              <button id="openPictureBtn" class="subject-card picture">
+                <div class="subject-card-content"><div class="subject-icon">🖼️</div><span class="card-game-tag">GAME INTERAKTIF</span><h2>Tebak-Tebakan</h2><p>Tebak kata, tempat, ungkapan, dan teka-teki dari petunjuk gambar.</p><span class="play-label">Main Sekarang →</span></div>
+              </button>
+            </div>
+          </div>
+          <div class="dashboard-flow portal-panel">
+            <span class="section-kicker">📌 ALUR PERMAINAN</span>
+            <h2>Ikuti alurnya</h2>
+            <div class="game-flow">
+              <div><b>01</b><span>Pilih game</span><small>Sesuaikan dengan materi.</small></div>
+              <div><b>02</b><span>Kerjakan tantangan</span><small>Jawab soal dan selesaikan misi.</small></div>
+              <div><b>03</b><span>Dapatkan nilai</span><small>Progres dan skor tersimpan otomatis.</small></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="studentViewNilai" class="portal-view student-view hidden">
+          <div class="portal-panel">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+              <div><h2>🏆 Nilai Saya</h2><p>Hanya nilai dari akun <b id="scoreOwnerName">siswa</b> yang ditampilkan.</p></div>
+              <span class="privacy-lock">🔒 Privat</span>
+            </div>
+            <table class="score-table">
+              <thead><tr><th>Game</th><th>Nilai</th><th>Status</th></tr></thead>
+              <tbody id="studentScoreTable">
+                <tr><td>Belum ada permainan</td><td>-</td><td>Belum dimainkan</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- ==================================================
+       PORTAL GURU
+  =================================================== -->
+  <section id="teacherPortalPage" class="app-view hidden">
+    <header class="topbar">
+      <a href="#" class="brand"><span class="brand-icon">✦</span>UpPlay • Guru</a>
+      <button id="teacherLogoutBtn" class="btn btn-outline">Keluar</button>
+    </header>
+    <div class="portal-shell teacher-shell">
+      <aside class="portal-sidebar teacher-sidebar">
+        <div class="sidebar-user">
+          <small>Guru aktif</small>
+          <strong id="teacherSidebarName">Nama Guru</strong>
+          <small id="teacherSidebarClass">Kelas 5A</small>
+        </div>
+        <nav class="side-nav" aria-label="Menu guru">
+          <button class="teacher-menu active" data-teacher-vnext="dashboard"><span>🏠</span>Dashboard</button>
+          <button class="teacher-menu" data-teacher-vnext="profile"><span>👤</span>Profil</button>
+          <button class="teacher-menu" data-teacher-vnext="games"><span>🎮</span>Permainan</button>
+          <button class="teacher-menu" data-teacher-vnext="room"><span>🎯</span>Room Game</button>
+          <button class="teacher-menu" data-teacher-vnext="scores"><span>🏆</span>Nilai Siswa</button>
+          <button class="teacher-menu" data-teacher-vnext="pvp"><span>⚔️</span>PVP Tarik Tambang</button>
+        </nav>
+      </aside>
+      <main class="portal-content teacher-main">
+        <div class="teacher-layout">
+          <div id="teacherDashboardPanel" class="teacher-section">
+            <div class="portal-top">
+              <div><span class="badge">👩‍🏫 Portal Guru</span><h1 id="teacherPortalTitle">Kelas 5A</h1><p id="teacherPortalSubtitle">Akun guru dibatasi hanya untuk kelas yang ditugaskan.</p></div>
+              <span class="class-chip" id="teacherClassChip">5A</span>
+            </div>
+            <div class="security-banner">🔐 <strong>Akses terbatas.</strong> Guru hanya dapat melihat siswa, nilai, game, dan pengaturan dari kelas yang ditugaskan. Tidak ada tombol untuk berpindah ke kelas lain.</div>
+            <div class="portal-cards">
+              <div class="portal-stat"><span>Jumlah siswa</span><strong id="teacherStudentCount">0</strong></div>
+              <div class="portal-stat"><span>Total Game</span><strong id="teacherGameCount">4</strong><small>3 quiz + 1 PVP</small></div>
+              <div class="portal-stat"><span>Room aktif</span><strong id="teacherRoomCount">0</strong></div>
+            </div>
+          </div>
+          <div id="teacherStudentsPanel" class="portal-panel teacher-section">
+            <h2>👧🧒 Siswa di kelas ini</h2>
+            <p>Hanya siswa dari kelas yang menjadi tanggung jawab akun guru ini.</p>
+            <div id="teacherStudentList" class="student-list"></div>
+          </div>
+          <div id="teacherGamesPanel" class="portal-panel teacher-section">
+            <h2>🎮 Pengaturan Game</h2>
+            <p>Guru dapat memilih game yang muncul untuk siswa di kelas ini.</p>
+            <div class="teacher-toolbar">
+              <button class="btn btn-primary teacher-game-toggle" data-game="math">🔢 Perhitungan</button>
+              <button class="btn btn-primary teacher-game-toggle" data-game="logic">🧠 Logika Sederhana</button>
+              <button class="btn btn-primary teacher-game-toggle" data-game="picture">🖼️ Tebak-Tebakan</button>
+            </div>
+
+            <div class="teacher-divider"></div>
+
+            <h3 class="teacher-subheading">🕹️ Coba Game Sebagai Guru</h3>
+            <p>Mainkan sendiri game yang sama seperti yang dilihat siswa, untuk memastikan materi sesuai sebelum dibagikan.</p>
+            <div class="game-mini-grid">
+              <button id="teacherOpenMathBtn" class="subject-card math">
+                <div class="subject-card-content"><div class="subject-icon">🔢</div><span class="card-game-tag">MODE GURU</span><h2>Perhitungan</h2><p>Ular Tangga, Memory Card, dan TTS Hitung-Hitungan.</p><span class="play-label">Coba Game →</span></div>
+              </button>
+              <button id="teacherOpenLogicBtn" class="subject-card logic">
+                <div class="subject-card-content"><div class="subject-icon">🧠</div><span class="card-game-tag">MODE GURU</span><h2>Logika Sederhana</h2><p>Pola, urutan, dan pemecahan masalah.</p><span class="play-label">Coba Game →</span></div>
+              </button>
+              <button id="teacherOpenPictureBtn" class="subject-card picture">
+                <div class="subject-card-content"><div class="subject-icon">🖼️</div><span class="card-game-tag">MODE GURU</span><h2>Tebak-Tebakan</h2><p>Amati gambar, baca petunjuk, pilih jawaban.</p><span class="play-label">Coba Game →</span></div>
+              </button>
+            </div>
+
+            <div class="teacher-divider"></div>
+
+            <div class="pvp-teacher-box">
+              <div class="pvp-teacher-head">
+                <span class="section-kicker">⚔️ PVP TARIK TAMBANG</span>
+                <h3>Battle antar siswa kelas <span id="pvpTeacherClassLabel">5A</span></h3>
+                <p>Buat satu room, bagikan kodenya ke siswa kelas ini. Begitu dimulai, sistem akan <strong>mengacak tim A/B secara otomatis</strong>. Siswa kelas lain tidak bisa ikut bergabung ke room ini.</p>
+              </div>
+
+              <div id="teacherPvpNoRoom">
+                <button id="createPvpRoomBtn" class="btn btn-primary">⚔️ Buat Room Tarik Tambang</button>
+              </div>
+
+              <div id="teacherPvpRoomBox" class="pvp-room-box hidden">
+                <div class="pvp-room-code-row">
+                  <div>
+                    <small>Kode Room (bagikan ke siswa)</small>
+                    <div id="pvpRoomCodeText" class="pvp-room-code">-----</div>
+                  </div>
+                  <span id="pvpRoomStatusBadge" class="pvp-status-badge">Menunggu pemain</span>
+                </div>
+                <p class="pvp-room-hint">Pemain bergabung (min. 2 untuk mulai):</p>
+                <div id="pvpTeacherPlayerList" class="pvp-player-list"></div>
+                <div class="pvp-room-actions">
+                  <button id="pvpStartBtn" class="btn btn-success" disabled>🎲 Acak Tim &amp; Mulai</button>
+                  <button id="pvpCloseRoomBtn" class="btn btn-outline">Tutup Room</button>
+                </div>
+                <div id="pvpTeacherLiveBox" class="pvp-live-box hidden"></div>
+              </div>
+            </div>
+          </div>
+          <div id="teacherScoresPanel" class="portal-panel teacher-section">
+            <h2>🏆 Nilai Kelas</h2>
+            <p>Data nilai yang ditampilkan dibatasi pada siswa kelas <strong id="teacherScoreClass">5A</strong>.</p>
+            <div id="teacherScoreList" class="student-list"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- ==================================================
+       PORTAL ADMIN
+  =================================================== -->
+  <section id="adminPortalPage" class="app-view hidden">
+    <header class="topbar">
+      <a href="#" class="brand"><span class="brand-icon">✦</span>UpPlay • Admin</a>
+      <button id="adminLogoutBtn" class="btn btn-outline">Keluar</button>
+    </header>
+    <main class="portal-content">
+      <div class="admin-layout">
+        <div class="portal-top">
+          <div><span class="badge">🛠️ Portal Admin</span><h1>Administrasi UpPlay</h1><p>Portal terpisah untuk mengelola akun, kelas, guru, siswa, dan konfigurasi aplikasi.</p></div>
+        </div>
+        <div class="security-banner">🔒 Portal admin tidak dapat diakses dari dashboard siswa atau guru. Dalam aplikasi produksi, akses admin wajib memakai autentikasi server.</div>
+        <div class="portal-cards">
+          <div class="admin-card"><h3>👨‍🎓 Data Siswa</h3><p>Kelola akun siswa, kelas, dan PIN.</p></div>
+          <div class="admin-card"><h3>👩‍🏫 Data Guru</h3><p>Atur akun guru dan kelas yang ditugaskan.</p></div>
+          <div class="admin-card"><h3>🏫 Data Kelas</h3><p>Kelola kelas 5A–5D dan 6A–6D.</p></div>
+        </div>
+        <div class="portal-panel">
+          <h2>Struktur kelas</h2>
+          <p>5A • 5B • 5C • 5D &nbsp; | &nbsp; 6A • 6B • 6C • 6D</p>
+        </div>
+      </div>
+    </main>
+  </section>
+  <!-- ==================================================
+       HALAMAN SEDERHANA UNTUK GURU / ADMIN
+  =================================================== -->
+  <section id="mathLevelsPage" class="app-view hidden">
+    <header class="topbar">
+      <a href="#" class="brand" id="levelsHome">
+        <span class="brand-icon">✦</span>
+        UpPlay
+      </a>
+
+      <button class="btn btn-outline back-dashboard">
+        ← Dashboard
+      </button>
+    </header>
+
+    <main class="levels-page">
+      <div class="page-head">
+        <button class="back-btn back-dashboard" aria-label="Kembali ke dashboard">
+          ←
+        </button>
+
+        <div>
+          <h1>Game Hitung'an</h1>
+          <p>Pilih level. Selesaikan level sebelumnya untuk membuka level berikutnya.</p>
+        </div>
+      </div>
+
+      <div class="level-grid">
+        <article id="mathLevelCard1" class="level-card active">
+          <div class="level-number">1</div>
+          <h2>Ular Tangga Pintar</h2>
+          <p>Jawab soal untuk membuka dadu, bergerak di papan 1–25, naik tangga, dan menghadapi kepala ular.</p>
+          <div class="game-preview">🎲🐍🪜</div>
+          <button id="startSnakeGameBtn" class="btn btn-primary">Mainkan Level 1</button>
+        </article>
+
+        <article id="level2Card" class="level-card locked">
+          <div id="level2Number" class="level-number">🔒</div>
+          <h2>Memory Card Angka</h2>
+          <p>Cocokkan pasangan operasi hitung dengan hasilnya. Gunakan ingatan dan kecepatanmu.</p>
+          <div class="game-preview">🃏➕</div>
+          <button id="level2Btn" class="btn btn-secondary" disabled>Selesaikan Level 1</button>
+        </article>
+
+        <article id="level3Card" class="level-card locked">
+          <div id="level3Number" class="level-number">🔒</div>
+          <h2>TTS Hitung-Hitungan</h2>
+          <p>Isi jawaban hitungan pada kotak mendatar dan menurun, lalu periksa semua jawaban sebelum waktu habis.</p>
+          <div class="game-preview">🧩🔢✏️</div>
+          <button id="level3Btn" class="btn btn-secondary" disabled>Selesaikan Level 2</button>
+        </article>
+
+
+<div class="prototype-strip" id="mathPrototypeStrip">
+  <h2>🧪 Prototipe Tambahan</h2>
+  <p>Demo UI/UX yang bisa dipakai sebagai bahan Figma tanpa mengubah alur Level 1–3.</p>
+  <div class="prototype-grid">
+    <article class="prototype-card"><h3>🧭 Labirin Angka</h3><p>Gerakkan avatar pada labirin 5×5. Saat sampai kotak tantangan, jawab perkalian/pembagian dasar untuk membuka jalan.</p><button id="openMathMazeBtn" class="btn btn-primary">Coba Labirin Angka</button></article>
+    <article class="prototype-card"><h3>🔐 Misteri Brankas Angka</h3><p>Boss level bergaya detektif: pecahkan soal logika matematika lalu masukkan 4 digit kode melalui keypad.</p><button id="openSafeCrackerBtn" class="btn btn-secondary">Coba Boss Level</button></article>
+  </div>
+</div>
+
+        <article id="level4Card" class="level-card locked" style="display:none">
+          <div id="level4Number" class="level-number">🔒</div>
+          <h2>Misi Soal Cerita</h2>
+          <p>Gunakan perhitungan dalam situasi sehari-hari. Lima jawaban benar menyelesaikan misi.</p>
+          <div class="game-preview">📚🧠</div>
+          <button id="level4Btn" class="btn btn-secondary" disabled>Selesaikan Level 3</button>
+        </article>
+
+        <article id="level5Card" class="level-card locked" style="display:none">
+          <div id="level5Number" class="level-number">🔒</div>
+          <h2>Boss Matematika</h2>
+          <p>Tantangan akhir campuran hitungan, pecahan, dan soal cerita dengan lima pertanyaan.</p>
+          <div class="game-preview">🏆🔢</div>
+          <button id="level5Btn" class="btn btn-secondary" disabled>Selesaikan Level 4</button>
+        </article>
+      </div>
+    </main>
+  </section>
+  <!-- ==================================================
+       GAME ULAR TANGGA
+  =================================================== -->
+  <section id="snakeGamePage" class="app-view hidden">
+    <header class="topbar">
+      <a href="#" class="brand" id="snakeHome">
+        <span class="brand-icon">✦</span>
+        UpPlay
+      </a>
+
+      <button id="backToLevelsBtn" class="btn btn-outline">
+        ← Pilih Level
+      </button>
+    </header>
+
+    <main class="game-page">
+      <div class="page-head">
+        <button id="backToLevelsIconBtn" class="back-btn" aria-label="Kembali ke level">
+          ←
+        </button>
+
+        <div>
+          <h1>Level 1: Ular Tangga Pintar</h1>
+          <p>Jawab dengan benar, kemudian kocok dadu dan menuju kotak 25.</p>
+        </div>
+      </div>
+
+      <div class="game-layout">
+        <section class="board-shell" aria-label="Papan permainan ular tangga">
+          <div id="snakeBoard" class="board">
+            <svg id="boardSvg" class="board-svg" viewBox="0 0 500 500"></svg>
+            <div id="playerToken" class="player-token" aria-label="Pion pemain">★</div>
+          </div>
+        </section>
+
+        <aside class="game-panel">
+          <h2>🎯 Tantangan Soal</h2>
+          <p>
+            Dadu terkunci sampai kamu menjawab soal dengan benar.
+          </p>
+
+          <div class="score-row">
+            <div class="mini-stat">
+              <small>Posisi</small>
+              <strong id="positionText">1 / 25</strong>
+            </div>
+
+            <div class="mini-stat">
+              <small>Soal Benar</small>
+              <strong id="correctText">0</strong>
+            </div>
+          </div>
+
+          <div class="question-box">
+            <span id="questionLabel" class="question-label">SOAL UNTUK MEMBUKA DADU</span>
+            <div id="questionText" class="question-text">
+              Memuat soal...
+            </div>
+
+            <div class="answer-area">
+              <input
+                id="answerInput"
+                type="number"
+                inputmode="numeric"
+                placeholder="Jawaban"
+                aria-label="Masukkan jawaban"
+              />
+              <button id="checkAnswerBtn" class="check-answer">
+                Jawab
+              </button>
+            </div>
+          </div>
+
+          <div id="gameMessage" class="game-message">
+            Jawab soal terlebih dahulu agar dadu terbuka.
+          </div>
+
+          <div class="dice-wrapper">
+      <div
+        id="diceDisplay"
+        class="dice"
+        aria-label="Dadu"
+        aria-live="polite"
+        title="Dadu"
+      >
+        <span class="dice-dot dot-1"></span>
+        <span class="dice-dot dot-2"></span>
+        <span class="dice-dot dot-3"></span>
+        <span class="dice-dot dot-4"></span>
+        <span class="dice-dot dot-5"></span>
+        <span class="dice-dot dot-6"></span>
+        <span class="dice-value">?</span>
+      </div>
+
+      <button id="rollDiceBtn" class="btn btn-primary roll-button" disabled>
+        🎲 Kocok Dadu
+      </button>
+    </div>
+
+          <div class="game-rules">
+            <h3>Aturan singkat</h3>
+            <p>
+              Jika pion berhenti di dasar tangga, kamu akan naik. Jika pion
+              berhenti di kepala ular, kamu mendapat soal sulit: jawaban benar
+              membuatmu tetap di tempat, jawaban salah membuatmu turun mengikuti
+              ekor ular.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </section>
+
+  <!-- ==================================================
+       GAME LOGIKA SEDERHANA
+  =================================================== -->
+  <section id="logicGamePage" class="app-view hidden">
+    <header class="topbar">
+      <a href="#" class="brand" id="logicHome">
+        <span class="brand-icon">✦</span>
+        UpPlay
+      </a>
+
+      <button id="backLogicDashboard" class="btn btn-outline">
+        ← Dashboard
+      </button>
+    </header>
+
+    <main class="logic-page">
+      <div class="page-head">
+        <button id="backLogicIconBtn" class="back-btn" aria-label="Kembali ke dashboard">
+          ←
+        </button>
+
+        <div>
+          <h1>Game Logika Sederhana</h1>
+          <p>Latih cara berpikirmu dengan pola, teka-teki, dan masalah sederhana untuk kelas 5–6 SD.</p>
+        </div>
+      </div>
+
+      <div class="logic-layout">
+        <div class="logic-levels">
+          <button class="logic-level-btn active" data-logic-level="1">
+            <strong>⭐ Level 1: Pemula</strong><small>Pola angka dan urutan sederhana.</small>
+          </button>
+          <button class="logic-level-btn" data-logic-level="2" disabled>
+            <strong>🧩 Level 2: Menengah</strong><small>Hubungan dan pemecahan masalah.</small>
+          </button>
+          <button class="logic-level-btn" data-logic-level="3" disabled>
+            <strong>🎯 Level 3: Strategi</strong><small>Gunakan beberapa petunjuk.</small>
+          </button>
+          <button class="logic-level-btn" data-logic-level="4" disabled>
+            <strong>🔥 Level 4: Ahli</strong><small>Gabungkan pola dan logika.</small>
+          </button>
+          <button class="logic-level-btn" data-logic-level="5" disabled>
+            <strong>🏆 Level 5: Master</strong><small>Tantangan logika paling menantang.</small>
+          </button>
+        </div>
+
+        <div class="logic-game-card">
+          <div class="logic-top">
+            <div>
+              <h2 id="logicGameTitle">🧠 Tantangan Logika</h2>
+              <p id="logicGameSubtitle" style="margin:6px 0 0;color:var(--muted);">
+                Pilih jawaban yang menurutmu paling tepat.
+              </p>
+            </div>
+
+            <div class="logic-score">
+              <span>⭐ Skor: <b id="logicScore">0</b></span>
+              <span>Soal: <b id="logicQuestionNumber">1</b>/5</span>
+            </div>
+          </div>
+
+          <div id="logicQuestionArea">
+            <div class="logic-question">
+              <span id="logicQuestionLabel" class="logic-question-label">Pertanyaan 1</span>
+              <div id="logicQuestionText" class="logic-question-text"></div>
+              <div id="logicOptions" class="logic-options"></div>
+              <div id="logicFeedback" class="logic-feedback">
+                Pilih salah satu jawaban untuk melanjutkan.
+              </div>
+            </div>
+
+            <div class="logic-actions">
+              <div class="logic-progress">
+                <div id="logicProgressFill" class="logic-progress-fill"></div>
+              </div>
+              <button id="logicNextBtn" class="logic-next btn" disabled>
+                Soal Berikutnya →
+              </button>
+            </div>
+          </div>
+
+          <div id="logicResult" class="logic-result hidden"></div>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <!-- ==================================================
+       GAME TEBAK GAMBAR
+  =================================================== -->
+  <section id="pictureGamePage" class="app-view hidden">
+    <header class="topbar">
+      <a href="#" class="brand" id="pictureHome">
+        <span class="brand-icon">✦</span>
+        UpPlay
+      </a>
+      <button id="backPictureDashboard" class="btn btn-outline">
+        ← Dashboard
+      </button>
+    </header>
+
+    <main class="picture-page">
+      <div class="page-head">
+        <button id="backPictureIconBtn" class="back-btn" aria-label="Kembali ke dashboard">←</button>
+        <div>
+          <h1>Game Tebak Gambar</h1>
+          <p>Tebak istilah dari gambar dan simbol. Materinya dekat dengan pelajaran kelas 5–6 SD.</p>
+        </div>
+      </div>
+
+      <div class="picture-layout">
+        <aside class="picture-levels">
+          <div class="picture-level-title">🎯 Pilih Tantangan</div>
+          <button class="picture-level-btn active" data-picture-level="1">
+            <strong>⭐ Level 1: Jelajah</strong><small>Kenali gambar dan konsep dasar.</small>
+          </button>
+          <button class="picture-level-btn" data-picture-level="2" disabled>
+            <strong>🧩 Level 2: Petualang 🔒</strong><small>Gabungkan beberapa petunjuk.</small>
+          </button>
+          <button class="picture-level-btn" data-picture-level="3" disabled>
+            <strong>🎯 Level 3: Detektif 🔒</strong><small>Perhatikan detail gambar.</small>
+          </button>
+          <button class="picture-level-btn" data-picture-level="4" disabled>
+            <strong>🔥 Level 4: Ahli 🔒</strong><small>Hubungkan gambar dengan materi.</small>
+          </button>
+          <button class="picture-level-btn" data-picture-level="5" disabled>
+            <strong>🏆 Level 5: Master 🔒</strong><small>Tantangan gambar tingkat akhir.</small>
+          </button>
+        </aside>
+
+        <section class="picture-game-card">
+          <div class="picture-top">
+            <div>
+              <h2 id="pictureGameTitle">🔍 Tebak Apa Ini?</h2>
+              <p id="pictureGameSubtitle">Amati gambar, baca petunjuk, lalu pilih jawabanmu.</p>
+            </div>
+            <div class="picture-score">⭐ <b id="pictureScore">0</b> poin · Soal <b id="pictureQuestionNumber">1</b>/5</div>
+          </div>
+
+          <div id="pictureQuestionArea">
+            <div class="picture-question">
+              <span id="pictureSubjectTag" class="picture-subject-tag">IPA</span>
+              <div id="pictureVisual" class="picture-visual" aria-label="Gambar petunjuk"></div>
+              <div id="pictureClue" class="picture-clue"></div>
+              <div id="pictureOptions" class="picture-options"></div>
+              <div id="pictureFeedback" class="picture-feedback">Pilih jawaban yang paling tepat.</div>
+            </div>
+            <div class="picture-actions">
+              <div class="picture-progress"><div id="pictureProgressFill" class="picture-progress-fill"></div></div>
+              <button id="pictureNextBtn" class="btn btn-primary" disabled>Soal Berikutnya →</button>
+            </div>
+          </div>
+
+          <div id="pictureResult" class="picture-result hidden"></div>
+        </section>
+      </div>
+    </main>
+  </section>
+
+  <!-- ==================================================
+       MEMORY CARD
+  =================================================== -->
+  <section id="memoryPage" class="app-view hidden">
+    <header class="topbar">
+      <a href="#" class="brand" id="memoryHome">
+        <span class="brand-icon">✦</span>
+        UpPlay
+      </a>
+
+      <button id="backToLevelsFromMemory" class="btn btn-outline">
+        ← Pilih Level
+      </button>
+    </header>
+
+    <main class="memory-page">
+      <div class="page-head">
+        <button id="backMemoryIconBtn" class="back-btn" aria-label="Kembali ke level">
+          ←
+        </button>
+
+        <div>
+          <h1>Level 2: Memory Card Angka</h1>
+          <p>Buka dua kartu dan pasangkan soal dengan jawaban yang benar.</p>
+        </div>
+      </div>
+
+      <div class="memory-layout">
+        <div class="memory-info">
+          <div>
+            <h2>🧠 Temukan semua pasangan</h2>
+            <p>Gunakan ingatanmu dan selesaikan semua pasangan kartu.</p>
+          </div>
+
+          <div class="memory-score">
+            <div>Pasangan: <span id="memoryPairs">0</span>/4</div>
+            <div>Langkah: <span id="memoryMoves">0</span></div>
+          </div>
+        </div>
+
+        <div id="memoryBoard" class="memory-board"></div>
+      </div>
+    </main>
+  </section>
+
+  <!-- ==================================================
+       PVP TARIK TAMBANG (room antar-siswa, tim diacak sistem)
+  =================================================== -->
+  <section id="tugWarPage" class="app-view hidden">
+    <header class="topbar">
+      <a href="#" class="brand" id="tugWarHome"><span class="brand-icon">✦</span>UpPlay</a>
+      <button id="tugWarExitBtn" class="btn btn-outline">Keluar Room</button>
+    </header>
+    <main class="tugwar-page">
+
+      <div id="tugWarWaiting" class="tugwar-waiting">
+        <div class="tugwar-waiting-box">
+          <span class="section-kicker">⏳ MENUNGGU GURU MEMULAI</span>
+          <h1>Room <span id="tugWarWaitingCode">-----</span></h1>
+          <p>Kamu sudah bergabung. Tunggu guru mengacak tim dan menekan "Mulai" — ini bisa berjalan otomatis begitu guru memulai, tidak perlu refresh halaman.</p>
+          <p class="tugwar-waiting-count"><strong id="tugWarWaitingCount">1</strong> pemain sudah bergabung</p>
+          <div id="tugWarWaitingPlayers" class="pvp-player-list"></div>
+        </div>
+      </div>
+
+      <div id="tugWarPlaying" class="tugwar-playing hidden">
+        <div class="page-head">
+          <div><h1>⚔️ Tarik Tambang — Room <span id="tugWarPlayingCode">-----</span></h1><p>Klik tombol TARIK sekuat dan sesering mungkin bersama rekan satu timmu!</p></div>
+        </div>
+        <div class="tugwar-arena">
+          <div class="tugwar-team team-a">
+            <h3>🔵 Tim A</h3>
+            <div id="tugWarTeamA" class="tugwar-team-list"></div>
+          </div>
+          <div class="tugwar-rope-wrap">
+            <div class="tugwar-score-row"><span id="tugWarScoreA">0</span><span class="tugwar-vs">VS</span><span id="tugWarScoreB">0</span></div>
+            <div class="tugwar-rope-track">
+              <div class="tugwar-rope-mid"></div>
+              <div id="tugWarRopeFlag" class="tugwar-rope-flag">🚩</div>
+            </div>
+            <div class="tugwar-rope-labels"><span>Tim A menang</span><span>Tim B menang</span></div>
+          </div>
+          <div class="tugwar-team team-b">
+            <h3>🔴 Tim B</h3>
+            <div id="tugWarTeamB" class="tugwar-team-list"></div>
+          </div>
+        </div>
+        <div class="tugwar-action-wrap">
+          <div id="tugWarYourTeamLabel" class="tugwar-your-team">Timmu: -</div>
+          <button id="tugWarPullBtn" class="tugwar-pull-btn">💪 TARIK!</button>
+        </div>
+      </div>
+
+      <div id="tugWarFinished" class="tugwar-finished hidden">
+        <div class="tugwar-finished-box">
+          <div id="tugWarResultEmoji" class="tugwar-result-emoji">🏆</div>
+          <h1 id="tugWarResultTitle">Tim A Menang!</h1>
+          <p id="tugWarResultText">Kerja sama tim luar biasa.</p>
+          <button id="tugWarBackBtn" class="btn btn-primary">Kembali</button>
+        </div>
+      </div>
+
+    </main>
+  </section>
+
+  <!-- ==================================================
+       HALAMAN SEDERHANA UNTUK GURU / ADMIN
+  =================================================== -->
+  
+
+<section id="simpleRolePage" class="app-view hidden">
+    <header class="topbar">
+      <a href="#" class="brand" id="roleHome">
+        <span class="brand-icon">✦</span>
+        UpPlay
+      </a>
+
+      <button id="roleLogoutBtn" class="btn btn-outline">Keluar</button>
+    </header>
+
+    <main class="simple-role-page">
+      <div class="simple-role-box">
+        <div style="font-size: 3.5rem; margin-bottom: 12px;">👩‍🏫</div>
+        <h1 id="roleTitle">Dashboard Guru</h1>
+        <p id="roleDescription">
+          Halaman ini adalah placeholder untuk dashboard guru. Nantinya guru dapat
+          membuat soal, melihat progres siswa, dan mengelola kelas.
+        </p>
+        <button id="roleBackBtn" class="btn btn-primary">Kembali ke Beranda</button>
+      </div>
+    </main>
+  </section>
+
+  <!-- ==================================================
+       MODAL LOGIN
+  =================================================== -->
+  <div id="loginModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle">
+    <div class="modal">
+      <div class="modal-top">
+        <div>
+          <h2 id="loginModalTitle">Masuk ke UpPlay</h2>
+          <p>Masuk sebagai siswa atau guru menggunakan akun masing-masing.</p>
+        </div>
+        <button id="closeModalBtn" class="close-modal" aria-label="Tutup modal">×</button>
+      </div>
+
+      <form id="loginForm" class="login-form">
+        <div class="field-group">
+          <label for="loginName">Nama</label>
+          <input id="loginName" type="text" placeholder="Masukkan nama" autocomplete="username" required>
+        </div>
+        <div class="field-group">
+          <label for="loginPassword">Password</label>
+          <div class="password-wrap">
+            <input id="loginPassword" type="password" placeholder="Masukkan password" autocomplete="current-password" required>
+            <button type="button" class="toggle-password" data-target="loginPassword" aria-label="Lihat password">👁</button>
+          </div>
+        </div>
+        <div id="loginError" class="login-error"></div>
+        <button class="btn btn-primary" type="submit">Masuk</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================================================
+       MODAL DAFTAR SISWA — SATU HALAMAN
+  =================================================== -->
+  <div id="registerModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="registerModalTitle">
+    <div class="modal">
+      <div class="modal-top">
+        <div>
+          <h2 id="registerModalTitle">Daftar Akun Siswa</h2>
+          <p>Pendaftaran hanya diperuntukkan bagi siswa. Guru tidak perlu mendaftar.</p>
+        </div>
+        <button id="closeRegisterBtn" class="close-modal" aria-label="Tutup">×</button>
+      </div>
+
+      <form id="registerForm" class="login-form">
+        <div class="field-group">
+          <label for="registerName">Nama</label>
+          <input id="registerName" type="text" placeholder="Contoh: Siti Aminah" autocomplete="name" required>
+        </div>
+
+        <div class="field-group">
+          <label for="registerClass">Kelas</label>
+          <select id="registerClass" required>
+            <option value="">Pilih kelas</option>
+            <option value="5A">5A</option><option value="5B">5B</option>
+            <option value="5C">5C</option><option value="5D">5D</option>
+            <option value="6A">6A</option><option value="6B">6B</option>
+            <option value="6C">6C</option><option value="6D">6D</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="registerEmail">Email</label>
+          <input id="registerEmail" type="email" placeholder="contoh@gmail.com" inputmode="email" autocomplete="email" required>
+        </div>
+
+        <div class="field-group">
+          <label for="registerPassword">Buat Password</label>
+          <div class="password-wrap">
+            <input id="registerPassword" type="password" placeholder="Min. 6 karakter, huruf & angka" autocomplete="new-password" required>
+            <button type="button" class="toggle-password" data-target="registerPassword" aria-label="Lihat password">👁</button>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="registerConfirmPassword">Konfirmasi Password</label>
+          <div class="password-wrap">
+            <input id="registerConfirmPassword" type="password" placeholder="Ketik ulang kata sandi" autocomplete="new-password" required>
+            <button type="button" class="toggle-password" data-target="registerConfirmPassword" aria-label="Lihat password">👁</button>
+          </div>
+        </div>
+
+        <div class="auth-note">🔐 Password dibuat sendiri saat mendaftar dan digunakan saat siswa masuk. Email hanya menjadi data akun, bukan password.</div>
+        <div id="registerError" class="login-error"></div>
+        <div class="auth-actions-bottom">
+          <button type="submit" class="btn btn-primary up-reg-btn">Simpan &amp; Daftar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================================================
+       MODAL JOIN ROOM
+  =================================================== -->
+  <div id="roomModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="roomModalTitle">
+    <div class="modal room-modal">
+      <div class="modal-top">
+        <div>
+          <h2 id="roomModalTitle">⚔️ Join Room Tarik Tambang</h2>
+          <p>Masukkan kode room yang diberikan guru kelasmu. Room guru kelas lain tidak dapat dimasuki.</p>
+        </div>
+        <button id="closeRoomModalBtn" class="close-modal" aria-label="Tutup">×</button>
+      </div>
+      <form id="roomForm" class="login-form">
+        <div>
+          <label for="roomCodeInput">Kode Room</label>
+          <input id="roomCodeInput" maxlength="8" placeholder="Contoh: 5A123" autocomplete="off" />
+        </div>
+        <div id="roomError" class="login-error"></div>
+        <button class="btn btn-success" type="submit">Gabung Room →</button>
+        <div class="login-note">Room tersinkron otomatis antar tab/perangkat di browser yang sama lewat penyimpanan lokal. Untuk realtime lintas perangkat berbeda secara penuh, aplikasi produksi perlu backend/WebSocket (mis. Firebase/Supabase).</div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/05-up-game-switch.js" data-layer="up-game-switch"></script>
+<script src="js/06-main.js"></script>
+
+<link rel="stylesheet" href="css/06-base.css">
+
+
+<link rel="stylesheet" href="css/07-level-revision-style.css" data-layer="level-revision-style">
+
+<section id="crosswordGamePage" class="app-view hidden">
+  <header class="topbar">
+    <a href="#" class="brand" id="crosswordHome"><span class="brand-icon">✦</span>UpPlay</a>
+    <button id="backCrosswordLevels" class="btn btn-outline">← Pilih Level</button>
+  </header>
+  <main class="game-page">
+    <div class="page-head">
+      <button id="backCrosswordIcon" class="back-btn" aria-label="Kembali ke level">←</button>
+      <div><h1>Level 3: TTS Hitung-Hitungan</h1><p>Isi jawaban hitungan dalam bentuk kata pada kolom mendatar dan menurun. Perhatikan huruf yang bersilangan.</p></div>
+    </div>
+    <div class="crossword-layout">
+      <section class="crossword-board-wrap"><div id="crosswordBoard" class="crossword-board" aria-label="Kotak TTS matematika"></div></section>
+      <aside class="crossword-panel">
+        <h2>🧩 TTS Matematika</h2>
+        <p>Tulis jawaban dalam <strong>teks</strong>, bukan angka. Huruf pada kotak persilangan harus sama. Contoh: 3 + 3 = <strong>ENAM</strong>.</p>
+        <div class="score-row"><div class="mini-stat"><small>Jawaban benar</small><strong id="crosswordCorrect">0 / 4</strong></div><div class="mini-stat"><small>Waktu</small><strong id="crosswordTimeText">03:00</strong></div></div>
+        <div class="crossword-clue-box"><h3>↔ Mendatar</h3><ol><li value="1"><strong>4 + 4 = ....</strong> <span>(7 kotak)</span></li><li value="2"><strong>4 − 3 = ....</strong> <span>(4 kotak)</span></li></ol></div>
+        <div class="crossword-clue-box"><h3>↕ Menurun</h3><ol><li value="3"><strong>1 + 1 = ....</strong> <span>(3 kotak)</span></li><li value="4"><strong>5 + 4 = ....</strong> <span>(8 kotak)</span></li></ol></div>
+        <button id="checkCrosswordBtn" class="btn btn-primary">Periksa Jawaban</button>
+        <div id="crosswordFeedback" class="game-message crossword-result">Isi seluruh kotak, lalu tekan Periksa Jawaban.</div>
+      </aside>
+    </div>
+  </main>
+</section>
+
+<div id="gameTutorialModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="gameTutorialTitle">
+  <div class="modal"><div class="modal-top"><div><h2 id="gameTutorialTitle">Tutorial Game</h2><p id="gameTutorialText">Baca ketentuan sebelum mulai.</p></div><button id="closeTutorialBtn" class="close-modal" aria-label="Tutup">×</button></div><ul id="gameTutorialRules" class="tutorial-rules"></ul><button id="startTutorialGameBtn" class="btn btn-primary">Saya Mengerti, Mulai</button></div>
+</div>
+<div id="countdownOverlay" class="countdown-overlay" aria-live="assertive"><div id="countdownNumber" class="countdown-number">3</div></div>
+
+<div id="levelOutcomeModal" class="level-outcome-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="levelOutcomeTitle">
+  <div class="level-outcome-card">
+    <div id="levelOutcomeIcon" class="level-outcome-icon">🏆</div>
+    <div class="level-outcome-kicker" id="levelOutcomeKicker">LEVEL SELESAI</div>
+    <h2 id="levelOutcomeTitle">Hebat!</h2>
+    <p id="levelOutcomeText"></p>
+    <div id="levelOutcomeStars" class="level-outcome-stars"></div>
+    <div class="level-outcome-actions">
+      <button id="levelOutcomePrimary" class="btn btn-primary">Lanjut Level</button>
+      <button id="levelOutcomeSecondary" class="btn btn-outline">Kembali ke Menu Level</button>
+    </div>
+  </div>
+</div>
+
+
+
+<script src="js/07-level-revision-script.js" data-layer="level-revision-script"></script>
+
+<script src="js/08-final-game-fixes.js" data-layer="final-game-fixes"></script>
+
+<script src="js/09-final-game-navigation-fix.js" data-layer="final-game-navigation-fix"></script>
+
+<script src="js/10-tutorial-game-hardening.js" data-layer="tutorial-game-hardening"></script>
+
+<script src="js/11-snake-final-engine.js" data-layer="snake-final-engine"></script>
+
+
+<script src="js/12-snake-navigation-and-visual-final.js" data-layer="snake-navigation-and-visual-final"></script>
+
+<link rel="stylesheet" href="css/08-base.css">
+
+
+
+<link rel="stylesheet" href="css/09-student-dashboard-professional-v6.css" data-layer="student-dashboard-professional-v6">
+
+<script src="js/13-student-dashboard-professional-v6-js.js" data-layer="student-dashboard-professional-v6-js"></script>
+
+
+<link rel="stylesheet" href="css/10-student-ui-final-v2.css" data-layer="student-ui-final-v2">
+
+
+<script src="js/14-student-ui-final-v2-js.js" data-layer="student-ui-final-v2-js"></script>
+
+
+<link rel="stylesheet" href="css/11-student-ui-v4-final.css" data-layer="student-ui-v4-final">
+
+
+<script src="js/15-student-ui-v4-navigation.js" data-layer="student-ui-v4-navigation"></script>
+
+<link rel="stylesheet" href="css/12-cerdasplay-navigation-authority-v5.css" data-layer="cerdasplay-navigation-authority-v5">
+<script src="js/16-cerdasplay-navigation-authority-v5-js.js" data-layer="cerdasplay-navigation-authority-v5-js"></script>
+
+<link rel="stylesheet" href="css/13-cerdasplay-profile-summary-lockdown.css" data-layer="cerdasplay-profile-summary-lockdown">
+
+<link rel="stylesheet" href="css/14-cerdasplay-pvp-style.css" data-layer="cerdasplay-pvp-style">
+
+<script src="js/17-cerdasplay-pvp-tugofwar.js" data-layer="cerdasplay-pvp-tugofwar"></script>
+
+<script src="js/18-cerdasplay-final-clean-navigation.js" data-layer="cerdasplay-final-clean-navigation"></script>
+
+
+<link rel="stylesheet" href="css/15-cerdasplay-room-vnext-style.css" data-layer="cerdasplay-room-vnext-style">
+
+</style>
+
+<link rel="stylesheet" href="css/16-teacher-dashboard-chart-style.css" data-layer="teacher-dashboard-chart-style">
+
+<script src="js/19-cerdasplay-room-vnext.js" data-layer="cerdasplay-room-vnext"></script>
+
+
+<section id="mathMazePage" class="app-view hidden">
+  <header class="topbar"><a href="#" class="brand" id="mazeHome"><span class="brand-icon">✦</span>UpPlay</a><button id="mazeBack" class="btn btn-outline">← Menu Level</button></header>
+  <main class="levels-page">
+    <div class="page-head"><button id="mazeBackIcon" class="back-btn">←</button><div><h1>🧭 Labirin Angka</h1><p>Gerakkan avatar, pecahkan soal, dan temukan jalan menuju bintang.</p></div></div>
+    <div class="maze-shell">
+      <section class="maze-card"><div id="mazeGrid" class="maze-grid"></div><div class="maze-controls"><span class="empty"></span><button data-move="up">↑</button><span class="empty"></span><button data-move="left">←</button><button data-move="down">↓</button><button data-move="right">→</button></div></section>
+      <aside class="maze-panel"><div class="score-row"><div class="mini-stat"><small>Skor</small><strong id="mazeScore">0</strong></div><div class="mini-stat"><small>Nyawa</small><strong id="mazeLives">❤️❤️❤️</strong></div></div><div id="mazeQuestion" class="maze-question" style="margin-top:14px"><h3>🚩 Tantangan</h3><p>Gunakan tombol arah untuk bergerak.</p></div><div id="mazeStatus" class="maze-status">Capai kotak ⭐ untuk menang.</div></aside>
+    </div>
+  </main>
+</section>
+
+<section id="safeCrackerPage" class="app-view hidden">
+  <header class="topbar" style="background:#0c1220;border-color:#26364d"><a href="#" class="brand" id="safeHome" style="color:#eef5ff"><span class="brand-icon">✦</span>UpPlay</a><button id="safeBack" class="btn btn-outline">← Menu Level</button></header>
+  <main class="safe-shell">
+    <div class="safe-story"><strong>🕵️ MISI TERAKHIR</strong><br>Brankas angka hanya akan terbuka jika kamu menemukan hasil dari teka-teki matematika. Jawaban harus dimasukkan sebagai <strong>4 digit</strong>. Contoh: 0040.</div>
+    <section id="safeCard" class="safe-card"><div class="safe-door"><div><div id="safeDigits" class="safe-digits"><span class="safe-digit">_</span><span class="safe-digit">_</span><span class="safe-digit">_</span><span class="safe-digit">_</span></div><div id="safeLight" class="safe-light"></div></div></div><div id="safeQuestion" class="safe-story" style="margin-top:18px;text-align:center">Berapa hasil dari <strong>(15 × 2) ÷ 3 + 5</strong>?</div><div id="safeKeypad" class="safe-keypad"></div><div class="safe-actions"><button id="safeClear" class="btn btn-outline">Hapus</button><button id="safeSubmit" class="btn btn-primary">🔓 Buka</button></div><div id="safeResult" class="safe-result">Masukkan kode 4 digit.</div></section>
+  </main>
+</section>
+
+<script src="js/20-prototype-and-outcome-script.js" data-layer="prototype-and-outcome-script"></script>
+
+<link rel="stylesheet" href="css/17-real-level45-css.css" data-layer="real-level45-css">
+
+<script src="js/21-real-level45-script.js" data-layer="real-level45-script"></script>
+
+
+<link rel="stylesheet" href="css/18-final-level-layout-fix.css" data-layer="final-level-layout-fix">
+
+<script src="js/22-final-level-flow-fix.js" data-layer="final-level-flow-fix"></script>
+
+<link rel="stylesheet" href="css/19-final-laptop-layout-v2.css" data-layer="final-laptop-layout-v2">
+<script src="js/23-final-laptop-flow-v2.js" data-layer="final-laptop-flow-v2"></script>
+
+<link rel="stylesheet" href="css/20-level-card-clickable-final-fix.css" data-layer="level-card-clickable-final-fix">
+
+<link rel="stylesheet" href="css/21-level-card-real-elements-fix.css" data-layer="level-card-real-elements-fix">
+
+<script src="js/24-level-card-click-handler-final-fix.js" data-layer="level-card-click-handler-final-fix"></script>
+
+
+<link rel="stylesheet" href="css/22-timeout-popup-style.css" data-layer="timeout-popup-style">
+<div id="timeoutModalV3" class="level-outcome-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="tmTitle">
+  <div class="level-outcome-card">
+    <div class="level-outcome-icon">⏰</div>
+    <div class="level-outcome-kicker" id="tmKicker">WAKTU HABIS</div>
+    <h2 id="tmTitle">Waktu Habis!</h2>
+    <p id="tmText">Waktu pengerjaan sudah habis sebelum semua soal selesai.</p>
+    <div class="tm-level" id="tmLevel"></div>
+    <div class="tm-score" id="tmScore"></div>
+    <div class="level-outcome-actions">
+      <button id="tmRetry" class="btn btn-primary" type="button">🔄 Main Lagi</button>
+      <button id="tmMenu" class="btn btn-outline" type="button">🏠 Kembali ke Menu</button>
+    </div>
+  </div>
+</div>
+<script src="js/25-timeout-popup-script.js" data-layer="timeout-popup-script"></script>
+
+<link rel="stylesheet" href="css/23-final-user-requested-levels-v4.css" data-layer="final-user-requested-levels-v4">
+
+<script src="js/26-final-user-requested-levels-v4-script.js" data-layer="final-user-requested-levels-v4-script"></script>
+
+
+<!-- ================================================================
+     CERDASPLAY — FINAL GAMEPLAY PATCH V5
+     Replaces the conflicting legacy handlers for Levels 2–5 with one
+     deterministic, production-style game flow.
+================================================================= -->
+<link rel="stylesheet" href="css/24-professional-gameplay-v5-style.css" data-layer="professional-gameplay-v5-style">
+
+<link rel="stylesheet" href="css/25-cw3-style.css" data-layer="cw3-style">
+
+<link rel="stylesheet" href="css/26-l4-big-maze-style.css" data-layer="l4-big-maze-style">
+<script src="js/27-professional-gameplay-v5-script.js" data-layer="professional-gameplay-v5-script"></script>
+
+
+<!-- ===================================================================
+     PORTAL SISWA — Dashboard (grafik), Profil (ikon mata), Game (card menu)
+     Blok ini sengaja diletakkan paling akhir; hanya menyentuh #studentDashboard.
+     =================================================================== -->
+<link rel="stylesheet" href="css/27-student-portal-v7-style.css" data-layer="student-portal-v7-style">
+
+<script src="js/28-student-portal-v7-js.js" data-layer="student-portal-v7-js"></script>
+
+<link rel="stylesheet" href="css/28-teacher-guru-v4-style.css" data-layer="teacher-guru-v4-style">
+
+<script src="js/29-teacher-guru-v4-js.js" data-layer="teacher-guru-v4-js"></script>
+
+
+<link rel="stylesheet" href="css/29-cd-fit-style.css" data-layer="cd-fit-style">
+
+<script src="js/30-cd-final-ui.js" data-layer="cd-final-ui"></script>
+
+<!-- =====================================================================
+     SISWA — ALUR GAME HITUNG'AN LEVEL 1–5 (V8)
+     Rules (bubble) -> hitung mundur 3,2,1 -> game. Panah kiri atas = konfirmasi keluar.
+     Hanya menyentuh tampilan/alur siswa. Portal guru tidak diubah.
+     ===================================================================== -->
+<link rel="stylesheet" href="css/30-cp-student-flow-v8-style.css" data-layer="cp-student-flow-v8-style">
+
+<div id="cpRulesModal" class="cp-ov" role="dialog" aria-modal="true" aria-labelledby="cpRulesTitle">
+  <div class="cp-bubble">
+    <button type="button" id="cpRulesClose" class="cp-close" aria-label="Tutup">✕</button>
+    <span id="cpRulesBadge" class="cp-badge">Level 1</span>
+    <h2 id="cpRulesTitle">Rules</h2>
+    <p id="cpRulesGoal" class="cp-goal"></p>
+    <div class="cp-time"><span>⏱️ Waktu pengerjaan</span><strong id="cpRulesTime">3 menit</strong></div>
+    <ul id="cpRulesList" class="cp-list"></ul>
+    <div class="cp-actions"><button type="button" id="cpRulesStart" class="btn btn-primary">Saya Mengerti, Mulai</button></div>
+  </div>
+</div>
+
+<div id="cpExitModal" class="cp-ov" role="dialog" aria-modal="true" aria-labelledby="cpExitTitle">
+  <div class="cp-bubble cp-small">
+    <div class="cp-emoji">🚪</div>
+    <h2 id="cpExitTitle">Keluar dari permainan?</h2>
+    <p class="cp-sub">Level ini belum selesai. Kamu akan kembali ke menu level.</p>
+    <div class="cp-actions">
+      <button type="button" id="cpExitNo" class="btn btn-primary">Tidak</button>
+      <button type="button" id="cpExitYes" class="btn btn-outline">Ya</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/31-cp-student-flow-v8-js.js" data-layer="cp-student-flow-v8-js"></script>
+
+<link rel="stylesheet" href="css/31-cp-live-style.css" data-layer="cp-live-style">
+<script src="js/32-cp-live-js.js" data-layer="cp-live-js"></script>
+
+<link rel="stylesheet" href="css/32-cp-game-style.css" data-layer="cp-game-style">
+<script src="js/33-cp-game-js.js" data-layer="cp-game-js"></script>
+
+<link rel="stylesheet" href="css/33-cp-admin-style.css" data-layer="cp-admin-style">
+<script src="js/34-cp-admin-js.js" data-layer="cp-admin-js"></script>
+
+<link rel="stylesheet" href="css/34-lg-style.css" data-layer="lg-style">
+<script src="js/35-lg-js.js" data-layer="lg-js"></script>
+
+
+<link rel="stylesheet" href="css/35-cp-levelcard-sync-style.css" data-layer="cp-levelcard-sync-style">
+<script src="js/36-cp-levelcard-sync-js.js" data-layer="cp-levelcard-sync-js"></script>
+
+<link rel="stylesheet" href="css/36-cp-vault-style.css" data-layer="cp-vault-style">
+<script src="js/37-cp-vault-js.js" data-layer="cp-vault-js"></script>
+
+<!-- ==================================================
+     GAME TEBAK-TEBAKAN (portal siswa) — menu 5 level seperti Logika Sederhana
+=================================================== -->
+<link rel="stylesheet" href="css/37-tt-style.css" data-layer="tt-style">
+<script src="js/38-tt-js.js" data-layer="tt-js"></script>
+<link rel="stylesheet" href="css/38-tt-l45-style.css" data-layer="tt-l45-style">
+<link rel="stylesheet" href="css/39-cp-roomrun-style.css" data-layer="cp-roomrun-style">
+<script src="js/39-cp-roomrun-js.js" data-layer="cp-roomrun-js"></script>
+
+
+<!-- =====================================================================
+     JOIN ROOM V9 — paste, riwayat 24 jam, panel hasil room di Nilai Siswa.
+     (Portal admin tidak disentuh.)
+     ===================================================================== -->
+<link rel="stylesheet" href="css/40-cp-room-v9-style.css" data-layer="cp-room-v9-style">
+<script src="js/40-cp-room-v9-js.js" data-layer="cp-room-v9-js"></script>
+
+<link rel="stylesheet" href="css/41-up-v3-style.css" data-layer="up-v3-style">
+
+<link rel="stylesheet" href="css/42-upx-shell-style.css" data-layer="upx-shell-style">
+
+<script src="js/41-upx-shell-script.js" data-layer="upx-shell-script"></script>
+
+<link rel="stylesheet" href="css/43-upy-style.css" data-layer="upy-style">
+<script src="js/42-upy-script.js" data-layer="upy-script"></script>
+
+
+
+<link rel="stylesheet" href="css/44-upz-style.css" data-layer="upz-style">
+
+<script src="js/43-upz-script.js" data-layer="upz-script"></script>
+
+<link rel="stylesheet" href="css/45-upz7-style.css" data-layer="upz7-style">
+
+<script src="js/44-upz7-script.js" data-layer="upz7-script"></script>
+
+<link rel="stylesheet" href="css/46-upz8-style.css" data-layer="upz8-style">
+
+<script src="js/45-upz8-script.js" data-layer="upz8-script"></script>
+
+<link rel="stylesheet" href="css/47-upz9-style.css" data-layer="upz9-style">
+
+<script src="js/46-upz9-script.js" data-layer="upz9-script"></script>
+
+<link rel="stylesheet" href="css/48-upz10-style.css" data-layer="upz10-style">
+
+<script src="js/47-upz10-script.js" data-layer="upz10-script"></script>
+
+
+<link rel="stylesheet" href="css/49-upz11-style.css" data-layer="upz11-style">
+
+<script src="js/48-upz11-script.js" data-layer="upz11-script"></script>
+
+
+<link rel="stylesheet" href="css/50-upz12-style.css" data-layer="upz12-style">
+
+<script src="js/49-upz12-script.js" data-layer="upz12-script"></script>
+
+<link rel="stylesheet" href="css/51-upz13-style.css" data-layer="upz13-style">
+
+<script src="js/50-upz13-script.js" data-layer="upz13-script"></script>
+
+<link rel="stylesheet" href="css/52-upz14-style.css" data-layer="upz14-style">
+
+<script src="js/51-upz14-script.js" data-layer="upz14-script"></script>
+
+</body>
+</html>

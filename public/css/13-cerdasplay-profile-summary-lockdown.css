@@ -1,0 +1,33 @@
+/* =========================================================
+   KUNCI TAMPILAN "RINGKASAN PROFIL" (dan seluruh kartu Profil).
+   Sebelumnya banyak skrip lama saling menimpa status tampil/sembunyi
+   sub-halaman siswa, sehingga kartu Ringkasan Akun/Profil bisa ikut
+   kelihatan saat pindah ke halaman Card Menu, Game, atau Dashboard.
+   Aturan di bawah ini membuatnya TERSEMBUNYI SECARA DEFAULT di mana pun,
+   dan HANYA dimunculkan kembali kalau tab sidebar "Profil"
+   (#studentViewProfile) benar-benar sedang aktif (tidak berclass .hidden).
+   Ini berlaku terlepas dari skrip JS apa pun yang mengatur status lain,
+   jadi ringkasan profil dijamin cuma muncul di tampilan sidebar Profil.
+========================================================= */
+.profile-layout,
+.profile-card,
+.profile-summary{
+  display:none!important;
+}
+
+#studentDashboard #studentViewProfile:not(.hidden) .profile-layout{
+  display:grid!important;
+}
+#studentDashboard #studentViewProfile:not(.hidden) .profile-card,
+#studentDashboard #studentViewProfile:not(.hidden) .profile-summary{
+  display:block!important;
+}
+
+/* Jaga-jaga tambahan: kalau #studentDashboard sendiri sedang tersembunyi
+   (artinya pengguna ada di Card Menu/Level/Game/halaman lain), pastikan
+   kartu profil tidak pernah dipaksa tampil oleh aturan apa pun. */
+#studentDashboard.hidden .profile-layout,
+#studentDashboard.hidden .profile-card,
+#studentDashboard.hidden .profile-summary{
+  display:none!important;
+}

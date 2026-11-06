@@ -1,0 +1,453 @@
+/* ===== Game Logika (menyamai tampilan Game Hitung'an) ===== */
+#lgPlayPage .topbar .btn{display:none!important}
+#lgPlayPage:not(.hidden){display:flex;flex-direction:column;min-height:100vh}
+#lgPlayPage>main{flex:1;width:100%;max-width:none!important;margin:0;padding:0 26px 18px!important;box-sizing:border-box}
+#lgPlayPage .page-head,#lgPlayPage .lg-layout{width:100%;max-width:1100px;margin-left:auto!important;margin-right:auto!important;box-sizing:border-box}
+#lgPlayPage:not(.hidden) .cd-timebar{display:flex;align-items:center;gap:14px;flex:none;margin:8px 26px 6px;height:24px}
+.lg-layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px;align-items:start}
+.lg-card{background:#fff;border:1px solid var(--line,#e5e0d9);border-radius:26px;padding:22px;box-shadow:0 14px 40px rgba(30,31,31,.08)}
+.lg-qhead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
+.lg-qhead h2{margin:0;font-size:1.15rem;color:#2a2a29}
+.lg-chip{padding:6px 12px;border-radius:999px;background:#f6f3ee;color:#1e1f1f;font-weight:900;font-size:.78rem;white-space:nowrap}
+.lg-stage{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:12px;min-height:150px;padding:20px;border-radius:20px;background:#f6f3ee;border:1px solid #efe9e1;margin-bottom:14px}
+.lg-tile{min-width:68px;height:68px;padding:0 10px;display:grid;place-items:center;border-radius:16px;background:#fff;border:1px solid #e5e0d9;box-shadow:0 4px 10px rgba(30,31,31,.07);font-size:1.9rem;font-weight:1000;color:#2a2a29}
+.lg-tile.q{background:#efe9e1;border:2px dashed #ba9d7f;color:#1e1f1f}
+.lg-arrow{font-size:1.4rem;color:#84817d;font-weight:900}
+.lg-opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.lg-opt{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;background:#fff;border:2px solid #e5e0d9;font:inherit;font-size:1.5rem;font-weight:1000;color:#2a2a29;cursor:pointer;text-align:left;transition:.15s}
+.lg-opt:hover:not(:disabled){border-color:#ba9d7f;transform:translateY(-2px);box-shadow:0 8px 18px rgba(30,31,31,.15)}
+.lg-opt b{width:30px;height:30px;flex:none;display:grid;place-items:center;border-radius:9px;background:#efe9e1;color:#1e1f1f;font-size:.8rem}
+.lg-opt.ok{background:#e9fbf0;border-color:#22c55e}.lg-opt.ok b{background:#22c55e;color:#fff}
+.lg-opt.bad{background:#fff0f0;border-color:#ef4444;animation:lgShake .35s}.lg-opt.bad b{background:#ef4444;color:#fff}
+.lg-opt:disabled{cursor:default}
+@keyframes lgShake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.lg-fb{margin-top:14px;padding:13px 16px;border-radius:14px;background:#f6f3ee;color:#4a4a49;font-weight:900}
+.lg-fb.ok{background:#e9fbf0;color:#15803d;border:1px solid #86efac}
+.lg-fb.bad{background:#fff0f0;color:#dc2626;border:1px solid #fca5a5}
+.lg-dots{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.lg-dots i{width:22px;height:8px;border-radius:99px;background:#e5e0d9}
+.lg-dots i.d{background:#22c55e}.lg-dots i.c{background:#1e1f1f}
+#lgPlayPage .game-panel{box-sizing:border-box}
+.lg-note{margin:12px 0 0;color:#4a4a49;font-weight:700;font-size:.85rem;line-height:1.5}
+#lgOutcome{z-index:100000}
+#lgOutcome .lg-score{margin:14px auto 4px;padding:12px 16px;max-width:380px;border-radius:14px;background:#fff4e8;color:#b45309;font-weight:900;font-size:1.05rem}
+#lgOutcome .lg-level{color:#84817d;font-weight:800;font-size:.85rem;margin-top:6px}
+#lgOutcome .level-outcome-stars{font-size:2rem;color:#f5a000;letter-spacing:4px;margin:12px 0 2px}
+@media(max-width:860px){.lg-layout{grid-template-columns:1fr}.lg-opts{grid-template-columns:1fr}.lg-tile{min-width:54px;height:54px;font-size:1.5rem}}
+@media(min-width:900px) and (min-height:470px){
+  #lgPlayPage:not(.hidden){height:100vh;overflow:hidden}
+  #lgPlayPage:not(.hidden) .topbar{flex:none;height:52px;min-height:0;padding-top:0;padding-bottom:0;box-sizing:border-box;position:relative}
+  #lgPlayPage:not(.hidden) .topbar .brand-icon{width:32px;height:32px;font-size:1rem;border-radius:10px}
+  #lgPlayPage:not(.hidden)>main{overflow:auto;min-height:0}
+  #lgPlayPage:not(.hidden) .page-head{margin:0 0 8px!important;gap:10px;align-items:center;padding:0}
+  #lgPlayPage:not(.hidden) .page-head h1{margin:0;font-size:1.3rem;line-height:1.2}
+  #lgPlayPage:not(.hidden) .page-head p{display:none}
+  #lgPlayPage:not(.hidden) .page-head .back-btn{width:34px;height:34px;min-width:34px;font-size:1rem}
+}
+
+/* ===== Level 2: Memory Match 3 baris × 4 kolom ===== */
+#lgPlayPage[data-mode="mem"] #lgPatCard{display:none}
+#lgPlayPage:not([data-mode="mem"]) #lgMemCard{display:none}
+#lgMemCard{display:flex;flex-direction:column;min-width:0}
+.lg-mboard{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:12px;height:clamp(240px,calc(100vh - 360px),520px);padding:14px;border-radius:20px;background:#f6f3ee;border:1px solid #efe9e1;box-sizing:border-box}
+.lg-mcard{position:relative;min-width:0;min-height:0;padding:0;border:0;background:none;cursor:pointer;perspective:700px;font:inherit}
+.lg-min{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .45s}
+.lg-mcard.flip .lg-min,.lg-mcard.match .lg-min{transform:rotateY(180deg)}
+.lg-mf,.lg-mb{position:absolute;inset:0;display:grid;place-items:center;border-radius:16px;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;line-height:1}
+.lg-mf{background:linear-gradient(135deg,#1e1f1f,#ba9d7f);color:#fff;font-size:clamp(1.4rem,3.2vw,2.4rem);font-weight:1000;box-shadow:0 6px 14px rgba(30,31,31,.25)}
+.lg-mcard:hover:not(.flip):not(.match) .lg-mf{filter:brightness(1.1)}
+.lg-mb{transform:rotateY(180deg);background:#fff;border:2px solid #e5e0d9;font-size:clamp(1.6rem,4.2vw,3rem);box-shadow:0 4px 10px rgba(30,31,31,.08)}
+.lg-mcard.match .lg-mb{background:#e9fbf0;border-color:#22c55e;animation:lgPop .4s}
+@keyframes lgPop{50%{transform:rotateY(180deg) scale(1.08)}}
+#lgMemCard .lg-fb{margin-top:12px}
+@media(max-width:860px){.lg-mboard{height:auto;aspect-ratio:4/3;gap:8px;padding:10px}}
+
+/* ===== Level 3: Balok Logika ===== */
+#lgPlayPage[data-mode="blk"] #lgPatCard,#lgPlayPage[data-mode="blk"] #lgMemCard{display:none}
+#lgPlayPage:not([data-mode="blk"]) #lgBlkCard,#lgPlayPage:not([data-mode="blk"]) .lg-trayw{display:none}
+#lgPlayPage[data-mode="blk"] .lg-dots,#lgPlayPage[data-mode="blk"] #lgPanelP{display:none}
+#lgPlayPage[data-mode="blk"] .lg-layout{grid-template-columns:minmax(0,1fr) 370px}
+#lgBlkCard{display:flex;flex-direction:column;min-width:0;padding:16px 20px}
+#lgBlkCard .lg-qhead{margin-bottom:10px}
+.lg-bwrap{display:grid;place-items:center;height:clamp(250px,calc(100vh - 292px),600px);border-radius:20px;background:#f6f3ee;border:1px solid #efe9e1;box-sizing:border-box;overflow:hidden}
+.lg-board{position:relative;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+.lg-sil{position:absolute;left:0;top:0;pointer-events:none}
+.lg-bp,.lg-ghost{position:absolute;pointer-events:none;line-height:0}
+.lg-bp .lg-pc polygon{pointer-events:visiblePainted;cursor:grab}
+.lg-bp.sel .lg-pc{filter:drop-shadow(0 0 3px #1e1f1f)}
+.lg-pc{display:block;overflow:visible}
+.lg-ghost{z-index:5}
+.lg-float{position:fixed;z-index:140000;pointer-events:none;opacity:.92;line-height:0;filter:drop-shadow(0 8px 12px rgba(58,57,54,.35))}
+body.lg-dragging,body.lg-dragging *{cursor:grabbing!important;user-select:none!important}
+#lgBlkCard .lg-fb{margin-top:10px;padding:9px 14px;font-size:.9rem}
+.lg-trayw{margin-top:10px}
+.lg-trayh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:6px}
+.lg-trayh small{color:#1e1f1f;font-weight:900;font-size:.76rem}
+.lg-tray{display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;padding:10px;border-radius:16px;background:#f6f3ee;border:1px solid #efe9e1;min-height:96px;max-height:calc(100vh - 470px);overflow:auto;touch-action:none}
+.lg-ti{position:relative;display:grid;place-items:center;padding:6px 8px 15px;border-radius:12px;background:#fff;border:2px solid #e5e0d9;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;line-height:0}
+.lg-ti small{position:absolute;bottom:2px;left:0;right:0;text-align:center;font-size:.62rem;font-weight:900;color:#84817d;line-height:1}
+.lg-ti:hover{border-color:#ba9d7f}
+.lg-ti.sel{border-color:#1e1f1f;box-shadow:0 0 0 3px rgba(30,31,31,.2)}
+.lg-tdone{font-weight:900;color:#15803d;line-height:1.4;padding:8px}
+.lg-blkbtns{display:flex;gap:8px;margin-top:10px}
+.lg-blkbtns .btn{flex:1;padding:9px 10px;font-size:.84rem;min-height:0}
+@media(max-width:860px){#lgPlayPage[data-mode="blk"] .lg-layout{grid-template-columns:1fr}.lg-bwrap{height:min(60vh,420px)}.lg-tray{max-height:none}}
+
+/* ===== Level 4: Benar atau Salah · Level 5: Detektif Logika ===== */
+#lgPlayPage[data-mode="qz"] #lgPatCard{display:none}
+#lgPlayPage:not([data-mode="qz"]) #lgQzCard{display:none}
+#lgQzCard{display:flex;flex-direction:column;min-width:0}
+.lg-case{padding:20px 22px;border-radius:20px;background:#f6f3ee;border:1px solid #efe9e1;margin-bottom:14px}
+.lg-case-text{margin:0;color:#3a3936;font-weight:700;line-height:1.6;font-size:1rem}
+.lg-case-q{margin:12px 0 0;padding-top:12px;border-top:1px dashed #e5e0d9;font-weight:1000;color:#1e1f1f;line-height:1.45}
+#lgPlayPage[data-lv="4"] .lg-case{display:grid;place-items:center;text-align:center;min-height:170px;box-sizing:border-box}
+#lgPlayPage[data-lv="4"] .lg-case-text{font-size:clamp(1.15rem,2.2vw,1.5rem);font-weight:900;color:#2a2a29;line-height:1.5}
+.lg-qz-opts{display:grid;gap:12px}
+.lg-qz-opts.tf{grid-template-columns:1fr 1fr}
+.lg-qz-opts .lg-opt.txt{font-size:1rem;font-weight:800;line-height:1.4}
+.lg-qz-opts .lg-opt.tfb{justify-content:center;font-size:1.3rem;padding:18px 16px}
+.lg-qz-opts .lg-opt.tfb.t{background:#f3fdf6;border-color:#bbf7d0}
+.lg-qz-opts .lg-opt.tfb.t b{background:#dcfce7;color:#15803d}
+.lg-qz-opts .lg-opt.tfb.f{background:#fff6f6;border-color:#fecaca}
+.lg-qz-opts .lg-opt.tfb.f b{background:#fee2e2;color:#dc2626}
+.lg-qz-opts .lg-opt.ok{background:#e9fbf0;border-color:#22c55e}
+.lg-qz-opts .lg-opt.ok b{background:#22c55e;color:#fff}
+.lg-qz-opts .lg-opt.bad{background:#fff0f0;border-color:#ef4444}
+.lg-qz-opts .lg-opt.bad b{background:#ef4444;color:#fff}
+.lg-qz-opts .lg-opt.reveal{background:#e9fbf0;border-color:#22c55e;border-style:dashed}
+.lg-qz-opts .lg-opt.reveal b{background:#22c55e;color:#fff}
+.lg-dots i.x{background:#ef4444}
+#lgQzCard .lg-fb{margin-top:12px;line-height:1.45}
+#lgPlayPage[data-lv="5"] .lg-case{padding:14px 18px;margin-bottom:10px}
+#lgPlayPage[data-lv="5"] .lg-case-text{font-size:.95rem;line-height:1.5}
+#lgPlayPage[data-lv="5"] .lg-case-q{margin-top:8px;padding-top:8px}
+#lgPlayPage[data-lv="5"] .lg-qz-opts{gap:8px}
+#lgPlayPage[data-lv="5"] .lg-qz-opts .lg-opt.txt{padding:9px 14px}
+#lgPlayPage[data-lv="5"] #lgQzCard{padding:16px 20px}
+#lgPlayPage[data-lv="5"] #lgQzCard .lg-qhead{margin-bottom:10px}
+#lgPlayPage[data-lv="5"] #lgQzCard .lg-fb{margin-top:10px;padding:9px 14px;font-size:.9rem}
+/* aturan menu level Matematika disalin untuk menu Logika */
+#lgLevelsPage #tutorial{ display: none !important; }
+#lgLevelsPage .level-grid{
+  display:flex!important; flex-wrap:nowrap!important; flex-direction:row!important;
+  align-items:stretch!important; gap:18px!important; width:100%!important;
+  max-width:1400px!important; margin:18px auto 0!important;
+  overflow-x:auto!important; overflow-y:hidden!important;
+  padding:4px 4px 16px!important; scroll-behavior:smooth!important;
+}
+#lgLevelsPage .level-grid>.level-card{
+  flex:0 0 236px!important; width:236px!important; min-width:236px!important;
+  max-width:236px!important; margin:0!important;
+}
+#lgLevelsPage .level-grid::-webkit-scrollbar{height:9px}
+#lgLevelsPage .level-grid::-webkit-scrollbar-thumb{background:#d4ccc1;border-radius:99px}
+#lgLevelsPage .level-grid::-webkit-scrollbar-track{background:#efe9e1;border-radius:99px}
+@media(min-width:1200px){#lgLevelsPage .level-grid{overflow-x:hidden!important;justify-content:center!important}#lgLevelsPage .level-grid>.level-card{
+    flex-basis:220px!important;width:220px!important;min-width:220px!important
+  }}
+#lgLevelsPage .levels-page{
+  min-height:calc(100vh - 72px)!important;
+  padding:24px 22px 32px!important;
+  overflow:hidden!important;
+}
+#lgLevelsPage .page-head{
+  max-width:1160px!important;
+  margin:0 auto 18px!important;
+}
+#lgLevelsPage .page-head h1{font-size:clamp(1.55rem,2vw,2rem)!important}
+#lgLevelsPage .level-grid{
+  display:flex!important;
+  flex-direction:row!important;
+  flex-wrap:nowrap!important;
+  align-items:stretch!important;
+  justify-content:flex-start!important;
+  gap:14px!important;
+  width:min(1160px,100%)!important;
+  max-width:1160px!important;
+  margin:0 auto!important;
+  padding:2px 2px 12px!important;
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  scroll-snap-type:x proximity!important;
+}
+#lgLevelsPage .level-grid>.level-card{
+  flex:0 0 218px!important;
+  width:218px!important;
+  min-width:218px!important;
+  min-height:322px!important;
+  height:322px!important;
+  padding:20px!important;
+  border-radius:22px!important;
+  scroll-snap-align:start!important;
+}
+#lgLevelsPage .level-card h2{
+  margin:15px 0 8px!important;
+  font-size:1.12rem!important;
+  line-height:1.25!important;
+}
+#lgLevelsPage .level-card p{
+  min-height:72px!important;
+  font-size:.82rem!important;
+  line-height:1.45!important;
+}
+#lgLevelsPage .game-preview{
+  height:72px!important;
+  margin:12px 0!important;
+  font-size:2rem!important;
+  border-radius:14px!important;
+}
+#lgLevelsPage .level-number{
+  width:45px!important;height:45px!important;border-radius:14px!important;font-size:1.08rem!important;
+}
+#lgLevelsPage .level-grid .btn{
+  width:100%!important;
+  min-height:42px!important;
+  padding:9px 12px!important;
+  font-size:.82rem!important;
+}
+#lgLevelsPage .level-grid::-webkit-scrollbar{height:8px}
+#lgLevelsPage .level-grid::-webkit-scrollbar-thumb{background:#e5e0d9;border-radius:99px}
+#lgLevelsPage .level-grid::-webkit-scrollbar-track{background:#efe9e1;border-radius:99px}
+#lgLevelsPage .level-grid{
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:row!important;
+  flex-wrap:nowrap!important;
+  align-items:stretch!important;
+  gap:14px!important;
+  width:100%!important;
+  max-width:1180px!important;
+  margin:16px auto!important;
+  padding:6px 8px 14px!important;
+  overflow-x:auto!important;
+  overflow-y:visible!important;
+  position:relative!important;
+}
+#lgLevelsPage .level-grid > .level-card{
+  box-sizing:border-box!important;
+  position:relative!important;
+  flex:0 0 214px!important;
+  width:214px!important;
+  min-width:214px!important;
+  max-width:214px!important;
+  height:304px!important;
+  min-height:304px!important;
+  max-height:304px!important;
+  margin:0!important;
+  padding:18px 16px 14px!important;
+  overflow:visible!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-start!important;
+  cursor:pointer!important;
+  z-index:1!important;
+}
+#lgLevelsPage .level-grid > .level-card *{
+  box-sizing:border-box!important;
+}
+#lgLevelsPage .level-card .level-icon,#lgLevelsPage .level-card .icon,#lgLevelsPage .level-card [class*="icon"]{
+  width:52px!important;
+  height:52px!important;
+  min-width:52px!important;
+  min-height:52px!important;
+  font-size:26px!important;
+  line-height:1!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  margin:0 auto 10px!important;
+  flex-shrink:0!important;
+}
+#lgLevelsPage .level-card h3,#lgLevelsPage .level-card h4{
+  font-size:18px!important;
+  line-height:1.2!important;
+  margin:5px 0 7px!important;
+  min-height:22px!important;
+}
+#lgLevelsPage .level-card p,#lgLevelsPage .level-card .description{
+  font-size:12px!important;
+  line-height:1.45!important;
+  margin:0 0 9px!important;
+}
+#lgLevelsPage .level-card .level-number,#lgLevelsPage .level-card .number,#lgLevelsPage .level-card .badge{
+  font-size:11px!important;
+  line-height:1!important;
+}
+#lgLevelsPage .level-card button,#lgLevelsPage .level-card .btn,#lgLevelsPage .level-card a{
+  position:relative!important;
+  z-index:20!important;
+  pointer-events:auto!important;
+  flex-shrink:0!important;
+  min-height:40px!important;
+  height:40px!important;
+  width:100%!important;
+  margin-top:auto!important;
+  padding:9px 10px!important;
+  border-radius:12px!important;
+  font-size:13px!important;
+  line-height:1.1!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  cursor:pointer!important;
+}
+#lgLevelsPage .level-card.locked button{
+  pointer-events:none!important;
+}
+#lgLevelsPage .level-card::before,#lgLevelsPage .level-card::after{
+  pointer-events:none!important;
+}
+#lgLevelsPage .level-card{
+  overflow:visible!important;
+}
+#lgLevelsPage .level-grid::-webkit-scrollbar{height:8px}
+#lgLevelsPage .level-grid::-webkit-scrollbar-thumb{
+  background:#e5e0d9;border-radius:99px;
+}
+#lgLevelsPage .level-grid::-webkit-scrollbar-track{
+  background:#efe9e1;border-radius:99px;
+}
+@media (min-width:1180px){#lgLevelsPage .level-grid{
+    overflow-x:hidden!important;
+    justify-content:center!important;
+  }}
+@media (max-width:900px){#lgLevelsPage .level-grid{
+    justify-content:flex-start!important;
+  }}
+#lgLevelsPage .level-card svg,#lgLevelsPage .level-card .decorative,#lgLevelsPage .level-card .shine{
+  pointer-events:none!important;
+}
+#lgLevelsPage .level-grid{
+  overflow-y:visible!important;
+  align-items:stretch!important;
+}
+#lgLevelsPage .level-grid > .level-card{
+  height:auto!important;
+  min-height:318px!important;
+  max-height:none!important;
+  padding:18px 16px 16px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:0!important;
+}
+#lgLevelsPage .level-card .level-number{
+  width:40px!important;
+  height:40px!important;
+  min-width:40px!important;
+  min-height:40px!important;
+  border-radius:12px!important;
+  font-size:.95rem!important;
+  line-height:1!important;
+  margin:0 0 10px!important;
+  flex-shrink:0!important;
+}
+#lgLevelsPage .level-card h2{
+  font-size:.98rem!important;
+  line-height:1.28!important;
+  font-weight:800!important;
+  margin:0 0 7px!important;
+  min-height:0!important;
+  max-height:2.6em!important;
+  overflow:hidden!important;
+  display:-webkit-box!important;
+  -webkit-line-clamp:2!important;
+  -webkit-box-orient:vertical!important;
+}
+#lgLevelsPage .level-card p{
+  font-size:.74rem!important;
+  line-height:1.45!important;
+  margin:0 0 10px!important;
+  min-height:0!important;
+  max-height:3.2em!important;
+  overflow:hidden!important;
+  display:-webkit-box!important;
+  -webkit-line-clamp:3!important;
+  -webkit-box-orient:vertical!important;
+  color:var(--muted)!important;
+  flex-shrink:0!important;
+}
+#lgLevelsPage .level-card .game-preview{
+  height:60px!important;
+  min-height:60px!important;
+  margin:0 0 10px!important;
+  font-size:1.65rem!important;
+  border-radius:13px!important;
+  line-height:1!important;
+  flex-shrink:0!important;
+}
+#lgLevelsPage .level-card .lock-badge{
+  margin-top:0!important;
+  padding:6px 9px!important;
+  font-size:.66rem!important;
+  line-height:1.2!important;
+  gap:5px!important;
+}
+#lgLevelsPage .level-card .level-stars{
+  margin:0 0 6px!important;
+  font-size:.7rem!important;
+  line-height:1.3!important;
+  flex-shrink:0!important;
+}
+#lgLevelsPage .level-card .level-time{
+  margin:0 0 10px!important;
+  padding:4px 8px!important;
+  font-size:.64rem!important;
+  line-height:1.3!important;
+  flex-shrink:0!important;
+}
+#lgLevelsPage .level-card .btn{
+  margin-top:auto!important;
+  height:auto!important;
+  min-height:38px!important;
+  padding:9px 10px!important;
+  font-size:.74rem!important;
+  line-height:1.2!important;
+  font-weight:800!important;
+  white-space:normal!important;
+  text-align:center!important;
+}
+#lgLevelsPage .level-card{
+  transition:transform .16s ease, box-shadow .16s ease!important;
+}
+#lgLevelsPage .level-card:not(.locked):hover{
+  transform:translateY(-4px)!important;
+  box-shadow:0 18px 32px rgba(58,57,54,.14)!important;
+}
+#lgLevelsPage .level-card.locked:hover{
+  transform:none!important;
+}
+@media (max-width:480px){#lgLevelsPage .level-grid > .level-card{ min-height:300px!important; }#lgLevelsPage .level-card h2{ font-size:.92rem!important; }}
+#lgLevelsPage .level-grid{
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:14px!important;
+  max-width:1240px!important;
+  overflow:visible!important;
+}
+#lgLevelsPage .level-card{
+  min-width:0!important;
+  min-height:330px!important;
+  padding:18px!important;
+}
+#lgLevelsPage .level-card h2{
+  font-size:1.05rem!important;
+  line-height:1.25!important;
+  margin:15px 0 8px!important;
+}
+#lgLevelsPage .level-card p{
+  min-height:66px!important;
+  font-size:.78rem!important;
+  line-height:1.5!important;
+}
+#lgLevelsPage .game-preview{
+  height:76px!important;
+  margin:12px 0!important;
+}
+#lgLevelsPage .level-card .btn{
+  width:100%!important;
+  min-height:40px!important;
+  font-size:.78rem!important;
+}
+@media(max-width:1100px){#lgLevelsPage .level-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:760px){#lgLevelsPage .level-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:520px){#lgLevelsPage .level-grid{grid-template-columns:1fr!important}}

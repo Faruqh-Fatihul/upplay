@@ -1,0 +1,1 @@
+window.UP_DUR={math:180,logic:180,picture:120};window.__upDur=function(g){g=String(g||'');return /picture|tebak|^tt/i.test(g)?120:180};window.__upDurTxt=function(g){return (window.__upDur(g)/60)+' menit'};

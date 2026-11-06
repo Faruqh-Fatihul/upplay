@@ -1,0 +1,288 @@
+/* =====================================================================
+   UpPlay vNext: satu jenis bar (sidebar), tanpa topbar di dalam aplikasi,
+   head tanggal realtime + menu garis tiga, mode gelap/terang, transisi.
+   Lapisan ini hanya menimpa tampilan; logika game tidak diubah.
+   ===================================================================== */
+:root{
+  --upx-brand:#1e1f1f; --upx-brand-2:#ba9d7f; --upx-ink:#2a2a29; --upx-muted:#84817d;
+  --upx-surface:#ffffff; --upx-surface-2:#f6f3ee; --upx-line:#e5e0d9; --upx-page:#f6f3ee;
+  --upx-danger:#e5484d; --upx-shadow:0 18px 40px -18px rgba(30,31,31,.28),0 2px 6px rgba(58,57,54,.06);
+  --upx-wc:76px; --upx-wo:248px; --upx-gap:14px; --upx-w:var(--upx-wc);
+  --upx-ease:cubic-bezier(.16,1,.3,1);
+}
+html.upx-dark{
+  --upx-ink:#efe9e1; --upx-muted:#a9a49e; --upx-surface:#1e1f1f; --upx-surface-2:#2a2a29;
+  --upx-line:#3a3936; --upx-page:#141413; --upx-brand:#ba9d7f; --upx-brand-2:#ba9d7f;
+  --upx-shadow:0 18px 40px -18px rgba(0,0,0,.6),0 2px 6px rgba(0,0,0,.3);
+  color-scheme:dark;
+}
+body.upx-open{--upx-w:var(--upx-wo)}
+
+/* ---------- topbar hanya di landing page ---------- */
+body .app-view:not(#landingPage) > header.topbar{display:none!important}
+body .app-view:not(#landingPage) .student-search{display:none!important}
+
+/* ---------- sidebar lama disembunyikan, diganti #upxSide ---------- */
+html body.upx-app .portal-sidebar,
+html body.upx-app .ad-side,
+html body.upx-app #studentDashboard aside.portal-sidebar.student-sidebar-modern,
+html body.upx-app #teacherPortalPage aside.portal-sidebar.teacher-sidebar,
+html body.upx-app #adminPortalPage aside.ad-side{display:none!important}
+body.upx-app #studentDashboard{display:block!important}
+body.upx-app #studentDashboard:not(.hidden){display:block!important}
+body.upx-app #studentDashboard.hidden{display:none!important}
+body.upx-app .portal-shell{display:block!important}
+body.upx-app .ad-wrap{display:block!important}
+body.upx-app .teacher-shell{display:block!important}
+body.upx-app .portal-content,body.upx-app .teacher-main,body.upx-app .ad-main{width:auto!important;max-width:none!important;margin-left:0!important}
+body.upx-app #belajar{padding-top:6px!important}
+body.upx-app .teacher-main{padding-top:10px!important}
+body.upx-app .ad-main{padding-top:10px!important}
+
+/* ruang untuk sidebar: konten bergeser saat sidebar dibuka */
+body.upx-app .app-view:not(#landingPage){
+  margin-left:calc(var(--upx-w) + var(--upx-gap) * 2);
+  transition:margin-left .55s var(--upx-ease);
+  min-width:0;
+}
+body.upx-app{background:var(--upx-page)}
+
+/* ---------- SIDEBAR ---------- */
+#upxSide{
+  position:fixed;z-index:70;top:var(--upx-gap);left:var(--upx-gap);bottom:var(--upx-gap);
+  width:var(--upx-w);display:none;flex-direction:column;
+  background:var(--upx-surface);border:1px solid var(--upx-line);border-radius:24px;
+  box-shadow:var(--upx-shadow);padding:16px 12px;overflow:visible;
+  transition:width .55s var(--upx-ease),background .3s,border-color .3s;
+  font-family:inherit;color:var(--upx-ink);
+}
+body.upx-app #upxSide{display:flex}
+#upxSide *{box-sizing:border-box}
+.upx-brandrow{display:flex;align-items:center;gap:12px;min-height:50px;padding:0 4px;position:relative}
+.upx-logo{
+  flex:0 0 44px;width:44px;height:44px;border-radius:15px;border:0;cursor:pointer;
+  display:grid;place-items:center;color:#fff;font-size:20px;
+  background:linear-gradient(145deg,#1e1f1f,#ba9d7f);box-shadow:0 10px 22px -8px rgba(30,31,31,.7);
+  transition:transform .35s var(--upx-ease),box-shadow .3s;
+}
+.upx-logo:hover{transform:rotate(-8deg) scale(1.06)}
+.upx-logo:active{transform:scale(.94)}
+.upx-logo span{display:block;transition:transform .6s var(--upx-ease)}
+body.upx-open .upx-logo span{transform:rotate(180deg)}
+.upx-logo:focus-visible,.upx-item:focus-visible,.upx-burger:focus-visible,.upx-back:focus-visible,.upx-tab:focus-visible{outline:3px solid #d4ccc1;outline-offset:2px}
+.upx-brandtext{white-space:nowrap;overflow:hidden;line-height:1.15}
+.upx-brandtext b{display:block;font-size:1.12rem;font-weight:900;color:var(--upx-ink)}
+.upx-brandtext small{display:block;font-size:.74rem;font-weight:700;color:var(--upx-muted)}
+.upx-tab{
+  position:absolute;right:-26px;top:50%;transform:translateY(-50%);
+  width:24px;height:24px;border-radius:50%;border:1px solid var(--upx-line);background:var(--upx-surface);
+  color:var(--upx-ink);display:grid;place-items:center;cursor:pointer;padding:0;
+  box-shadow:0 4px 12px rgba(58,57,54,.12);transition:transform .45s var(--upx-ease);
+}
+body.upx-open .upx-tab{transform:translateY(-50%) rotate(180deg)}
+
+.upx-user{
+  display:flex;align-items:center;gap:11px;margin:16px 0 10px;padding:9px;border-radius:18px;
+  border:1px solid var(--upx-line);background:var(--upx-surface-2);min-height:62px;overflow:hidden;
+  transition:padding .4s var(--upx-ease),border-color .3s;
+}
+.upx-ava{flex:0 0 40px;width:40px;height:40px;border-radius:50%;overflow:hidden;display:grid;place-items:center;
+  background:linear-gradient(145deg,#efe9e1,#d9f2ff);color:var(--upx-brand);font-weight:900}
+.upx-ava img{width:100%;height:100%;object-fit:cover;display:block}
+.upx-who{min-width:0;white-space:nowrap}
+.upx-who b{display:block;font-size:.93rem;font-weight:900;overflow:hidden;text-overflow:ellipsis;color:var(--upx-ink)}
+.upx-who small{display:block;font-size:.76rem;font-weight:700;color:var(--upx-muted)}
+
+.upx-nav{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.upx-item{
+  position:relative;display:flex;align-items:center;gap:13px;height:46px;padding:0 13px;border:0;border-radius:15px;
+  background:transparent;color:var(--upx-ink);font:inherit;font-weight:800;font-size:.94rem;cursor:pointer;
+  text-align:left;white-space:nowrap;transition:background .25s,color .25s,padding .45s var(--upx-ease);
+}
+.upx-item svg{flex:0 0 20px}
+.upx-item:hover{background:var(--upx-surface-2)}
+.upx-item.on{background:linear-gradient(135deg,#1e1f1f,#ba9d7f);color:#fff;box-shadow:0 12px 24px -12px rgba(30,31,31,.9)}
+.upx-lbl{opacity:1;transition:opacity .3s .12s,transform .45s var(--upx-ease);transform:none}
+.upx-spacer{flex:1}
+.upx-bottom{display:flex;flex-direction:column;gap:6px}
+.upx-theme{
+  display:flex;gap:4px;padding:4px;margin-top:8px;border-radius:999px;border:1px solid var(--upx-line);
+  background:var(--upx-surface-2);width:max-content;transition:width .4s var(--upx-ease)
+}
+.upx-theme button{width:38px;height:38px;border-radius:50%;border:0;background:transparent;color:var(--upx-muted);display:grid;place-items:center;cursor:pointer;transition:background .3s,color .3s}
+.upx-theme button.on{background:var(--upx-brand);color:#fff}
+
+/* sidebar tertutup: hanya ikon (seperti contoh FinSet) */
+body:not(.upx-open) #upxSide .upx-brandtext,
+body:not(.upx-open) #upxSide .upx-who,
+body:not(.upx-open) #upxSide .upx-lbl{opacity:0;pointer-events:none;width:0;transform:translateX(-6px);transition:opacity .15s}
+body:not(.upx-open) #upxSide .upx-brandrow{justify-content:center;padding:0}
+body:not(.upx-open) #upxSide .upx-user{padding:9px 0;justify-content:center;background:transparent;border-color:transparent}
+body:not(.upx-open) #upxSide .upx-item{justify-content:center;padding:0;gap:0;width:46px;margin:0 auto;border-radius:50%}
+body:not(.upx-open) #upxSide .upx-theme{flex-direction:column;margin-left:auto;margin-right:auto}
+body:not(.upx-open) #upxSide .upx-theme button:not(.on){display:none}
+body:not(.upx-open) #upxSide .upx-item:hover::after{
+  content:attr(data-tip);position:absolute;left:calc(100% + 14px);top:50%;transform:translateY(-50%);
+  background:var(--upx-ink);color:var(--upx-surface);padding:7px 11px;border-radius:10px;font-size:.8rem;font-weight:800;white-space:nowrap;
+  box-shadow:0 8px 20px rgba(0,0,0,.18);pointer-events:none
+}
+
+/* ---------- HEAD: tanggal realtime + menu garis tiga ---------- */
+.upx-head{
+  transition:padding .55s var(--upx-ease);
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  padding:22px 40px 8px;color:var(--upx-ink);position:relative;z-index:5
+}
+.upx-date{display:flex;align-items:center;gap:12px;min-width:0}
+.upx-cal{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;flex:0 0 46px;
+  background:var(--upx-surface);border:1px solid var(--upx-line);color:var(--upx-brand);box-shadow:var(--upx-shadow)}
+.upx-date b{display:block;font-size:1.02rem;font-weight:900;letter-spacing:-.01em;color:var(--upx-ink)}
+.upx-date small{display:block;font-size:.8rem;font-weight:800;color:var(--upx-muted);font-variant-numeric:tabular-nums}
+.upx-actions{display:flex;align-items:center;gap:10px;margin-left:auto}
+.upx-back{
+  display:inline-flex;align-items:center;gap:7px;height:44px;padding:0 16px 0 12px;border-radius:14px;
+  border:1px solid var(--upx-line);background:var(--upx-surface);color:var(--upx-ink);font:inherit;font-weight:800;font-size:.9rem;
+  cursor:pointer;box-shadow:var(--upx-shadow);transition:transform .25s var(--upx-ease),border-color .25s
+}
+.upx-back:hover{transform:translateX(-2px);border-color:var(--upx-brand)}
+.upx-burger{
+  position:relative;width:46px;height:46px;border-radius:15px;border:1px solid var(--upx-line);
+  background:var(--upx-surface);cursor:pointer;box-shadow:var(--upx-shadow);display:grid;place-items:center;padding:0
+}
+.upx-burger i{position:absolute;left:13px;right:13px;height:2.4px;border-radius:2px;background:var(--upx-ink);transition:transform .4s var(--upx-ease),opacity .25s,top .4s var(--upx-ease)}
+.upx-burger i:nth-child(1){top:15px}.upx-burger i:nth-child(2){top:21.8px}.upx-burger i:nth-child(3){top:28.6px}
+.upx-burger.open i:nth-child(1){top:21.8px;transform:rotate(45deg)}
+.upx-burger.open i:nth-child(2){opacity:0;transform:scaleX(.2)}
+.upx-burger.open i:nth-child(3){top:21.8px;transform:rotate(-45deg)}
+.upx-burger .upx-dot{position:absolute;top:8px;right:8px;width:9px;height:9px;border-radius:50%;background:#ff5a5f;border:2px solid var(--upx-surface);display:none}
+.upx-burger.has-dot .upx-dot{display:block}
+.upx-mlogo{display:none}
+
+/* ---------- DROPDOWN ---------- */
+#upxMenu{
+  position:fixed;z-index:95;width:268px;padding:8px;border-radius:20px;
+  background:var(--upx-surface);border:1px solid var(--upx-line);box-shadow:0 26px 60px -20px rgba(42,42,41,.45);
+  color:var(--upx-ink);transform-origin:top right;display:none
+}
+#upxMenu.show{display:block}
+.upx-mhead{padding:10px 12px 8px;font-size:.76rem;font-weight:800;color:var(--upx-muted)}
+.upx-mi{
+  width:100%;display:flex;align-items:center;gap:12px;padding:11px 12px;border:0;border-radius:13px;background:transparent;
+  color:var(--upx-ink);font:inherit;font-weight:800;font-size:.92rem;cursor:pointer;text-align:left
+}
+.upx-mi:hover,.upx-mi:focus{background:var(--upx-surface-2);outline:none!important;box-shadow:none!important}
+#upxMenu button:focus{outline:none!important}
+#upxMenu button:focus-visible{outline:2px solid var(--upx-brand)!important;outline-offset:1px}
+.upx-mi .upx-mic{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:var(--upx-surface-2);color:var(--upx-brand);flex:0 0 34px}
+.upx-mi small{display:block;font-size:.74rem;font-weight:700;color:var(--upx-muted)}
+.upx-mi .upx-count{margin-left:auto;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:#ff5a5f;color:#fff;font-size:.72rem;font-weight:900;display:grid;place-items:center}
+.upx-mi.danger{color:var(--upx-danger)}
+.upx-mi.danger .upx-mic{color:var(--upx-danger);background:rgba(229,72,77,.1)}
+.upx-sep{height:1px;background:var(--upx-line);margin:6px 8px}
+.upx-mtheme{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px}
+.upx-mtheme button{display:flex;align-items:center;justify-content:center;gap:8px;height:42px;border-radius:13px;border:1px solid var(--upx-line);
+  background:transparent;color:var(--upx-ink);font:inherit;font-weight:800;font-size:.86rem;cursor:pointer;transition:background .25s,color .25s,border-color .25s}
+.upx-mtheme button.on{background:var(--upx-brand);border-color:var(--upx-brand);color:#fff}
+
+/* ---------- ikon garis pengganti emoji (guru & admin) ---------- */
+.upx-ic{display:inline-flex;vertical-align:-.18em;line-height:1;margin-right:.32em}
+.upx-ic svg{width:1.08em;height:1.08em}
+.upx-ic.red{color:#ef4444}.upx-ic.blue{color:#2563eb}.upx-ic.green{color:#16a34a}.upx-ic.gold{color:#d99a00}.upx-ic.silver{color:#8a94a6}.upx-ic.bronze{color:#b8692f}
+.ad-stat small .upx-ic,.tg4-stat span .upx-ic{color:var(--upx-brand)}
+.ad-b .upx-ic,.btn .upx-ic{margin-right:.4em}
+
+/* ---------- foto profil: ikon kamera masuk ke lingkaran ---------- */
+html body #studentDashboard #studentViewProfile .sd-avatar-wrap{position:relative!important;width:max-content!important;height:max-content!important;line-height:0}
+html body #studentDashboard #studentViewProfile .sd-cam{
+  position:absolute!important;right:calc(14.6% - 16px)!important;bottom:calc(14.6% - 16px)!important;left:auto!important;top:auto!important;
+  width:32px!important;height:32px!important;border-radius:50%!important;margin:0!important;transform:none!important;
+  display:grid!important;place-items:center!important;background:var(--upx-brand)!important;color:#fff!important;
+  border:3px solid var(--upx-surface)!important;box-shadow:0 6px 14px -4px rgba(30,31,31,.6)!important;cursor:pointer
+}
+
+/* ---------- profil: aksi terpisah per kartu ---------- */
+html body.upx-app #studentDashboard #studentViewProfile .profile-actions,html body #studentDashboard #studentViewProfile #profileFormMessage,html body #studentDashboard #studentViewProfile .profile-actions{display:none!important}
+.upx-cardfoot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:22px;padding-top:18px;border-top:1px solid var(--upx-line)}
+.upx-msg{font-size:.86rem;font-weight:800;min-height:1.2em}
+.upx-msg.ok{color:#18803f}.upx-msg.err{color:#c43d3a}
+.upx-btns{display:flex;gap:10px;margin-left:auto}
+.upx-btn{height:44px;padding:0 20px;border-radius:13px;font:inherit;font-weight:900;font-size:.9rem;cursor:pointer;border:1px solid var(--upx-line);background:var(--upx-surface);color:var(--upx-ink);transition:transform .2s,box-shadow .25s}
+.upx-btn.pri{background:linear-gradient(135deg,#1e1f1f,#ba9d7f);border-color:transparent;color:#fff;box-shadow:0 12px 24px -12px rgba(30,31,31,.85)}
+.upx-btn:hover{transform:translateY(-1px)}
+.upx-btn:active{transform:scale(.97)}
+
+/* ---------- ikon mata seragam ---------- */
+.upx-pw{position:relative;display:block;width:100%}
+.upx-pw > input{width:100%;padding-right:48px!important;box-sizing:border-box}
+.upx-eye,.toggle-password{
+  position:absolute!important;right:7px!important;top:50%!important;transform:translateY(-50%)!important;
+  width:36px!important;height:36px!important;border-radius:10px!important;border:0!important;display:grid!important;place-items:center!important;
+  background:transparent!important;color:#84817d!important;cursor:pointer!important;padding:0!important;font-size:0!important
+}
+.upx-eye:hover,.toggle-password:hover,.upx-eye[aria-pressed="true"],.toggle-password[aria-pressed="true"]{background:#efe9e1!important;color:#1e1f1f!important}
+.upx-eye svg,.toggle-password svg{width:20px;height:20px;display:block;pointer-events:none}
+
+/* level pages: latar menyatu dengan head */
+body.upx-app .app-view:not(#landingPage) .levels-page{background:transparent!important}
+/* ---------- mobile ---------- */
+.upx-scrim{position:fixed;inset:0;z-index:69;background:rgba(30,31,31,.42);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:opacity .35s}
+@media (max-width:760px){
+  body.upx-app .app-view:not(#landingPage){margin-left:0}
+  #upxSide{width:var(--upx-wo);transform:translateX(calc(-100% - 20px));transition:transform .5s var(--upx-ease)}
+  body.upx-open #upxSide{transform:none}
+  body.upx-app.upx-open .upx-scrim{opacity:1;pointer-events:auto}
+  #upxSide .upx-tab{display:none}
+  body:not(.upx-open) #upxSide .upx-brandtext,body:not(.upx-open) #upxSide .upx-who,body:not(.upx-open) #upxSide .upx-lbl{opacity:1;width:auto;transform:none}
+  body:not(.upx-open) #upxSide .upx-item{justify-content:flex-start;padding:0 13px;gap:13px;width:auto;margin:0;border-radius:15px}
+  .upx-head{padding:14px 16px 4px}
+  .upx-mlogo{display:grid;width:46px;height:46px;border-radius:15px;border:0;place-items:center;color:#fff;font-size:20px;background:linear-gradient(145deg,#1e1f1f,#ba9d7f);cursor:pointer;flex:0 0 46px}
+  .upx-cal{display:none}
+  .upx-back span{display:none}
+}
+
+/* ---------- MODE GELAP ---------- */
+html.upx-dark body.upx-app,
+html.upx-dark body.upx-app .app-view:not(#landingPage),
+html.upx-dark body.upx-app #belajar,
+html.upx-dark body.upx-app .portal-content,
+html.upx-dark body.upx-app .teacher-main,
+html.upx-dark body.upx-app .ad-main,
+html.upx-dark body.upx-app .ad-wrap,
+html.upx-dark body.upx-app .portal-shell,
+html.upx-dark body.upx-app .levels-page,
+html.upx-dark body.upx-app .app-view:not(#landingPage) > main{background:var(--upx-page)!important;color:var(--upx-ink)}
+html.upx-dark body.upx-app .app-view:not(#landingPage):not(#upxZ1):not(#upxZ2) :is(.portal-panel,.portal-stat,.sd-chart-card,.profile-card,.profile-summary,.tg4-panel,.tg4-stat,.tg4-note,.tg4-table-wrap,.tg4-chip,.ad-card,.ad-stat,.ad-tw,.ad-md,.level-card,.game-preview,.level-number,.game-panel,.crossword-panel,.maze-panel,.picture-levels,.dashboard-flow,.dashboard-games-panel,.security-banner,.cp-sum > div,.cp-tw,.student-list,.score-table,.cp-podium > div,.tg4-round,.tg4-room-top,.admin-card,.modal,.pvp-teacher-box,.pvp-room-box){
+  background:var(--upx-surface)!important;border-color:var(--upx-line)!important;color:var(--upx-ink)!important;box-shadow:var(--upx-shadow)!important
+}
+html.upx-dark body.upx-app .app-view:not(#landingPage):not(#upxZ1):not(#upxZ2) :is(.portal-panel,.portal-stat,.sd-chart-card,.profile-card,.profile-summary,.tg4-panel,.tg4-stat,.tg4-head,.ad-card,.ad-stat,.ad-md,.level-card,.portal-top,.game-panel,.dashboard-flow,.dashboard-games-panel,.levels-page,.ad-main,.modal,.admin-card) :is(h1,h2,h3,h4,h5,strong,b,label,p,li,td,th,span:not(.upx-ic):not([class*="badge"]):not(.sd-dot):not(.section-kicker):not(.tg4-chip),small,code){color:inherit!important}
+html.upx-dark body.upx-app .app-view:not(#landingPage):not(#upxZ1):not(#upxZ2) :is(.portal-top,.tg4-head,.ad-main,.levels-page) :is(h1,h2){color:var(--upx-ink)!important}
+html.upx-dark body.upx-app .app-view:not(#landingPage):not(#upxZ1):not(#upxZ2) :is(p,small,.ad-sub){opacity:1}
+html.upx-dark body.upx-app .app-view:not(#landingPage):not(#upxZ1):not(#upxZ2) :is(.portal-stat,.tg4-stat,.ad-stat) strong,
+html.upx-dark body.upx-app .app-view:not(#landingPage):not(#upxZ1):not(#upxZ2) :is(.portal-stat,.tg4-stat,.ad-stat) b{color:#ba9d7f!important}
+html.upx-dark body.upx-app .app-view:not(#landingPage):not(#upxZ1):not(#upxZ2) :is(input,select,textarea):not([type=checkbox]):not([type=radio]):not([type=range]){
+  background:var(--upx-surface-2)!important;color:var(--upx-ink)!important;border-color:var(--upx-line)!important
+}
+html.upx-dark body.upx-app .app-view:not(#landingPage):not(#upxZ1):not(#upxZ2) input::placeholder{color:#84817d!important}
+html.upx-dark body.upx-app .app-view:not(#landingPage):not(#upxZ1):not(#upxZ2) :is(table) :is(td){border-color:var(--upx-line)!important;background:transparent!important}
+html.upx-dark body.upx-app .app-view:not(#landingPage):not(#upxZ1):not(#upxZ2) :is(table) tbody tr:nth-child(even) td{background:rgba(255,255,255,.025)!important}
+html.upx-dark body.upx-app .app-view:not(#landingPage):not(#upxZ1):not(#upxZ2) :is(.btn-outline,.ad-b:not(.pri):not(.red),.btn-secondary,.back-btn){background:var(--upx-surface-2)!important;color:var(--upx-ink)!important;border-color:var(--upx-line)!important}
+html.upx-dark body.upx-app .app-view:not(#landingPage):not(#upxZ1):not(#upxZ2) .student-view svg rect[fill="#fff"],
+html.upx-dark body.upx-app .app-view:not(#landingPage):not(#upxZ1):not(#upxZ2) .tg4-chart rect[fill="#fff"]{fill:transparent}
+html.upx-dark body.upx-app .app-view:not(#landingPage):not(#upxZ1):not(#upxZ2) :is(.sd-chart-box,.tg4-chart-wrap) svg line{stroke:#3a3936}
+html.upx-dark body.upx-app .app-view:not(#landingPage):not(#upxZ1):not(#upxZ2) :is(.sd-chart-box,.tg4-chart-wrap) svg text{fill:#d4ccc1}
+html.upx-dark body.upx-app .app-view:not(#landingPage):not(#upxZ1):not(#upxZ2) :is(.sd-chart-box,.tg4-chart-wrap) svg circle{fill:var(--upx-surface)}
+
+html.upx-dark body.upx-app .app-view:not(#landingPage):not(#upxZ1):not(#upxZ2):not(#upxZ3) :is(.portal-stat,.tg4-stat,.ad-stat) :is(strong,b){color:#ba9d7f!important}
+html.upx-dark body.upx-app .app-view:not(#landingPage):not(#upxZ1):not(#upxZ2):not(#upxZ3) :is(.portal-panel,.portal-stat,.sd-chart-card,.profile-card,.tg4-panel,.tg4-stat,.ad-card,.ad-stat,.level-card,.portal-top,.tg4-head,.dashboard-flow,.dashboard-games-panel) :is(p,small):not(.upx-msg){color:var(--upx-muted)!important}
+html.upx-dark body.upx-app .app-view:not(#landingPage):not(#upxZ1):not(#upxZ2) :is(.profile-photo-area,.profile-card-head,.password-section-head,hr,.teacher-divider,.upx-cardfoot){border-color:var(--upx-line)!important}
+html.upx-dark body.upx-app .app-view:not(#landingPage):not(#upxZ1):not(#upxZ2) .section-kicker{color:#ba9d7f!important}
+html.upx-dark body.upx-app .app-view:not(#landingPage):not(#upxZ1):not(#upxZ2) .sd-kicker-gold{color:#f5c04e!important}
+html.upx-dark body.upx-app .modal-overlay{background:rgba(20,20,19,.7)!important}
+html.upx-dark body .modal{background:var(--upx-surface)!important;color:var(--upx-ink)!important}
+html.upx-dark body.upx-app .password-toggle{background:transparent!important;color:#a9a49e!important}
+html.upx-dark .upx-eye,html.upx-dark .toggle-password{color:#a9a49e!important}
+html.upx-dark body.upx-app .sidebar-user,html.upx-dark body.upx-app .sidebar-help{background:var(--upx-surface-2)!important}
+
+@media (prefers-reduced-motion:reduce){
+  #upxSide,.upx-item,.upx-lbl,body.upx-app .app-view:not(#landingPage),.upx-burger i{transition:none!important}
+}

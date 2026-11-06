@@ -1,0 +1,30 @@
+/* UpPlay — design tokens (V14). Sumber kebenaran warna & huruf untuk frontend. */
+:root{
+  /* palet inti dari pemilik produk */
+  --up-c1:#d3b99d;      /* color 1  — sorotan, tombol di mode gelap */
+  --up-accent:#ba9d7f;  /* accent   — dekorasi, garis lembut */
+  --up-ground:#e5e0d9;  /* ground   — latar halaman (terang) */
+  --up-ink:#1e1f1f;     /* ink      — teks utama, tombol utama (terang) */
+  --up-c5:#4a4a49;      /* color 5  — teks sekunder */
+  --up-c6:#84817d;      /* color 6  — teks keterangan, ikon pasif */
+  /* turunan tambahan (sedikit lebih terang/gelap) untuk kontras */
+  --up-paper:#f6f3ee;       /* permukaan kartu (terang) */
+  --up-mist:#efe9e1;        /* teks utama di mode gelap */
+  --up-accent-deep:#8a6d50; /* accent yang terbaca di atas kertas (garis grafik guru, tab logo) */
+  --up-muted-deep:#5f5c58;  /* teks keterangan kecil di mode terang */
+  --up-night:#141413;       /* latar halaman (gelap) */
+  --up-ink-2:#2a2a29;       /* permukaan kedua (gelap) */
+  --up-line-dark:#3a3936;   /* garis/border (gelap) */
+  --up-line:#d8d0c5;        /* garis/border (terang) */
+  /* status (dipakai game; jangan diganti warna palet agar arti benar/salah tetap jelas) */
+  --up-ok:#2f6b3d; --up-ok-bg:#d3e6d6; --up-bad:#a3442f; --up-bad-bg:#f1d6cd;
+  /* bintang hadiah — satu-satunya warna di luar palet (V14) */
+  --up-star:#ffc61a; --up-star-edge:rgba(120,78,0,.55); --up-star-off:#cbc3b8; --up-star-off-dark:#57554f;
+  /* foto profil bawaan: siluet (V14) */
+  --up-avatar-bg:#e5e0d9; --up-avatar-fg:#a8a29b;
+  /* kerangka muat (V14) */
+  --up-skel:#e7e1d8; --up-skel-shine:#efe9e1; --up-skel-dark:#2c2c2a; --up-skel-shine-dark:#262625;
+  /* huruf */
+  --up-font-display:'Playfair Display','Lora',Georgia,serif;
+  --up-font-body:'Lora',Georgia,'Times New Roman',serif;
+}

@@ -1,0 +1,39 @@
+/* LEVEL 4 & 5: gunakan komponen yang sama dengan game UpPlay, tanpa mengubah layout Level 1–3. */
+#level4Card,#level5Card{display:block !important}
+#level4Card .game-preview,#level5Card .game-preview{font-size:3rem;min-height:70px;display:grid;place-items:center}
+.level-card .level-stars{margin-top:7px;font-size:.78rem;font-weight:900}
+.level-card .level-stars .earned{color:#f5b51b}
+
+/* Labirin sungguhan — lebih banyak jalur, tetap responsif untuk laptop/LED. */
+#mathMazePage .maze-shell{max-width:1180px;grid-template-columns:minmax(480px,1fr) 350px;align-items:start}
+#mathMazePage .maze-card{min-width:0}
+#mathMazePage .maze-grid.real-maze{max-width:700px;grid-template-columns:repeat(11,1fr);gap:3px;padding:6px}
+#mathMazePage .maze-cell{min-width:0;aspect-ratio:1;border-radius:7px;font-size:clamp(.65rem,1.6vw,1.35rem)}
+#mathMazePage .maze-cell.wall{background:#5bc56b}
+#mathMazePage .maze-cell.path{background:#fff}
+#mathMazePage .maze-cell.challenge{background:#fff0a6;box-shadow:inset 0 0 0 3px #f4b400}
+#mathMazePage .maze-cell.goal{background:#ffd75a;box-shadow:inset 0 0 0 3px #e5a500}
+#mathMazePage .maze-cell.player{background:#8be1ff;box-shadow:inset 0 0 0 4px #168bd4}
+#mathMazePage .maze-cell.visited{background:#eef7ff}
+#mathMazePage .maze-controls button{min-width:58px}
+#mathMazePage .maze-level-badge{display:inline-flex;padding:7px 11px;border-radius:12px;background:#e9f8ea;color:#247a35;font-weight:1000;margin-bottom:10px}
+#mathMazePage .maze-timer{font-size:1.5rem;font-weight:1000;color:#2a2a29}
+
+/* Boss Level 5 */
+#safeCrackerPage .safe-shell{max-width:900px}
+#safeCrackerPage .safe-round{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:10px 0;color:#9bb0c7;font-weight:900}
+#safeCrackerPage .safe-round strong{color:#62ff9b;font-size:1.1rem}
+#safeCrackerPage .safe-result.success{color:#62ff9b}
+#safeCrackerPage .safe-result.bad{color:#ff7b83}
+
+/* Popup hasil level tetap memakai visual modal UpPlay yang sudah ada. */
+#levelOutcomeModal .level-outcome-stars{letter-spacing:4px}
+
+@media(max-width:1000px){
+  #mathMazePage .maze-shell{grid-template-columns:1fr;}
+  #mathMazePage .maze-grid.real-maze{max-width:620px}
+}
+@media(max-width:700px){
+  #mathMazePage .maze-grid.real-maze{max-width:calc(100vw - 38px)}
+  #mathMazePage .maze-cell{border-radius:5px}
+}

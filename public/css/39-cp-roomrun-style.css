@@ -1,0 +1,45 @@
+/* ===== ikon paste ===== */
+.cp-pastewrap{display:flex;gap:8px;align-items:stretch}
+.cp-pastewrap input{flex:1;min-width:0}
+.cp-pastebtn{flex:none;width:48px;border-radius:14px;border:2px solid #e5e0d9;background:#f6f3ee;color:#1e1f1f;cursor:pointer;display:grid;place-items:center;transition:.15s}
+.cp-pastebtn:hover{background:#1e1f1f;color:#fff}
+.cp-pastebtn svg{width:22px;height:22px}
+/* ===== mode room: game penuh layar ===== */
+body.cp-room-mode .page-head .back-btn,body.cp-room-mode #safeExitArrow,body.cp-room-mode #mazeBack{display:none!important}
+body.cp-room-mode .app-view .topbar .brand{pointer-events:none}
+#cpRoomHud{position:fixed;top:9px;right:16px;z-index:99990;display:flex;gap:10px;align-items:center;padding:8px 14px;border-radius:999px;background:#2a2a29;color:#fff;font-weight:900;font-size:.82rem;box-shadow:0 8px 22px rgba(42,42,41,.3)}
+#cpRoomHud b{color:#ffd75e}
+#cpRoomInter{position:fixed;inset:0;z-index:99995;display:grid;place-items:center;background:rgba(42,42,41,.86);backdrop-filter:blur(6px)}
+#cpRoomInter > div{background:#fff;border-radius:26px;padding:30px 38px;text-align:center;max-width:min(440px,92vw);box-shadow:0 24px 60px rgba(0,0,0,.35)}
+#cpRoomInter h2{margin:6px 0;font-size:1.7rem;color:#2a2a29}#cpRoomInter p{margin:4px 0;color:#4a4a49;font-weight:800}
+#cpRoomInter .pts{font-size:2.4rem;font-weight:1000;color:#16a34a}
+/* ===== klasemen realtime guru ===== */
+.cp-medal{flex:1;max-width:210px;text-align:center;padding:14px 10px;border-radius:20px;background:#f6f3ee;border:2px solid #e5e0d9;transition:background .4s}
+.cp-medal span{font-size:2.3rem;display:block}.cp-medal b{display:block;color:#2a2a29}.cp-medal small{font-weight:800;color:#4a4a49}
+.cp-medal.m1{background:linear-gradient(135deg,#fff3c4,#ffe08a);border-color:#f6c445;padding-top:22px}
+.cp-medal.m2{background:linear-gradient(135deg,#f1f4fa,#dfe5f0)}.cp-medal.m3{background:linear-gradient(135deg,#fde9d9,#f7cfae)}
+.cp-board{border:1px solid #e5e0d9;border-radius:18px;overflow:hidden;background:#fff;overflow-x:auto}
+.cp-bh,.cp-brow{display:grid;grid-template-columns:56px minmax(130px,1.3fr) minmax(150px,1.5fr) 80px 90px 80px 100px;gap:8px;align-items:center;padding:11px 16px;min-width:700px;box-sizing:border-box}
+.cp-medals{display:flex;gap:14px;justify-content:center;align-items:flex-end;margin:16px 0 14px}
+.cp-medals:empty{display:none}
+.cp-st{display:inline-block;padding:4px 12px;border-radius:99px;background:#e0e7ff;color:#1e1f1f;font-size:.72rem;font-weight:900}
+.cp-st.live{background:#dcfce7;color:#15803d}
+.cp-count-ov{position:fixed;inset:0;z-index:99998;display:grid;place-items:center;background:rgba(42,42,41,.9);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#fff;text-align:center}
+.cp-count-ov small{font-weight:900;letter-spacing:1px;opacity:.85}
+.cp-count-ov p{margin:6px 0 0;font-size:1.3rem;font-weight:900}
+.cp-count-ov b{display:block;font-size:9rem;line-height:1.05;color:#ffd75e;animation:cpCountPop 1s ease-in-out infinite}
+@keyframes cpCountPop{0%{transform:scale(.7);opacity:.4}35%{transform:scale(1.08);opacity:1}100%{transform:scale(1);opacity:.9}}
+.cp-bh{background:linear-gradient(135deg,#1e1f1f,#ba9d7f);color:#fff;font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.6px}
+.cp-brow{border-top:1px solid #efe9e1;font-weight:800;font-size:.88rem;background:#fff;position:relative;will-change:transform}
+.cp-brow .pos{font-size:1.15rem;font-weight:1000;color:#1e1f1f;text-align:center}
+.cp-brow.r1 .pos,.cp-brow.r2 .pos,.cp-brow.r3 .pos{color:#b45309}
+.cp-brow .sc{font-weight:1000;color:#16a34a;text-align:right;font-size:1rem}
+.cp-brow.cp-up{background:#e9fbf0}.cp-brow.cp-down{background:#fff4e5}
+.cp-brow small{display:block;color:#84817d;font-weight:700}
+.cp-pbar{height:8px;border-radius:99px;background:#efe9e1;overflow:hidden;margin-bottom:3px}
+.cp-pbar i{display:block;height:100%;background:linear-gradient(90deg,#1e1f1f,#22c55e);transition:width .5s}
+.cp-h3{margin:14px 0 8px}
+/* ===== hasil siswa ===== */
+.cp-pod2{display:flex;gap:10px;justify-content:center;margin:14px 0}
+.cp-pod2 div{flex:1;max-width:150px;padding:12px 6px;border-radius:16px;background:#f6f3ee;text-align:center}
+.cp-pod2 div:first-child{background:#fff3c4}.cp-pod2 span{font-size:1.9rem;display:block}.cp-pod2 b{display:block;font-size:.85rem}.cp-pod2 small{font-weight:800;color:#4a4a49}

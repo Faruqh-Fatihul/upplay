@@ -1,0 +1,94 @@
+/* =====================================================================
+   UpPlay V10
+   ===================================================================== */
+
+/* ---------- kartu permainan: kartu hanya hover, yang bisa diklik hanya tombol ---------- */
+html body .subject-card{cursor:default!important}
+html body .app-view:not(#upz1):not(#upz2):not(#upz3) .subject-card .play-label{
+  display:inline-flex!important;align-items:center;gap:8px;width:auto!important;align-self:flex-start;
+  padding:10px 18px!important;border:1.5px solid currentColor!important;border-radius:999px!important;
+  background:transparent!important;cursor:pointer!important;font-weight:700;
+  transition:background-color .25s,color .25s,transform .25s cubic-bezier(.22,1,.36,1)!important
+}
+html body .app-view:not(#upz1):not(#upz2):not(#upz3) .subject-card .play-label:hover{transform:translateY(-2px)}
+html body .app-view:not(#upz1):not(#upz2):not(#upz3) .subject-card.math .play-label:hover{background:#f6f3ee!important;color:#1e1f1f!important}
+html body .app-view:not(#upz1):not(#upz2):not(#upz3) .subject-card:is(.logic,.picture) .play-label:hover{background:#1e1f1f!important;color:#f6f3ee!important}
+html.upx-dark body .app-view:not(#upz1):not(#upz2):not(#upz3) .subject-card.picture .play-label:hover{background:#f6f3ee!important;color:#1e1f1f!important}
+html body .subject-card:hover{transform:translateY(-4px)!important;box-shadow:0 26px 40px -30px rgba(30,31,31,.6)!important}
+html body .level-card{cursor:default!important;transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s!important}
+html body .level-card:hover{transform:translateY(-4px);box-shadow:0 26px 40px -30px rgba(30,31,31,.55)!important}
+html body .level-card button{cursor:pointer;transition:transform .25s cubic-bezier(.22,1,.36,1),background-color .25s,color .25s!important}
+html body .level-card button:not(:disabled):hover{transform:translateY(-2px)}
+
+/* ---------- ikon kartu level: maksimal 2 ---------- */
+html body .level-card .game-preview{flex-wrap:nowrap!important;gap:18px!important}
+html body .level-card .game-preview > :is(.upz-ab,span):nth-of-type(n+3){display:none!important}
+
+/* ---------- avatar kembar: tanda titik kecil ---------- */
+#quizRoomModalV2 .avatar-choice{position:relative}
+#quizRoomModalV2 .avatar-twin{position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:#ba9d7f}
+
+/* ---------- hitung mundur awal ruang: angka saja yang berganti ---------- */
+.cp-count-ov{position:fixed;inset:0;z-index:100020;display:grid;place-items:center;background:rgba(20,20,19,.55);backdrop-filter:blur(4px)}
+.cp-count-ov > div{min-width:min(340px,90vw);padding:26px 30px;border-radius:22px;text-align:center;background:#f6f3ee!important;color:#1e1f1f!important;border:1px solid #d8d0c5;box-shadow:0 40px 80px -40px rgba(0,0,0,.6)}
+.cp-count-ov small{display:block;letter-spacing:.12em;text-transform:uppercase;color:#84817d}
+.cp-count-ov p{margin:6px 0 12px;font-weight:700}
+.cp-count-ov .cp-cnum{display:grid;place-items:center;width:96px;height:96px;margin:0 auto;border-radius:50%;background:#1e1f1f;color:#d3b99d;font-family:var(--upz-display)!important;font-size:2.8rem;line-height:1}
+.cp-count-ov .cp-cnum.tick{animation:cpCntTick .85s cubic-bezier(.22,1,.36,1) both}
+@keyframes cpCntTick{0%{transform:scale(1.18)}60%{transform:scale(.96)}100%{transform:scale(1)}}
+html.upx-dark .cp-count-ov > div{background:#1e1f1f!important;color:#efe9e1!important;border-color:#3a3936}
+html.upx-dark .cp-count-ov .cp-cnum{background:#d3b99d;color:#1e1f1f}
+
+/* ---------- TTS di mode gelap: kotak terang, huruf tinta (kontras tinggi) ---------- */
+html.upx-dark body .app-view:not(#upz1):not(#upz2):not(#upz3) .cw3-cell{background:#efe9e1!important;box-shadow:inset 0 0 0 1.5px #84817d!important}
+html.upx-dark body.upx-app .app-view:not(#upz1):not(#upz2):not(#upz3):not(#upz4) .cw3-cell input:not([type=checkbox]):not([type=radio]):not([type=range]){background:transparent!important;border:0!important;box-shadow:none!important;color:#1e1f1f!important;-webkit-text-fill-color:#1e1f1f}
+html.upx-dark body .app-view:not(#upz1):not(#upz2):not(#upz3) .cw3-num{color:#4a4a49!important}
+html.upx-dark body .app-view:not(#upz1):not(#upz2):not(#upz3) .cw3-cell.cw3-active{background:#e6d3b9!important}
+html.upx-dark body .app-view:not(#upz1):not(#upz2):not(#upz3) .cw3-cell.cw3-cur{background:#d3b99d!important;box-shadow:inset 0 0 0 3px #1e1f1f!important}
+html.upx-dark body .app-view:not(#upz1):not(#upz2):not(#upz3) .cw3-cell:is(.cw3-ok,.cw3-chk-ok){background:#d3e6d6!important;box-shadow:inset 0 0 0 2px #2f6b3d!important}
+html.upx-dark body .app-view:not(#upz1):not(#upz2):not(#upz3) .cw3-cell:is(.cw3-bad,.cw3-chk-bad){background:#f1d6cd!important;box-shadow:inset 0 0 0 2px #a3442f!important}
+html.upx-dark body .app-view:not(#upz1):not(#upz2):not(#upz3) .cw3-cell.cw3-hint{background:#dbe5ec!important}
+
+/* ---------- Gabung Ruang: rapi di HP ---------- */
+#quizRoomModalV2 .modal{width:min(620px,calc(100vw - 20px))!important;max-width:calc(100vw - 20px)!important;box-sizing:border-box!important}
+#quizRoomModalV2 .modal *{box-sizing:border-box}
+#quizRoomModalV2 :is(div,form,label):has(> input + #quizRoomPasteV2){display:flex!important;gap:8px!important;width:100%!important;align-items:stretch}
+#quizRoomModalV2 :is(div,form,label):has(> input + #quizRoomPasteV2) > input{flex:1 1 auto!important;min-width:0!important;width:auto!important}
+#quizRoomPasteV2{flex:0 0 50px!important}
+#quizRoomModalV2 :is(.btn-success,button[type=submit]){width:100%!important;max-width:100%!important}
+@media (max-width:560px){
+  #quizRoomModalV2 .modal{padding:20px 16px!important;border-radius:20px!important}
+  #quizRoomModalV2 .modal h2{font-size:1.45rem!important}
+  #quizRoomModalV2 .modal p{font-size:.95rem!important}
+}
+
+/* ---------- popup & kartu di HP ---------- */
+@media (max-width:560px){
+  html body :is(.modal-overlay .modal,.cp-ov .cp-bubble,.level-outcome-overlay .level-outcome-card,.ad-ov .ad-md,.upz-dlg-box){width:calc(100vw - 20px)!important;max-width:calc(100vw - 20px)!important;padding:20px 16px!important;border-radius:20px!important}
+  html body .level-outcome-card :is(h2,h1){font-size:1.6rem!important}
+  html body .level-outcome-card :is(button){width:100%!important}
+  #landingPage .hero-visual .upz-show{width:100%!important;border-radius:20px}
+  .upz-cap b{font-size:1.2rem}
+  html body .app-view .levels-grid,html body .app-view .level-grid{grid-template-columns:1fr!important}
+}
+
+/* ---------- brankas: tombol Buka kontras ---------- */
+html body #safeCrackerPage .vault-open{background:linear-gradient(180deg,#2f7a49,#245f39)!important;color:#ffffff!important;text-shadow:none!important}
+
+html body #safeCrackerPage .empty{color:#6f9a7c!important}
+/* ---------- penutup peluncuran ronde ---------- */
+#cpLaunchCover{position:fixed;inset:0;z-index:100015;display:grid;place-items:center;background:var(--upx-page,#e5e0d9)}
+#cpLaunchCover > div{display:flex;align-items:center;gap:10px;padding:14px 20px;border-radius:999px;background:#1e1f1f;color:#f6f3ee}
+#cpLaunchCover .cpl-dot{width:10px;height:10px;border-radius:50%;background:#d3b99d;animation:upzBlink 1s infinite}
+html.upx-dark #cpLaunchCover > div{background:#d3b99d;color:#1e1f1f}
+html.upx-dark #cpLaunchCover .cpl-dot{background:#1e1f1f}
+:is(#cpLaunchCover,#cpRoomCount).out{animation:upzFadeOut .26s ease both}
+.cp-count-ov .cp-cnum.go{font-size:1.5rem}
+body.cp-room-mode :is(#mathLevelsPage,#lgLevelsPage,#ttLevelsPage){visibility:hidden}
+/* ---------- transisi tema: matahari terbit / bulan sabit ---------- */
+#upzSky{position:fixed;inset:0;z-index:100300;pointer-events:none;overflow:hidden}
+#upzSky .veil{position:absolute;inset:0}
+#upzSky .body{position:absolute;width:150px;height:150px;left:0;top:0;will-change:transform,opacity}
+#upzSky .sun{border-radius:50%;background:radial-gradient(circle at 50% 50%,#fbf3e6 0 26%,#ecd7b8 34%,#d3b99d 46%,rgba(211,185,157,.35) 58%,rgba(211,185,157,0) 72%);filter:drop-shadow(0 0 40px rgba(211,185,157,.75))}
+#upzSky .moon svg{width:100%;height:100%;filter:drop-shadow(0 0 26px rgba(239,233,225,.55))}
+@media (prefers-reduced-motion:reduce){#upzSky{display:none!important}}

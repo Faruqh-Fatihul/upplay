@@ -1,0 +1,7 @@
+/* V5: Profile is a dashboard sub-view only. It can never remain visible over a level/game page. */
+#studentDashboard:not(.hidden) #studentViewDashboard.hidden,
+#studentDashboard:not(.hidden) #studentViewProfile.hidden,
+#studentDashboard.hidden #studentViewDashboard,
+#studentDashboard.hidden #studentViewProfile,
+#studentDashboard.hidden .profile-summary,
+#studentDashboard.hidden .profile-card{display:none!important;}

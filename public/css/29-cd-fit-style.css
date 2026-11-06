@@ -1,0 +1,108 @@
+/* ================= Garis waktu (semua level) ================= */
+.cd-timebar{display:none}
+:is(#snakeGamePage,#memoryPage,#crosswordGamePage,#mathMazePage,#safeCrackerPage):not(.hidden) .cd-timebar{display:flex;align-items:center;gap:14px;flex:none;margin:8px 26px 6px;height:24px}
+.cd-timebar .cd-track{flex:1;height:14px;border-radius:99px;background:rgba(132,129,125,.22);overflow:hidden;box-shadow:inset 0 1px 2px rgba(30,31,31,.12)}
+.cd-timebar .cd-track i{display:block;height:100%;width:100%;border-radius:inherit;background:hsl(120,70%,45%);transition:width 1s linear,background-color .6s linear;box-shadow:inset 0 -3px 0 rgba(0,0,0,.08)}
+.cd-timebar.cd-reset .cd-track i{transition:none}
+.cd-timebar strong{min-width:84px;text-align:right;font:900 1.05rem/1 Nunito,Arial,sans-serif;font-variant-numeric:tabular-nums;color:#1e1f1f;letter-spacing:.2px;white-space:nowrap}
+.cd-timebar.cd-danger strong{color:#d62839;animation:cdPulse .8s ease-in-out infinite alternate}
+@keyframes cdPulse{from{opacity:1}to{opacity:.55}}
+#safeCrackerPage .cd-timebar strong{color:#eaf0ff}
+#safeCrackerPage .cd-timebar.cd-danger strong{color:#ff6b78}
+/* penghitung waktu lama (mengambang & di panel) diganti garis waktu di atas */
+#cp5Timer,#cerdasLevelTimer,#gameTimer,.cp5-timer,.cp5-inline-timer,.game-inline-timer,#snakeLevelTimer,.snake-level-timer,.cw3-timer,.cw3-bar,#snakeGamePage #snakeLevelTimer.snake-level-timer,#snakeGamePage .game-panel #snakeLevelTimer{display:none!important}
+
+/* ================= Muat layar laptop tanpa scroll ================= */
+@media (min-width:900px) and (min-height:470px){
+  :root{--cd-h:calc(100vh - 146px);--cd-s:min(var(--cd-h),calc(100vw - 520px))}
+  @supports (height:100dvh){:root{--cd-h:calc(100dvh - 146px)}}
+  :is(#snakeGamePage,#memoryPage,#crosswordGamePage,#mathMazePage,#safeCrackerPage):not(.hidden){display:flex!important;flex-direction:column;height:100vh;overflow:hidden}
+  @supports (height:100dvh){:is(#snakeGamePage,#memoryPage,#crosswordGamePage,#mathMazePage,#safeCrackerPage):not(.hidden){height:100dvh}}
+  :is(#snakeGamePage,#memoryPage,#crosswordGamePage,#mathMazePage,#safeCrackerPage):not(.hidden) .topbar{flex:none;height:52px;min-height:0;padding-top:0;padding-bottom:0;box-sizing:border-box;position:relative}
+  :is(#snakeGamePage,#memoryPage,#crosswordGamePage,#mathMazePage,#safeCrackerPage):not(.hidden) .topbar .brand-icon{width:32px;height:32px;font-size:1rem;border-radius:10px}
+  :is(#snakeGamePage,#memoryPage,#crosswordGamePage,#mathMazePage,#safeCrackerPage):not(.hidden) .topbar .btn{padding:7px 16px;font-size:.92rem}
+  :is(#snakeGamePage,#memoryPage,#crosswordGamePage,#mathMazePage,#safeCrackerPage):not(.hidden)>main{flex:1 1 0!important;min-height:0!important;height:auto!important;display:flex;flex-direction:column;width:100%;max-width:none!important;margin:0!important;padding:0 26px 10px!important;box-sizing:border-box;overflow:hidden}
+  :is(#snakeGamePage,#memoryPage,#crosswordGamePage,#mathMazePage):not(.hidden) .page-head{flex:none;width:100%;max-width:none!important;margin:0 0 6px!important;gap:10px;align-items:center;min-height:0;padding:0}
+  :is(#snakeGamePage,#memoryPage,#crosswordGamePage,#mathMazePage):not(.hidden) .page-head h1{margin:0;font-size:1.3rem;line-height:1.2}
+  :is(#snakeGamePage,#memoryPage,#crosswordGamePage,#mathMazePage):not(.hidden) .page-head p{display:none}
+  :is(#snakeGamePage,#memoryPage,#crosswordGamePage,#mathMazePage):not(.hidden) .page-head .back-btn{width:34px;height:34px;min-width:34px;font-size:1rem}
+
+  /* ---- Level 1: ular tangga ---- */
+  #snakeGamePage:not(.hidden) .game-layout{flex:1;min-height:0;display:grid;grid-template-columns:var(--cd-s) minmax(300px,420px);justify-content:center;align-items:start;gap:18px;margin:0 auto!important;width:max-content;max-width:100%}
+  #snakeGamePage:not(.hidden) .board-shell{width:var(--cd-s);height:var(--cd-s);padding:8px;box-sizing:border-box;margin:0}
+  #snakeGamePage:not(.hidden) #snakeBoard{width:100%;height:100%;max-width:none;aspect-ratio:auto}
+  #snakeGamePage:not(.hidden) .game-panel{max-height:var(--cd-s);padding:12px 14px;overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;gap:8px}
+  #snakeGamePage:not(.hidden) .game-panel>*{margin-top:0;margin-bottom:0}
+  #snakeGamePage:not(.hidden) .game-panel h2{font-size:1.05rem}
+  #snakeGamePage:not(.hidden) .game-panel>p,#snakeGamePage:not(.hidden) .game-rules{display:none}
+
+  /* ---- Level 2: memory ---- */
+  #memoryPage:not(.hidden) .memory-layout{flex:1;min-height:0;display:flex;flex-direction:column;gap:10px;width:100%;max-width:1000px;margin:0 auto;padding:0}
+  #memoryPage:not(.hidden) .memory-info{flex:none;padding:8px 14px;margin:0;gap:14px}
+  #memoryPage:not(.hidden) .memory-info h2,#memoryPage:not(.hidden) .memory-info h3{margin:0;font-size:1rem}
+  #memoryPage:not(.hidden) .memory-info p{margin:2px 0 0;font-size:.85rem}
+  #memoryPage:not(.hidden) #memoryBoard{flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:12px;width:100%;max-width:none;margin:0}
+  #memoryPage:not(.hidden) #memoryBoard .memory-card{height:100%!important;min-height:0!important;aspect-ratio:auto}
+  #memoryPage:not(.hidden) .cp5-memory-hint{flex:none;margin:0;font-size:.8rem;text-align:center}
+
+  /* ---- Level 3: TTS ---- */
+  #crosswordGamePage:not(.hidden) .crossword-layout{flex:1;min-height:0;display:grid;grid-template-columns:max-content minmax(0,1fr);justify-content:center;align-items:start;gap:16px;margin:0 auto!important;width:min(100%,1180px);max-width:none}
+  #crosswordGamePage:not(.hidden) .crossword-panel{min-width:0}
+  #crosswordGamePage:not(.hidden) .crossword-board-wrap{padding:6px!important;margin:0!important;width:auto;box-sizing:border-box}
+  #crosswordGamePage:not(.hidden) .cw3-board{--cell:max(22px,min(calc((var(--cd-h) - 36px)/var(--rows,11) - 3px),calc((100vw - 640px)/var(--cols,9) - 3px),56px));grid-template-columns:repeat(var(--cols,9),var(--cell));grid-auto-rows:var(--cell);width:max-content;max-width:100%;gap:3px;padding:6px}
+  #crosswordGamePage:not(.hidden) .cw3-cell{aspect-ratio:auto;width:var(--cell);height:var(--cell);border-radius:7px}
+  #crosswordGamePage:not(.hidden) .cw3-cell input{padding:calc(var(--cell)*.1) 0 0;font-size:calc(var(--cell)*.52)}
+  #crosswordGamePage:not(.hidden) .cw3-num{font-size:max(8px,calc(var(--cell)*.2));top:1px;left:3px}
+  #crosswordGamePage:not(.hidden) .cw3-block{aspect-ratio:auto}
+  #crosswordGamePage:not(.hidden) .crossword-panel{padding:12px 14px;margin:0;max-height:var(--cd-h);overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;gap:8px}
+  #crosswordGamePage:not(.hidden) .crossword-panel>*{margin-top:0;margin-bottom:0}
+  #crosswordGamePage:not(.hidden) .cw3-fb{padding:8px 12px;font-size:.9rem;line-height:1.35;min-height:0}
+  #crosswordGamePage:not(.hidden) .crossword-panel .score-row{display:flex;gap:10px}
+  #crosswordGamePage:not(.hidden) .crossword-panel .mini-stat{flex:1;padding:6px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+  #crosswordGamePage:not(.hidden) .crossword-panel .mini-stat strong{font-size:1.1rem}
+  #crosswordGamePage:not(.hidden) .cw3-cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;min-height:0}
+  #crosswordGamePage:not(.hidden) .cw3-clues{margin:0;padding:8px 10px}
+  #crosswordGamePage:not(.hidden) .cw3-clues h3{margin:0 0 4px;font-size:.95rem}
+  #crosswordGamePage:not(.hidden) .cw3-clues ol{gap:2px;align-content:start}
+  #crosswordGamePage:not(.hidden) .cw3-clues{align-self:start}
+  #crosswordGamePage:not(.hidden) .cw3-clue{padding:5px 8px;font-size:.85rem;gap:6px;flex-wrap:wrap}
+  #crosswordGamePage:not(.hidden) .cw3-clue em{font-size:.72rem}
+  #crosswordGamePage:not(.hidden) .cw3-actions{margin:0}
+  #crosswordGamePage:not(.hidden) .cw3-actions .btn{padding:9px 14px;min-width:0}
+  #crosswordGamePage:not(.hidden) .cw3-help{margin:0;font-size:.74rem;line-height:1.35}
+
+  /* ---- Level 4: labirin ---- */
+  #mathMazePage:not(.hidden) .maze-shell{flex:1;min-height:0;display:grid!important;grid-template-columns:var(--cd-s) minmax(300px,380px)!important;justify-content:center;align-items:start;gap:18px;margin:0 auto!important;max-width:none!important;width:max-content}
+  #mathMazePage:not(.hidden) .maze-card{width:var(--cd-s);height:var(--cd-s);padding:8px!important;box-sizing:border-box;margin:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  #mathMazePage:not(.hidden) .maze-grid.real-maze{width:calc(var(--cd-s) - 16px)!important;height:calc(var(--cd-s) - 16px)!important;max-width:none!important;aspect-ratio:auto;margin:0;box-sizing:border-box}
+  #mathMazePage:not(.hidden) .maze-panel{padding:12px 14px!important;max-height:var(--cd-s);overflow:hidden;box-sizing:border-box;display:flex;flex-direction:column;gap:8px}
+  #mathMazePage:not(.hidden) .maze-panel>*{margin-top:0!important;margin-bottom:0!important}
+  #mathMazePage:not(.hidden) .maze-panel .maze-question{padding:10px 12px}
+  #mathMazePage:not(.hidden) .maze-panel .maze-question h3{margin:0 0 4px;font-size:1rem}
+  #mathMazePage:not(.hidden) .maze-panel .maze-question p{margin:0 0 6px;font-size:.88rem;line-height:1.4}
+  #mathMazePage:not(.hidden) .maze-panel .mini-stat{padding:6px 12px}
+  #mathMazePage:not(.hidden) .maze-panel .maze-status{padding:8px 12px;font-size:.88rem}
+  #mathMazePage:not(.hidden) .maze-panel .maze-controls{display:grid;grid-template-columns:repeat(3,52px);grid-auto-rows:42px;gap:6px;justify-content:center;margin:2px 0 0;padding:0}
+  #mathMazePage:not(.hidden) .maze-panel .maze-controls button{width:52px;height:42px;padding:0}
+  #mathMazePage:not(.hidden) .maze-panel .maze-controls button[data-move="up"]{grid-column:2;grid-row:1}
+  #mathMazePage:not(.hidden) .maze-panel .maze-controls button[data-move="left"]{grid-column:1;grid-row:2}
+  #mathMazePage:not(.hidden) .maze-panel .maze-controls button[data-move="down"]{grid-column:2;grid-row:2}
+  #mathMazePage:not(.hidden) .maze-panel .maze-controls button[data-move="right"]{grid-column:3;grid-row:2}
+  #mathMazePage:not(.hidden) .maze-panel .maze-controls .empty{display:none}
+
+  /* ---- Level 5: brankas ---- */
+  #safeCrackerPage:not(.hidden)>main.safe-shell{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:8px;padding-top:2px}
+  #safeCrackerPage:not(.hidden) main.safe-shell>.safe-story{display:none}
+  #safeCrackerPage:not(.hidden) #safeCard{width:min(100%,980px);flex:1;min-height:0;box-sizing:border-box;padding:14px 18px;margin:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto auto auto 1fr;gap:10px 22px;align-items:start;overflow:hidden}
+  #safeCrackerPage:not(.hidden) #safeCard .safe-door{grid-column:1;grid-row:1 / span 2;width:min(100%,calc(var(--cd-h) - 150px));aspect-ratio:1;margin:0 auto;justify-self:center}
+  #safeCrackerPage:not(.hidden) #safeCard #safeQuestion{grid-column:1;grid-row:3;margin:0;padding:10px 14px;max-width:none}
+  #safeCrackerPage:not(.hidden) #safeCard #safeKeypad{grid-column:2;grid-row:1 / span 2;margin:0;align-self:start;gap:8px;max-width:340px;justify-self:center;width:100%}
+  #safeCrackerPage:not(.hidden) #safeCard #safeKeypad button{height:max(36px,calc((var(--cd-h) - 280px)/4))}
+  #safeCrackerPage:not(.hidden) #safeCard #safeKeypad button:last-child:nth-child(10){grid-column:2}
+  #safeCrackerPage:not(.hidden) #safeCard .safe-actions{grid-column:2;grid-row:3;margin:0;max-width:340px;justify-self:center;width:100%}
+  #safeCrackerPage:not(.hidden) #safeCard #safeResult{grid-column:1 / span 2;grid-row:4;min-height:0;margin:0}
+}
+/* ruang sempit (tinggi layar kecil) */
+@media (min-width:900px) and (min-height:470px) and (max-height:640px){
+    .cd-timebar{margin-top:5px!important;margin-bottom:3px!important}
+}

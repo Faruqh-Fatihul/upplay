@@ -1,0 +1,45 @@
+  .cp5-timer{
+    position:fixed;right:22px;top:88px;z-index:10050;display:none;align-items:center;gap:8px;
+    padding:10px 14px;border:1px solid #e5e0d9;border-radius:14px;background:#fff;
+    box-shadow:0 10px 30px rgba(30,31,31,.14);font-weight:900;color:#2a2a29
+  }
+  .cp5-timer.active{display:flex}.cp5-timer strong{color:#1e1f1f;font-variant-numeric:tabular-nums;min-width:48px;text-align:center}
+  .cp5-timer.warning{border-color:#f5c451;background:#fffaf0}.cp5-timer.warning strong{color:#a15b00}
+  .cp5-timer.danger{border-color:#ef9b9b;background:#fff3f3}.cp5-timer.danger strong{color:#b4232b}
+  .cp5-inline-timer{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;padding:10px 13px;border:1px solid #e5e0d9;border-radius:12px;background:#f6f3ee;font-weight:900}
+  .cp5-inline-timer strong{color:#1e1f1f;font-variant-numeric:tabular-nums}.cp5-inline-timer.warning{background:#fffaf0;border-color:#f5c451}.cp5-inline-timer.warning strong{color:#a15b00}.cp5-inline-timer.danger{background:#fff3f3;border-color:#ef9b9b}.cp5-inline-timer.danger strong{color:#b4232b}
+
+  #memoryBoard.cp5-memory{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:14px!important;max-width:900px!important;margin:0 auto!important}
+  #memoryBoard.cp5-memory .memory-card{height:150px!important;min-height:150px!important;border-radius:18px!important}
+  #memoryBoard.cp5-memory .memory-back{font-size:clamp(1rem,2vw,1.35rem)!important;font-weight:1000!important}
+  .cp5-memory-hint{margin-top:12px;text-align:center;color:#84817d;font-weight:800;font-size:.85rem}
+  .cp5-feedback{margin-top:12px;padding:11px 13px;border-radius:12px;background:#f6f3ee;color:#4a4a49;font-weight:900;text-align:center}
+
+  #crosswordGamePage .cp5-cw-layout{display:grid;grid-template-columns:minmax(420px,560px) minmax(300px,380px);gap:22px;align-items:start;justify-content:center}
+  #crosswordGamePage .cp5-cw-board-wrap{padding:18px;border:1px solid #e5e0d9;border-radius:24px;background:#fff;box-shadow:0 12px 30px rgba(30,31,31,.08)}
+  #crosswordGamePage .cp5-cw-board{display:grid;grid-template-columns:repeat(7,1fr);width:min(100%,490px);aspect-ratio:7/8;margin:auto;gap:3px;background:#2a2a29;padding:3px;border-radius:12px}
+  #crosswordGamePage .cp5-cw-cell{position:relative;background:#fff;min-width:0;min-height:0;border-radius:2px}
+  #crosswordGamePage .cp5-cw-cell.block{background:#2a2a29}
+  #crosswordGamePage .cp5-cw-cell input{width:100%;height:100%;border:0;background:transparent;text-align:center;text-transform:uppercase;font-weight:1000;font-size:clamp(1rem,3vw,1.5rem);color:#2a2a29;outline:none;padding-top:5px}
+  #crosswordGamePage .cp5-cw-cell:focus-within{background:#efe9e1}
+  #crosswordGamePage .cp5-cw-cell.correct{background:#e9faef}.cp5-cw-cell.wrong{background:#fff0f0}
+  #crosswordGamePage .cp5-cw-num{position:absolute;left:4px;top:2px;font-size:.58rem;font-weight:1000;color:#4a4a49;pointer-events:none}
+  #crosswordGamePage .cp5-clues{display:grid;gap:10px;margin:14px 0}.cp5-clue{padding:11px 13px;border:1px solid #e5e0d9;border-radius:12px;background:#f6f3ee}.cp5-clue strong{display:inline-block;min-width:28px;color:#1e1f1f}.cp5-cw-note{margin:0 0 12px;color:#84817d;font-size:.86rem;line-height:1.5}
+  @media(max-width:850px){#crosswordGamePage .cp5-cw-layout{grid-template-columns:1fr}#crosswordGamePage .cp5-cw-board-wrap{max-width:620px;margin:auto;width:100%}}
+
+  #mathMazePage .cp5-maze-layout{display:grid;grid-template-columns:minmax(480px,680px) minmax(290px,360px);gap:20px;align-items:start;justify-content:center}
+  #mathMazePage .cp5-maze-board-wrap{padding:14px;border:1px solid #e5e0d9;border-radius:24px;background:#fff;box-shadow:0 12px 30px rgba(30,31,31,.08)}
+  #mathMazePage .cp5-maze-grid{display:grid;grid-template-columns:repeat(15,1fr);gap:2px;width:min(100%,650px);aspect-ratio:1;margin:auto;background:#d4ccc1;padding:3px;border-radius:14px}
+  #mathMazePage .cp5-maze-cell{display:grid;place-items:center;border-radius:4px;font-size:clamp(.6rem,1.7vw,1rem);user-select:none}
+  #mathMazePage .cp5-maze-cell.wall{background:#3a3936}.cp5-maze-cell.path{background:#fffdf3}.cp5-maze-cell.visited{background:#f6f3ee}.cp5-maze-cell.player{background:#bcecff;box-shadow:inset 0 0 0 2px #38bdf8}.cp5-maze-cell.goal{background:#fff0a8;box-shadow:inset 0 0 0 2px #f0b400}.cp5-maze-cell.trap{background:#ffd9d9;box-shadow:inset 0 0 0 2px #ef4444;animation:cp5Trap .7s ease-in-out infinite alternate}.cp5-maze-cell.bonus{background:#dff8e8}.cp5-maze-legend{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:10px;color:#4a4a49;font-size:.76rem;font-weight:900}.cp5-maze-legend span{padding:5px 8px;border-radius:9px;background:#f6f3ee}
+  @keyframes cp5Trap{from{transform:scale(.94)}to{transform:scale(1)}}
+  #mathMazePage .cp5-maze-question{padding:15px;border:1px solid #efe9e1;border-radius:16px;background:#f6f3ee}.cp5-maze-question h3{margin:0 0 7px}.cp5-maze-question p{line-height:1.5}.cp5-maze-answer{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.cp5-maze-answer button{padding:11px;border:2px solid #efe9e1;border-radius:11px;background:#fff;font-weight:1000;color:#3a3936}.cp5-maze-answer button:hover{border-color:#1e1f1f;background:#f6f3ee}.cp5-bonus{margin-top:10px;padding:10px;border-radius:11px;background:#eaf9ef;color:#16713c;font-weight:1000}
+  @media(max-width:850px){#mathMazePage .cp5-maze-layout{grid-template-columns:1fr}}
+
+  #safeCrackerPage .cp5-safe-rounds{display:flex;gap:7px;justify-content:center;margin:12px 0}.cp5-safe-round{width:28px;height:8px;border-radius:99px;background:#dfe3ef}.cp5-safe-round.done{background:#22c55e}.cp5-safe-round.active{background:#1e1f1f}.cp5-safe-question{max-width:620px;margin:16px auto;padding:15px;border-radius:15px;background:#10182b;color:#eef5ff;text-align:center;font-size:1.05rem;line-height:1.6}.cp5-safe-sub{font-size:.8rem;color:#aeb8cf}.cp5-safe-result{min-height:44px;display:grid;place-items:center;margin-top:12px;font-weight:900}.cp5-safe-result.bad{color:#b4232b}.cp5-safe-result.good{color:#16803f}
+
+  #cp5Outcome.level-outcome-overlay{z-index:120000!important}
+  #cp5Outcome .level-outcome-card{width:min(500px,92vw)!important;border-radius:26px!important;padding:26px!important;text-align:center}
+  #cp5Outcome .level-outcome-icon{font-size:3.1rem!important}
+  #cp5Outcome .cp5-outcome-meta{margin:12px 0;padding:10px;border-radius:12px;background:#f6f3ee;color:#4a4a49;font-weight:900}
+  @media(max-width:700px){.cp5-timer{right:10px;top:78px}.cp5-memory .memory-card{height:110px!important;min-height:110px!important}#memoryBoard.cp5-memory{gap:8px!important}}
