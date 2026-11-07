@@ -197,8 +197,13 @@ app.use(express.static(ROOT));
 
 // Jalankan server setelah data Firestore berhasil dimuat ke cache lokal
 loadDbFromFirestore().then(() => {
-  app.listen(PORT, () => {
-    console.log('UpPlay (Express + Firestore) berjalan di http://localhost:' + PORT);
-    console.log('Buka di HP (satu Wi-Fi): http://<IP-laptop>:' + PORT);
-  });
+  if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+      console.log('UpPlay (Express + Firestore) berjalan di http://localhost:' + PORT);
+      console.log('Buka di HP (satu Wi-Fi): http://<IP-laptop>:' + PORT);
+    });
+  }
 });
+
+// WAJIB: Ekspor app agar bisa dibaca oleh Vercel Serverless
+module.exports = app;
