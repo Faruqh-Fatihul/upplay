@@ -1,15 +1,16 @@
 {
-  "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "server.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
+      "source": "/health",
+      "destination": "/api/[...path]"
+    },
     {
-      "src": "/(.*)",
-      "destination": "server.js"
+      "source": "/events",
+      "destination": "/api/[...path]"
+    },
+    {
+      "source": "/kv/:match*",
+      "destination": "/api/[...path]"
     }
   ]
 }

@@ -155,13 +155,11 @@ function broadcast(msg) {
 setInterval(() => { for (const res of clients) res.write(': ping\n\n'); }, 20000);
 
 /* ---------- Express Middleware & Routes ---------- */
-app.use(express.text({ type: '*/*' }));
-
-app.get('/api/health', (req, res) => {
+app.get('/health', (req, res) => {
   res.json({ ok: true, app: 'UpPlay', keys: Object.keys(db).length });
 });
 
-app.get('/api/events', (req, res) => {
+app.get('/events', (req, res) => {
   res.setHeader('Content-Type', 'text/event-stream');
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
@@ -170,11 +168,11 @@ app.get('/api/events', (req, res) => {
   req.on('close', () => clients.delete(res));
 });
 
-app.get('/api/kv', (req, res) => {
+app.get('/kv', (req, res) => {
   res.json(db);
 });
 
-app.get('/api/kv/:key', (req, res) => {
+app.get('/kv/:key', (req, res) => {
   const key = req.params.key;
   if (!/^cerdasPlay|^upplay/i.test(key)) {
     return res.status(400).json({ error: 'kunci tidak dikenal' });
@@ -187,7 +185,7 @@ app.get('/api/kv/:key', (req, res) => {
   }
 });
 
-app.put('/api/kv/:key', async (req, res) => {
+app.put('/kv/:key', async (req, res) => {
   const key = req.params.key;
   if (!/^cerdasPlay|^upplay/i.test(key)) {
     return res.status(400).json({ error: 'kunci tidak dikenal' });
@@ -197,7 +195,7 @@ app.put('/api/kv/:key', async (req, res) => {
   res.send(v);
 });
 
-app.delete('/api/kv/:key', async (req, res) => {
+app.delete('/kv/:key', async (req, res) => {
   const key = req.params.key;
   if (!/^cerdasPlay|^upplay/i.test(key)) {
     return res.status(400).json({ error: 'kunci tidak dikenal' });

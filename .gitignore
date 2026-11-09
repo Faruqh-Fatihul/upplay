@@ -4,3 +4,4 @@ server/data/db.json
 server/serviceAccountKey.json
 serviceAccountKey.json
 .env
+.vercel
