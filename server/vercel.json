@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "rewrites": [
     {
       "source": "/health",
@@ -9,7 +10,11 @@
       "destination": "/api/[...path]"
     },
     {
-      "source": "/kv/:match*",
+      "source": "/kv",
+      "destination": "/api/[...path]"
+    },
+    {
+      "source": "/kv/:path*",
       "destination": "/api/[...path]"
     }
   ]
