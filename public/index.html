@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<!-- Sinkron realtime ke server lokal (npm start). Dibuka sebagai file biasa: otomatis nonaktif. -->
+<!-- Tambahkan baris ini agar skrip sinkronisasi tahu alamat backend Vercel -->
+<script>
+  window.UPPLAY_API = 'https://api.upplay.my.id';
+</script>
 <script src="js/upplay-sync.js"></script>
+
 <link rel="stylesheet" href="css/01-upz-boot-style.css" data-layer="upz-boot-style">
 <script src="js/01-upz-boot.js" data-layer="upz-boot"></script>
 

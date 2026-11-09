@@ -11,7 +11,7 @@
 (function () {
   'use strict';
   if (!/^https?:$/.test(location.protocol)) return;
-  var API = (window.UPPLAY_API || '') + '/api';
+  var API = 'https://api.upplay.my.id';
   var SYNC = /^(cerdasPlay|upplay)/i;
   var ls = window.localStorage;
   var rawSet = Storage.prototype.setItem.bind(ls), rawRemove = Storage.prototype.removeItem.bind(ls), rawGet = Storage.prototype.getItem.bind(ls);
