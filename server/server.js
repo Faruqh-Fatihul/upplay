@@ -114,6 +114,26 @@ function mergeRooms(oldV, newV) {
   }
   return JSON.stringify(out);
 }
+
+function mergeStudents(oldV, newV) {
+  const o = parse(oldV, []) || [], n = parse(newV, []) || [];
+  const map = new Map();
+  [...o, ...n].forEach(item => {
+    const uniqueKey = item.id || item.email || JSON.stringify(item);
+    map.set(uniqueKey, item);
+  });
+  return JSON.stringify(Array.from(map.values()));
+}
+async function put(key, value) {
+  if (key === ROOM_KEY && db[key]) value = mergeRooms(db[key], value);
+  else if (key === NOTIF_KEY && db[key]) value = mergeNotifs(db[key], value);
+  else if (/students|siswa/i.test(key) && db[key]) value = mergeStudents(db[key], value);
+  db[key] = value; 
+  await persistFirestore(key, value); 
+  broadcast({ key, value });
+  return value;
+}
+
 function mergeNotifs(oldV, newV) {
   const o = parse(oldV, []) || [], n = parse(newV, []) || [], seen = new Set(), out = [];
   for (const x of [...n, ...o]) {
@@ -128,6 +148,17 @@ async function put(key, value) {
   else if (key === NOTIF_KEY && db[key]) value = mergeNotifs(db[key], value);
   db[key] = value; await persistFirestore(key, value); broadcast({ key, value });
   return value;
+}
+// Fungsi penggabungan aman untuk data siswa agar tidak saling overwrite
+function mergeStudents(oldV, newV) {
+  const o = parse(oldV, []) || [], n = parse(newV, []) || [];
+  const map = new Map();
+  // Masukkan data lama dan baru, gabungkan berdasarkan id atau email yang unik
+  [...o, ...n].forEach(item => {
+    const uniqueKey = item.id || item.email || JSON.stringify(item);
+    map.set(uniqueKey, item); // Data terbaru / terakhir akan memperbarui yang lama
+  });
+  return JSON.stringify(Array.from(map.values()));
 }
 
 /* ---------- Realtime (SSE) ---------- */
