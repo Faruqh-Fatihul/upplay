@@ -35,6 +35,9 @@ console.log("Firebase Admin SDK berhasil terhubung ke Firestore!");
 
 // Inisialisasi Express
 const app = express();
+// Middleware untuk membaca body teks dan JSON dari request client
+app.use(express.text({ limit: '10mb' }));
+app.use(express.json({ limit: '10mb' }));
 
 // Aktifkan helmet (dengan konfigurasi aman untuk SSE & Statis)
 app.use(
@@ -49,24 +52,9 @@ app.use(cors());
 
 const PORT = +process.env.PORT || 5173;
 const ROOT = path.join(__dirname, '..', 'public');
-const DB_FILE = path.join(__dirname, 'data', 'db.json');
 const ROOM_KEY = 'cerdasPlayQuizRoomsV2';
 const NOTIF_KEY = 'cerdasPlayRoomNotifsV1';
 const DAY = 864e5;
-
-let db = {};
-// Memuat data dari Firestore saat server pertama kali dinyalakan
-async function loadDbFromFirestore() {
-  try {
-    const snapshot = await dbFirestore.collection('kv_store').get();
-    snapshot.forEach(doc => {
-      db[doc.id] = doc.data().value;
-    });
-    console.log("Data berhasil dimuat dari Cloud Firestore. Total kunci:", Object.keys(db).length);
-  } catch (e) {
-    console.error("Gagal memuat data dari Firestore:", e.message);
-  }
-}
 
 // Menyimpan data secara asinkron ke Firestore
 async function persistFirestore(key, value) {
@@ -116,13 +104,31 @@ function mergeRooms(oldV, newV) {
 }
 
 async function put(key, value) {
-  if (key === ROOM_KEY && db[key]) value = mergeRooms(db[key], value);
-  else if (key === NOTIF_KEY && db[key]) value = mergeNotifs(db[key], value);
-  else if (/students|siswa/i.test(key) && db[key]) value = mergeStudents(db[key], value);
-  db[key] = value; 
-  await persistFirestore(key, value); 
-  broadcast({ key, value });
-  return value;
+  try {
+    // 1. Ambil data eksisting langsung dari Firestore
+    const docRef = dbFirestore.collection('kv_store').doc(key);
+    const docSnap = await docRef.get();
+    let existingValue = docSnap.exists ? docSnap.data().value : null;
+
+    // 2. Lakukan pengecekan dan merge jika kuncinya spesifik
+    if (existingValue) {
+      if (key === ROOM_KEY) {
+        value = mergeRooms(existingValue, value);
+      } else if (key === NOTIF_KEY) {
+        value = mergeNotifs(existingValue, value);
+      } else if (/students|siswa/i.test(key)) {
+        value = mergeStudents(existingValue, value);
+      }
+    }
+
+    // 3. Simpan hasil merge terbaru ke Firestore
+    await persistFirestore(key, value); 
+    broadcast({ key, value });
+    return value;
+  } catch (e) {
+    console.error("Gagal di fungsi put:", e.message);
+    throw e;
+  }
 }
 
 function mergeNotifs(oldV, newV) {
@@ -168,20 +174,41 @@ app.get('/events', (req, res) => {
   req.on('close', () => clients.delete(res));
 });
 
-app.get('/kv', (req, res) => {
-  res.json(db);
+app.get('/kv', async (req, res) => {
+  try {
+    const snapshot = await dbFirestore.collection('kv_store').get();
+    const allData = {};
+    snapshot.forEach(doc => {
+      allData[doc.id] = doc.data().value;
+    });
+    res.json(allData);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
-app.get('/kv/:key', (req, res) => {
+app.get('/kv/:key', async (req, res) => {
   const key = req.params.key;
+
+  // Validasi pola kunci
   if (!/^cerdasPlay|^upplay/i.test(key)) {
     return res.status(400).json({ error: 'kunci tidak dikenal' });
   }
-  if (key in db) {
-    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-    res.send(db[key]);
-  } else {
-    res.status(404).send({ error: 'tidak ada' });
+
+  try {
+    // Ambil langsung dari koleksi Firestore 'kv_store'
+    const docRef = dbFirestore.collection('kv_store').doc(key);
+    const docSnap = await docRef.get();
+
+    if (docSnap.exists) {
+      res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+      return res.send(docSnap.data().value);
+    } else {
+      return res.status(404).send({ error: 'tidak ada' });
+    }
+  } catch (error) {
+    console.error("Error reading Firestore:", error);
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -190,9 +217,14 @@ app.put('/kv/:key', async (req, res) => {
   if (!/^cerdasPlay|^upplay/i.test(key)) {
     return res.status(400).json({ error: 'kunci tidak dikenal' });
   }
-  const v = await put(key, req.body || '');
+  
+  const value = req.body || '';
+  
+  // Langsung simpan ke Firestore pakai fungsi yang sudah kamu buat
+  await persistFirestore(key, value);
+  
   res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-  res.send(v);
+  res.send(value);
 });
 
 app.delete('/kv/:key', async (req, res) => {
@@ -200,7 +232,6 @@ app.delete('/kv/:key', async (req, res) => {
   if (!/^cerdasPlay|^upplay/i.test(key)) {
     return res.status(400).json({ error: 'kunci tidak dikenal' });
   }
-  delete db[key];
   await persistFirestore(key);
   broadcast({ key, value: null });
   res.json({ ok: true });
@@ -210,14 +241,11 @@ app.delete('/kv/:key', async (req, res) => {
 app.use(express.static(ROOT));
 
 // Jalankan server setelah data Firestore berhasil dimuat ke cache lokal
-loadDbFromFirestore().then(() => {
   if (process.env.NODE_ENV !== 'production') {
     app.listen(PORT, () => {
       console.log('UpPlay (Express + Firestore) berjalan di http://localhost:' + PORT);
       console.log('Buka di HP (satu Wi-Fi): http://<IP-laptop>:' + PORT);
     });
   }
-});
-
 // WAJIB: Ekspor app agar bisa dibaca oleh Vercel Serverless
 module.exports = app;
