@@ -18,9 +18,9 @@
 
   /* Alamat API selalu berakhiran '/api' (rute /api/... dilayani Vercel lewat api/[...path].js tanpa
      bergantung pada vercel.json). Jika UPPLAY_API di tempat lain ditulis tanpa '/api', ditambahkan otomatis. */
-  var API = String(window.UPPLAY_API || 'https://api.upplay.my.id/api').replace(/\/+$/, '');
-  if (!/\/api$/.test(API)) API += '/api';
-  window.UPPLAY_API = API;
+  // Ubah bagian ini di upplay-sync.js baris awal:
+var API = String(window.UPPLAY_API || 'https://api.upplay.my.id').replace(/\/+$/, '');
+window.UPPLAY_API = API;
   var SYNC = /^(cerdasPlay|upplay)/i;
   var STU = 'cerdasPlayStudents', ROOM = 'cerdasPlayQuizRoomsV2';
   var OUTBOX = '__upOutbox', SESSION = 'cerdasPlaySession';
