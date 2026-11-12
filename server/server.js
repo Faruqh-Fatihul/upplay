@@ -220,11 +220,16 @@ app.put('/kv/:key', async (req, res) => {
   
   const value = req.body || '';
   
-  // Langsung simpan ke Firestore pakai fungsi yang sudah kamu buat
-  await persistFirestore(key, value);
-  
-  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-  res.send(value);
+  try {
+    // GUNAKAN FUNGSI put() AGAR LOGIKA MERGE (students, rooms, notifs) BERJALAN!
+    const savedValue = await put(key, value);
+
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    res.send(savedValue);
+  } catch (error) {
+    console.error("Error saving data:", error);
+    return res.status(500).json({ error: error.message });
+  }
 });
 
 app.delete('/kv/:key', async (req, res) => {
