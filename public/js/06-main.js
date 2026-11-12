@@ -1,4 +1,4 @@
-    /* ==================================================
+/* ==================================================
        AKUN, SESSION & PORTAL
     =================================================== */
     /* Peta ID halaman dicari ULANG setiap showPage() dipanggil (bukan referensi statis),
@@ -44,17 +44,12 @@
     const teacherData = {};
     [5,6].forEach(grade => ["A","B","C","D"].forEach(type => {
       const cls=`${grade}${type}`;
-      /* ================= AKUN 8 GURU (tanpa pendaftaran) =================
-         Password dibagikan langsung ke guru secara tatap muka.
-         Guru 5A -> Guru5A123   | Guru 5B -> Guru5B123   | Guru 5C -> Guru5C123   | Guru 5D -> Guru5D123
-         Guru 6A -> Guru6A123   | Guru 6B -> Guru6B123   | Guru 6C -> Guru6C123   | Guru 6D -> Guru6D123
-         Login guru memakai nama (contoh: "Guru 5A") + password di atas.
-         Admin/Master dapat mengubahnya di menu Data Guru.
-         =================================================================== */
+      /* Akun guru (8 akun, tanpa pendaftaran) kini disimpan di SERVER dalam bentuk hash.
+         Di sini hanya id & nama untuk tampilan. Login guru memakai nama (contoh: "Guru 5A").
+         Password dikelola admin/master di menu Data Guru. */
       teacherData[cls]=[1].map(i=>({
         id:`teacher-${cls}-${i}`,
-        name:`Guru ${cls}`,
-        password:`Guru${cls}123`
+        name:`Guru ${cls}`
       }));
     }));
 
@@ -161,31 +156,34 @@
     }
     function closeRegister(){registerModal.classList.add("hidden");document.getElementById("registerError").textContent="";}
 
-    function loginAutomatically(){
+    async function loginAutomatically(){
       const name=document.getElementById("loginName").value.trim();
       const password=document.getElementById("loginPassword").value;
-      const student=getRegisteredStudents().find(s=>s.name.toLowerCase()===name.toLowerCase() && s.password===password);
-      if(student){
-        setSession({role:"student",id:student.id,name:student.name,className:student.className,email:student.email,absen:student.absen||"",photo:student.photo||""});
-        closeModal();showPage("dashboard");return;
-      }
-      const teachers=Object.values(teacherData).flat();
-      const teacher=teachers.find(t=>t.name.toLowerCase()===name.toLowerCase() && t.password===password);
-      if(teacher){
-        const className=Object.keys(teacherData).find(cls=>teacherData[cls].some(t=>t.id===teacher.id));
-        setSession({role:"teacher",id:teacher.id,name:teacher.name,className});
-        closeModal();showPage("teacher");return;
-      }
-      throw new Error("Nama atau password salah. Periksa kembali data masuk Anda.");
+      if(!name||!password) throw new Error("Nama dan password wajib diisi.");
+      if(!window.__upSync) throw new Error("Tidak dapat terhubung ke server. Muat ulang halaman lalu coba lagi.");
+      /* Login diproses di SERVER: password dicek terhadap hash, server mengembalikan sesi + token. */
+      const res=await window.__upSync.request("POST","/auth/login",{name,password},true);
+      if(!res.ok) throw new Error((res.data&&res.data.error)||"Gagal masuk. Coba lagi.");
+      const session=res.data.session;
+      setSession(session);
+      window.__upSync.begin(); /* muat data milik akun ini dari server sebelum halaman ditampilkan */
+      document.getElementById("loginPassword").value="";
+      if(window.__upAfterLogin) window.__upAfterLogin(session);
+      closeModal();
+      showPage(session.role==="student"?"dashboard":session.role==="teacher"?"teacher":"admin");
     }
 
-    document.getElementById("loginForm").addEventListener("submit",event=>{
+    document.getElementById("loginForm").addEventListener("submit",async event=>{
       event.preventDefault();
-      try{loginAutomatically();}
-      catch(error){const __e=document.getElementById("loginError");__e.classList.remove("success-message");__e.textContent="⚠️ "+error.message;}
+      const __e=document.getElementById("loginError");
+      const __btn=event.target.querySelector('button[type="submit"]');
+      if(__btn)__btn.disabled=true;
+      try{await loginAutomatically();}
+      catch(error){__e.classList.remove("success-message");__e.textContent="⚠️ "+error.message;}
+      finally{if(__btn)__btn.disabled=false;}
     });
 
-    document.getElementById("registerForm").addEventListener("submit",event=>{
+    document.getElementById("registerForm").addEventListener("submit",async event=>{
       event.preventDefault();
       const email=document.getElementById("registerEmail").value.trim();
       const name=document.getElementById("registerName").value.trim();
@@ -201,13 +199,13 @@
       {const __pw=window.__upPwCheck?window.__upPwCheck(password):(password.length<6?"Kata sandi minimal 6 karakter.":"");if(__pw){error.textContent="⚠️ "+__pw;return;}}
       if(password!==confirm){error.textContent="⚠️ Konfirmasi password tidak sama.";return;}
 
-      const students=getRegisteredStudents();
-      if(students.some(s=>s.email.toLowerCase()===email.toLowerCase())){error.textContent="⚠️ Email sudah terdaftar.";return;}
-      if(students.some(s=>s.name.toLowerCase()===name.toLowerCase())){error.textContent="⚠️ Nama tersebut sudah digunakan.";return;}
-
-      const account={id:`student-${Date.now()}`,name,email,className,password,absen:"",photo:"",createdAt:new Date().toISOString()};
-      students.push(account);
-      saveRegisteredStudents(students);
+      const submitBtn=event.target.querySelector('button[type="submit"]');
+      if(submitBtn)submitBtn.disabled=true;
+      const res=window.__upSync
+        ? await window.__upSync.request("POST","/auth/register",{name,email,className,password},true)
+        : {ok:false,data:{error:"Tidak dapat terhubung ke server. Muat ulang halaman lalu coba lagi."}};
+      if(submitBtn)submitBtn.disabled=false;
+      if(!res.ok){error.textContent="⚠️ "+((res.data&&res.data.error)||"Pendaftaran gagal. Coba lagi.");return;}
 
       closeRegister();
       document.getElementById("loginName").value=name;
@@ -314,9 +312,9 @@
     });
 
     function logoutToLanding() {
-      clearSession();
-      activeStudentView = "dashboard";
-      showPage("landing");
+      const finish=()=>{clearSession();activeStudentView="dashboard";showPage("landing");};
+      /* kirim sisa perubahan ke server lalu hapus data akun ini dari perangkat (penting di komputer bersama) */
+      if(window.__upSync&&window.__upSync.logout){window.__upSync.logout().then(finish,finish);}else{finish();}
     }
 
     document.getElementById("logoutBtn").addEventListener("click", logoutToLanding);
@@ -1602,5 +1600,4 @@ function resetSnakeGame(level=1) {
        INISIALISASI
     =================================================== */
     updateDashboardProgress();
-    resetSnakeGame();
-  
+    resetSnakeGame();x

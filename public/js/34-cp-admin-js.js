@@ -6,33 +6,32 @@ const H=(s,seed=0)=>{let h1=0xdeadbeef^seed,h2=0x41c6ce57^seed;for(let i=0,c;i<s
 /* BACKEND: setiap kunci di K adalah satu tabel/endpoint. jget = GET, jset = PUT/POST.
    stu -> /api/students | room -> /api/rooms | notif -> /api/notifications | grp & pvp -> /api/pvp-results
    cfg -> /api/admin/config (akun master/admin, pemeliharaan) | tch -> /api/teachers | log -> /api/admin/logs */
-const K={stu:'cerdasPlayStudents',jab:'cerdasPlayStudentJabatan',room:'cerdasPlayQuizRoomsV2',notif:'cerdasPlayRoomNotifsV1',grp:'cerdasPlayPvpGroupScoresV4',pvp:'cerdasPlayLocalPvpScoresV3',cfg:'cerdasPlayAdminCfg',tch:'cerdasPlayAdminTeachers',log:'cerdasPlayAdminLog'};
+const K={stu:'cerdasPlayStudents',jab:'cerdasPlayStudentJabatan',room:'cerdasPlayQuizRoomsV2',notif:'cerdasPlayRoomNotifsV1',grp:'cerdasPlayPvpGroupScoresV4',pvp:'cerdasPlayLocalPvpScoresV3',cfg:'cerdasPlayAdminCfg',teachers:'cerdasPlayTeachers',users:'cerdasPlayAdminUsers',log:'cerdasPlayAdminLog'};
 const jget=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}};
 const jset=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
 const CLASSES=['5A','5B','5C','5D','6A','6B','6C','6D'];
 const GAMES=[['math','🔢 Perhitungan'],['logic','🧠 Logika Sederhana'],['picture','🖼️ Tebak-Tebakan']];
-/* ================= AKUN BAWAAN (tanpa pendaftaran) =================
-   Master (pusat)          -> username: master  | password: Master@2026
-   Admin (operator sekolah)-> username: admin   | password: Admin@2026
-   Password disimpan sebagai hash H('username|password'). Master dapat mengganti
-   kedua akun dari menu Pengaturan; nilai baru disimpan di localStorage 'cerdasPlayAdminCfg'.
-   =================================================================== */
-const DEF={master:{user:'master',hash:'1wgrm6feyim'}/* master / Master@2026 */,admin:{user:'admin',hash:'1yp99qp98kg'}/* admin / Admin@2026 */};
+/* ================= AKUN ADMIN / MASTER =================
+   Login admin diproses di SERVER (server/server.js). Password awal diisi lewat env
+   MASTER_PASSWORD dan ADMIN_PASSWORD di Vercel (dipakai sekali saat akun dibuat).
+   Master dapat mengganti username/password kedua akun dari menu Pengaturan.
+   Tidak ada password atau hash di kode ini.
+   ======================================================= */
 const cfg=()=>jget(K.cfg,{});
-const acc=lv=>Object.assign({},DEF[lv],(cfg().acc||{})[lv]||{});
+const acc=lv=>({user:(jget(K.users,{})||{})[lv]||lv});
 const adminUser=()=>acc('master').user;
-const adminAuth=(n,p)=>{const x=H(String(n).trim().toLowerCase()+'|'+p);for(const lv of ['master','admin']){if(x===acc(lv).hash)return lv}return null};
-const isAdmin=(n,p)=>!!adminAuth(n,p);
+const api=(m,p,b)=>window.__upSync?window.__upSync.request(m,p,b):Promise.resolve({ok:false,data:{error:'Tidak terhubung ke server.'}});
+const reloadData=()=>window.__upSync?window.__upSync.refresh():Promise.resolve();
+const apiErr=(r,d)=>(r&&r.data&&r.data.error)||d;
+window.__upAfterLogin=s=>{if(s&&s.role==='admin')log((s.adminLevel==='master'?'Master':'Admin')+' masuk')};
 const lvl=()=>{try{return currentSession&&currentSession.adminLevel==='master'?'master':'admin'}catch(e){return 'admin'}};
 const MASTER_ONLY='Hanya akun Master yang dapat melakukan ini.';
 const log=m=>{const l=jget(K.log,[]);l.unshift({ts:Date.now(),msg:m});jset(K.log,l.slice(0,100))};
 const fd=ts=>ts?new Date(ts).toLocaleString('id-ID',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'-';
 
-/* ---------- guru (override di atas teacherData bawaan) ---------- */
-const BASE=JSON.parse(JSON.stringify(teacherData));
-const tst=()=>Object.assign({edits:{},added:[]},jget(K.tch,{}));
-function allTeachers(){const st=tst(),o=[];CLASSES.forEach(c=>(BASE[c]||[]).forEach(t=>o.push(Object.assign({className:c,base:true},t,st.edits[t.id]||{}))));st.added.forEach(t=>o.push(Object.assign({base:false},t,st.edits[t.id]||{})));return o}
-function applyTeachers(){CLASSES.forEach(c=>{teacherData[c]=teacherData[c]||[];teacherData[c].length=0});allTeachers().filter(t=>!t.disabled).forEach(t=>teacherData[t.className].push({id:t.id,name:t.name,password:t.password}))}
+/* ---------- guru (daftar dari server; tanpa password) ---------- */
+function allTeachers(){return (jget(K.teachers,[])||[]).map(t=>Object.assign({},t))}
+function applyTeachers(){const l=allTeachers();if(!l.length)return;CLASSES.forEach(c=>{teacherData[c]=teacherData[c]||[];teacherData[c].length=0});l.filter(t=>!t.disabled).forEach(t=>{(teacherData[t.className]=teacherData[t.className]||[]).push({id:t.id,name:t.name})})}
 applyTeachers();
 
 /* ---------- data ---------- */
@@ -54,7 +53,7 @@ function modal(title,fields,ok,label,danger){
   document.body.appendChild(o);
   o.querySelector('[data-x]').onclick=()=>o.remove();
   o.onclick=e=>{if(e.target===o)o.remove()};
-  o.querySelector('form').onsubmit=e=>{e.preventDefault();const v={};new FormData(e.target).forEach((x,k)=>v[k]=String(x).trim());const er=ok(v);if(er)o.querySelector('.ad-err').textContent='⚠️ '+er;else{o.remove();render()}};
+  o.querySelector('form').onsubmit=e=>{e.preventDefault();const v={};new FormData(e.target).forEach((x,k)=>v[k]=String(x).trim());Promise.resolve().then(()=>ok(v)).then(er=>{if(er)o.querySelector('.ad-err').textContent='⚠️ '+er;else{o.remove();render()}}).catch(()=>{o.querySelector('.ad-err').textContent='⚠️ Terjadi kesalahan. Coba lagi.'})};
   const i=o.querySelector('input');if(i)i.focus();
 }
 function info(title,html){const o=document.createElement('div');o.className='ad-ov';o.innerHTML=`<div class="ad-md"><h3>${esc(title)}</h3>${html}<div class="ad-row"><button class="ad-b pri" data-x>Tutup</button></div></div>`;document.body.appendChild(o);o.querySelector('[data-x]').onclick=()=>o.remove();o.onclick=e=>{if(e.target===o)o.remove()}}
@@ -74,13 +73,13 @@ function vDash(){
 function stuRows(){
   const q=F.q.toLowerCase(),j=jget(K.jab,{});
   const l=students().filter(s=>(!F.cls||s.className===F.cls)&&(!q||(s.name+s.email).toLowerCase().includes(q))).slice(0,300);
-  return tbl(['No','Nama','Kelas','Email','Password','No. Absen','Jabatan','Skor room','Status','Aksi'],l.map((s,i)=>`<tr><td>${i+1}</td><td>${esc(s.name)}</td><td><span class="ad-bd">${esc(s.className)}</span></td><td>${esc(s.email)}</td><td class="ad-pwc"><code>${showPw[s.id]?esc(s.password||'-'):'••••••••'}</code> <button class="ad-b ad-eye" data-act="t-show" data-id="${s.id}" aria-label="${showPw[s.id]?'Sembunyikan':'Tampilkan'} password">👁</button></td><td>${esc(s.absen||'-')}</td><td>${esc(j[s.id]||'-')}</td><td><b>${totalOf(s.id)}</b></td><td><span class="ad-bd ${s.disabled?'r':'g'}">${s.disabled?'Nonaktif':'Aktif'}</span></td><td><button class="ad-b" data-act="s-edit" data-id="${s.id}">Edit</button><button class="ad-b" data-act="s-pw" data-id="${s.id}">Reset PW</button><button class="ad-b" data-act="s-tg" data-id="${s.id}">${s.disabled?'Aktifkan':'Nonaktifkan'}</button><button class="ad-b red" data-act="s-del" data-id="${s.id}">Hapus</button></td></tr>`),'Tidak ada siswa yang cocok.');
+  return tbl(['No','Nama','Kelas','Email','No. Absen','Jabatan','Skor room','Status','Aksi'],l.map((s,i)=>`<tr><td>${i+1}</td><td>${esc(s.name)}</td><td><span class="ad-bd">${esc(s.className)}</span></td><td>${esc(s.email)}</td><td>${esc(s.absen||'-')}</td><td>${esc(j[s.id]||'-')}</td><td><b>${totalOf(s.id)}</b></td><td><span class="ad-bd ${s.disabled?'r':'g'}">${s.disabled?'Nonaktif':'Aktif'}</span></td><td><button class="ad-b" data-act="s-edit" data-id="${s.id}">Edit</button><button class="ad-b" data-act="s-pw" data-id="${s.id}">Reset PW</button><button class="ad-b" data-act="s-tg" data-id="${s.id}">${s.disabled?'Aktifkan':'Nonaktifkan'}</button><button class="ad-b red" data-act="s-del" data-id="${s.id}">Hapus</button></td></tr>`),'Tidak ada siswa yang cocok.');
 }
 const vStudents=()=>head('Data Siswa','Kelola akun siswa yang mendaftar dari halaman utama.')+`<div class="ad-tb"><div class="ad-search"><input id="adQ" type="search" placeholder="Cari nama / email" value="${esc(F.q)}"><button type="button" class="ad-b pri" data-act="q-go">Cari</button></div>${clsSel('adCls',F.cls)}<button class="ad-b pri" data-act="s-add">+ Tambah Siswa</button><button class="ad-b" data-act="s-csv">⬇ Ekspor CSV</button></div><div id="adList">${stuRows()}</div>`;
 function tchRows(){
   const q=F.q.toLowerCase(),rl=roomList();
   const l=allTeachers().filter(t=>(!F.cls||t.className===F.cls)&&(!q||t.name.toLowerCase().includes(q)));
-  return tbl(['Nama','Kelas','Password','Room dibuat','Status','Aksi'],l.map(t=>`<tr><td>${esc(t.name)}</td><td><span class="ad-bd">${esc(t.className)}</span></td><td><code>${showPw[t.id]?esc(t.password):'••••••••'}</code> <button class="ad-b" data-act="t-show" data-id="${t.id}">👁</button></td><td>${rl.filter(r=>r.teacherId===t.id).length}</td><td><span class="ad-bd ${t.disabled?'r':'g'}">${t.disabled?'Nonaktif':'Aktif'}</span></td><td><button class="ad-b" data-act="t-edit" data-id="${t.id}">Edit</button><button class="ad-b" data-act="t-tg" data-id="${t.id}">${t.disabled?'Aktifkan':'Nonaktifkan'}</button>${t.base?'':`<button class="ad-b red" data-act="t-del" data-id="${t.id}">Hapus</button>`}</td></tr>`),'Tidak ada guru.');
+  return tbl(['Nama','Kelas','Room dibuat','Status','Aksi'],l.map(t=>`<tr><td>${esc(t.name)}</td><td><span class="ad-bd">${esc(t.className)}</span></td><td>${rl.filter(r=>r.teacherId===t.id).length}</td><td><span class="ad-bd ${t.disabled?'r':'g'}">${t.disabled?'Nonaktif':'Aktif'}</span></td><td><button class="ad-b" data-act="t-edit" data-id="${t.id}">Edit</button><button class="ad-b" data-act="t-tg" data-id="${t.id}">${t.disabled?'Aktifkan':'Nonaktifkan'}</button>${t.base?'':`<button class="ad-b red" data-act="t-del" data-id="${t.id}">Hapus</button>`}</td></tr>`),'Tidak ada guru.');
 }
 const vTeachers=()=>head('Data Guru','Atur akun guru dan kelas yang ditugaskan. Perubahan langsung berlaku di login guru.')+`<div class="ad-tb"><div class="ad-search"><input id="adQ" type="search" placeholder="Cari nama guru" value="${esc(F.q)}"><button type="button" class="ad-b pri" data-act="q-go">Cari</button></div>${clsSel('adCls',F.cls)}<button class="ad-b pri" data-act="t-add">+ Tambah Guru</button></div><div id="adList">${tchRows()}</div>`;
 function vClasses(){
@@ -174,17 +173,16 @@ function render(){const m=$('adMain');if(!m)return;$('adMenu').querySelectorAll(
 const dl=(name,text,type)=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
 const nameTaken=(n,id)=>students().some(s=>s.id!==id&&s.name.toLowerCase()===n.toLowerCase());
 const A={
- 's-add'(){modal('Tambah Siswa',[{k:'name',l:'Nama'},{k:'email',l:'Email',t:'email'},{k:'className',l:'Kelas',t:'select',o:CLASSES},{k:'password',l:'Password (min. 6)',t:'password'}],v=>{if(!v.name||!v.email)return 'Nama dan email wajib diisi.';if(v.password.length<6)return 'Password minimal 6 karakter.';const l=students();if(nameTaken(v.name))return 'Nama sudah digunakan.';if(l.some(s=>s.email.toLowerCase()===v.email.toLowerCase()))return 'Email sudah terdaftar.';l.push({id:'student-'+Date.now(),name:v.name,email:v.email,className:v.className,password:v.password,absen:'',photo:'',createdAt:new Date().toISOString()});jset(K.stu,l);log('Tambah siswa '+v.name)})},
+  's-add'(){modal('Tambah Siswa',[{k:'name',l:'Nama'},{k:'email',l:'Email',t:'email'},{k:'className',l:'Kelas',t:'select',o:CLASSES},{k:'password',l:'Password (min. 6)',t:'password'}],async v=>{if(!v.name||!v.email)return 'Nama dan email wajib diisi.';if(v.password.length<6)return 'Password minimal 6 karakter.';const r=await api('POST','/admin/students',{name:v.name,email:v.email,className:v.className,password:v.password});if(!r.ok)return apiErr(r,'Gagal menambah siswa.');await reloadData();log('Tambah siswa '+v.name)})},
  's-edit'(id){const l=students(),s=l.find(x=>x.id===id);if(!s)return;modal('Edit Siswa',[{k:'name',l:'Nama',v:s.name},{k:'email',l:'Email',v:s.email},{k:'className',l:'Kelas',t:'select',o:CLASSES,v:s.className},{k:'absen',l:'No. Absen',v:s.absen},{k:'jabatan',l:'Jabatan',v:jget(K.jab,{})[id]}],v=>{if(!v.name)return 'Nama wajib diisi.';if(nameTaken(v.name,id))return 'Nama sudah digunakan.';Object.assign(s,{name:v.name,email:v.email,className:v.className,absen:v.absen});jset(K.stu,l);const j=jget(K.jab,{});if(v.jabatan)j[id]=v.jabatan;else delete j[id];jset(K.jab,j);log('Edit siswa '+v.name)})},
- 's-pw'(id){const l=students(),s=l.find(x=>x.id===id);if(!s)return;modal('Reset Password: '+s.name,[{k:'password',l:'Password baru (min. 6)',t:'text'}],v=>{if(v.password.length<6)return 'Password minimal 6 karakter.';s.password=v.password;jset(K.stu,l);log('Reset password siswa '+s.name)})},
+  's-pw'(id){const s=students().find(x=>x.id===id);if(!s)return;modal('Reset Password: '+s.name,[{k:'password',l:'Password baru (min. 6)',t:'text'}],async v=>{if(v.password.length<6)return 'Password minimal 6 karakter.';const r=await api('POST','/admin/students/'+encodeURIComponent(id)+'/password',{password:v.password});if(!r.ok)return apiErr(r,'Gagal mengubah password.');log('Reset password siswa '+s.name)})},
  's-tg'(id){const l=students(),s=l.find(x=>x.id===id);if(!s)return;s.disabled=!s.disabled;jset(K.stu,l);log((s.disabled?'Nonaktifkan':'Aktifkan')+' siswa '+s.name);render()},
  's-del'(id){const l=students(),s=l.find(x=>x.id===id);if(!s||!confirm('Hapus siswa "'+s.name+'" beserta progres dan skornya? Tindakan ini tidak bisa dibatalkan.'))return;jset(K.stu,l.filter(x=>x.id!==id));delStudentData(id);log('Hapus siswa '+s.name);render()},
  's-csv'(){const j=jget(K.jab,{}),q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';dl('data-siswa.csv',['Nama,Email,Kelas,No. Absen,Jabatan,Skor room'].concat(students().map(s=>[s.name,s.email,s.className,s.absen,j[s.id],totalOf(s.id)].map(q).join(','))).join('\n'),'text/csv');log('Ekspor CSV siswa')},
- 't-show'(id){showPw[id]=!showPw[id];$('adList').innerHTML=(view==='students'?stuRows:tchRows)()},
- 't-add'(){modal('Tambah Guru',[{k:'name',l:'Nama guru'},{k:'className',l:'Kelas',t:'select',o:CLASSES},{k:'password',l:'Password (min. 6)',t:'text'}],v=>{if(!v.name)return 'Nama wajib diisi.';if(v.password.length<6)return 'Password minimal 6 karakter.';if(allTeachers().some(t=>t.name.toLowerCase()===v.name.toLowerCase()))return 'Nama guru sudah ada.';const st=tst();st.added.push({id:'teacher-custom-'+Date.now(),name:v.name,className:v.className,password:v.password});jset(K.tch,st);applyTeachers();log('Tambah guru '+v.name)})},
- 't-edit'(id){const t=allTeachers().find(x=>x.id===id);if(!t)return;const f=[{k:'name',l:'Nama guru',v:t.name},{k:'password',l:'Password',v:t.password}];if(!t.base)f.push({k:'className',l:'Kelas',t:'select',o:CLASSES,v:t.className});modal('Edit Guru',f,v=>{if(!v.name)return 'Nama wajib diisi.';if(v.password.length<6)return 'Password minimal 6 karakter.';if(allTeachers().some(x=>x.id!==id&&x.name.toLowerCase()===v.name.toLowerCase()))return 'Nama guru sudah ada.';const st=tst();st.edits[id]=Object.assign(st.edits[id]||{},{name:v.name,password:v.password});if(!t.base)st.edits[id].className=v.className;jset(K.tch,st);applyTeachers();log('Edit guru '+v.name)})},
- 't-tg'(id){const t=allTeachers().find(x=>x.id===id);if(!t)return;const st=tst();st.edits[id]=Object.assign(st.edits[id]||{},{disabled:!t.disabled});jset(K.tch,st);applyTeachers();log((t.disabled?'Aktifkan':'Nonaktifkan')+' guru '+t.name);render()},
- 't-del'(id){const t=allTeachers().find(x=>x.id===id);if(!t||!confirm('Hapus guru "'+t.name+'"?'))return;const st=tst();st.added=st.added.filter(x=>x.id!==id);delete st.edits[id];jset(K.tch,st);applyTeachers();log('Hapus guru '+t.name);render()},
+  't-add'(){modal('Tambah Guru',[{k:'name',l:'Nama guru'},{k:'className',l:'Kelas',t:'select',o:CLASSES},{k:'password',l:'Password (min. 6)',t:'text'}],async v=>{if(!v.name)return 'Nama wajib diisi.';if(v.password.length<6)return 'Password minimal 6 karakter.';const r=await api('POST','/admin/teachers',{name:v.name,className:v.className,password:v.password});if(!r.ok)return apiErr(r,'Gagal menambah guru.');await reloadData();applyTeachers();log('Tambah guru '+v.name)})},
+  't-edit'(id){const t=allTeachers().find(x=>x.id===id);if(!t)return;const f=[{k:'name',l:'Nama guru',v:t.name},{k:'password',l:'Password baru (kosongkan jika tidak diganti)',v:''}];if(!t.base)f.push({k:'className',l:'Kelas',t:'select',o:CLASSES,v:t.className});modal('Edit Guru',f,async v=>{if(!v.name)return 'Nama wajib diisi.';if(v.password&&v.password.length<6)return 'Password minimal 6 karakter.';const body={name:v.name};if(v.password)body.password=v.password;if(!t.base)body.className=v.className;const r=await api('PUT','/admin/teachers/'+encodeURIComponent(id),body);if(!r.ok)return apiErr(r,'Gagal menyimpan guru.');await reloadData();applyTeachers();log('Edit guru '+v.name)})},
+  't-tg'(id){const t=allTeachers().find(x=>x.id===id);if(!t)return;api('PUT','/admin/teachers/'+encodeURIComponent(id),{disabled:!t.disabled}).then(r=>{if(!r.ok)return toast(apiErr(r,'Gagal mengubah status guru.'));return reloadData().then(()=>{applyTeachers();log((t.disabled?'Aktifkan':'Nonaktifkan')+' guru '+t.name);render()})})},
+  't-del'(id){const t=allTeachers().find(x=>x.id===id);if(!t||!confirm('Hapus guru "'+t.name+'"?'))return;api('DELETE','/admin/teachers/'+encodeURIComponent(id)).then(r=>{if(!r.ok)return toast(apiErr(r,'Gagal menghapus guru.'));return reloadData().then(()=>{applyTeachers();log('Hapus guru '+t.name);render()})})},
  'r-view'(c){const r=rooms()[c];if(!r)return;const p=[...(r.players||[])].sort((a,b)=>(b.score||0)-(a.score||0));info('Room '+c+' • Kelas '+r.className,`<p>${stB(r.status)} • ${(r.sequence||[]).length} ronde • Guru: ${esc(r.teacherName||'-')}</p>`+(p.length?tbl(['#','Siswa','Ronde','Skor'],p.map((x,i)=>`<tr><td>${i+1}</td><td>${x.avatar||'👤'} ${esc(x.name)}</td><td>${x.finished?'Selesai':(x.roundIndex||0)+'/'+(r.sequence||[]).length}</td><td><b>${x.score||0}</b></td></tr>`)):'<div class="ad-empty">Belum ada pemain.</div>'))},
  'r-end'(c){const rs=rooms();if(!rs[c]||!confirm('Akhiri room '+c+' sekarang? Skor yang sudah masuk tetap disimpan.'))return;rs[c].status='finished';rs[c].finishedAt=Date.now();(rs[c].players||[]).forEach(p=>p.finished=true);jset(K.room,rs);log('Akhiri room '+c);render()},
  'r-close'(c){const rs=rooms();if(!rs[c]||!confirm('Tutup room '+c+'? Nilainya tidak akan dihitung.'))return;rs[c].status='closed';jset(K.room,rs);log('Tutup room '+c);render()},
@@ -193,16 +191,16 @@ const A={
  'sc-room'(){const rs=rooms(),n=Object.keys(rs).filter(c=>rs[c].status==='finished'&&(!F.cls||rs[c].className===F.cls));if(!n.length)return toast('Tidak ada nilai room.');if(!confirm('Reset nilai '+n.length+' room selesai'+(F.cls?' kelas '+F.cls:'')+'?'))return;n.forEach(c=>delete rs[c]);jset(K.room,rs);log('Reset nilai room '+(F.cls||'semua kelas'));render()},
  'sc-pvp'(){if(!confirm('Reset nilai PVP'+(F.cls?' kelas '+F.cls:' semua kelas')+'?'))return;[K.grp,K.pvp].forEach(k=>jset(k,F.cls?jget(k,[]).filter(x=>x.className!==F.cls):[]));log('Reset nilai PVP '+(F.cls||'semua kelas'));render()},
  'maint'(){if(lvl()!=='master')return toast(MASTER_ONLY);const c=cfg();c.maintenance=!c.maintenance;jset(K.cfg,c);log('Mode pemeliharaan '+(c.maintenance?'diaktifkan':'dimatikan'));render()},
- 'chpw'(){if(lvl()!=='master')return toast(MASTER_ONLY);const cur=acc('master'),o=$('adOld').value,nu=($('adNU').value.trim()||cur.user).toLowerCase(),np=$('adNP').value;
-   if(!o)return toast('Isi password Master saat ini.');if(H(cur.user+'|'+o)!==cur.hash)return toast('Password Master saat ini salah.');
-   if(np&&np.length<8)return toast('Password baru minimal 8 karakter.');if(!/^[a-z0-9._-]{3,30}$/.test(nu))return toast('Username 3–30 karakter: huruf kecil, angka, titik, garis bawah.');
-   if(nu===acc('admin').user)return toast('Username itu sudah dipakai akun Admin.');if(nu===cur.user&&!np)return toast('Tidak ada perubahan untuk disimpan.');
-   const c=cfg();c.acc=c.acc||{};c.acc.master={user:nu,hash:H(nu+'|'+(np||o))};jset(K.cfg,c);log('Master mengganti akun Master');toast('Akun Master tersimpan.');render()},
- 'chadm'(){if(lvl()!=='master')return toast(MASTER_ONLY);const cur=acc('admin'),o=$('adAO').value,nu=($('adAU').value.trim()||cur.user).toLowerCase(),np=$('adAP').value;
-   if(!o)return toast('Isi password Admin saat ini.');if(H(cur.user+'|'+o)!==cur.hash)return toast('Password Admin saat ini salah.');
-   if(np&&np.length<8)return toast('Password baru minimal 8 karakter.');if(!/^[a-z0-9._-]{3,30}$/.test(nu))return toast('Username 3–30 karakter: huruf kecil, angka, titik, garis bawah.');
-   if(nu===acc('master').user)return toast('Username itu sudah dipakai akun Master.');if(nu===cur.user&&!np)return toast('Tidak ada perubahan untuk disimpan.');
-   const c=cfg();c.acc=c.acc||{};c.acc.admin={user:nu,hash:H(nu+'|'+(np||o))};jset(K.cfg,c);log('Master mengganti akun Admin');toast('Akun Admin tersimpan.');render()},
+  'chpw'(){if(lvl()!=='master')return toast(MASTER_ONLY);const cur=acc('master'),o=$('adOld').value,nu=($('adNU').value.trim()||cur.user).toLowerCase(),np=$('adNP').value;
+    if(!o)return toast('Isi password Master saat ini.');
+    if(np&&np.length<8)return toast('Password baru minimal 8 karakter.');if(!/^[a-z0-9._-]{3,30}$/.test(nu))return toast('Username 3–30 karakter: huruf kecil, angka, titik, garis bawah.');
+    if(nu===cur.user&&!np)return toast('Tidak ada perubahan untuk disimpan.');
+    api('POST','/admin/account',{level:'master',currentPassword:o,newUser:nu,newPassword:np}).then(r=>{if(!r.ok)return toast(apiErr(r,'Gagal menyimpan akun Master.'));return reloadData().then(()=>{log('Master mengganti akun Master');toast('Akun Master tersimpan.');render()})})},
+  'chadm'(){if(lvl()!=='master')return toast(MASTER_ONLY);const cur=acc('admin'),o=$('adAO').value,nu=($('adAU').value.trim()||cur.user).toLowerCase(),np=$('adAP').value;
+    if(!o)return toast('Isi password Admin saat ini.');
+    if(np&&np.length<8)return toast('Password baru minimal 8 karakter.');if(!/^[a-z0-9._-]{3,30}$/.test(nu))return toast('Username 3–30 karakter: huruf kecil, angka, titik, garis bawah.');
+    if(nu===cur.user&&!np)return toast('Tidak ada perubahan untuk disimpan.');
+    api('POST','/admin/account',{level:'admin',currentPassword:o,newUser:nu,newPassword:np}).then(r=>{if(!r.ok)return toast(apiErr(r,'Gagal menyimpan akun Admin.'));return reloadData().then(()=>{log('Master mengganti akun Admin');toast('Akun Admin tersimpan.');render()})})},
  'acc-cancel'(w){(w==='m'?['adOld','adNU','adNP']:['adAO','adAU','adAP']).forEach(id=>{const e=$(id);if(e){e.value='';if(e.dataset.upxPw)e.type='password'}});toast('Perubahan dibatalkan.')},
  'msg-send'(){const t=($('adMsgTitle').value||'').trim(),x=($('adMsgText').value||'').trim();if(!t||!x)return toast('Isi judul dan isi pesan terlebih dahulu.');
    const L=JSON.parse(localStorage.getItem('upplayMessagesV1')||'[]').filter(m=>Date.now()-m.at<864e5);
@@ -212,11 +210,11 @@ const A={
  'msg-cancel'(){['adMsgTitle','adMsgText'].forEach(id=>{const e=$(id);if(e)e.value=''});toast('Pesan dibatalkan.')},
  'q-go'(){const q=$('adQ');F.q=q?q.value.trim():'';const l=$('adList');if(l)l.innerHTML=(view==='students'?stuRows:tchRows)();toast(F.q?'Hasil pencarian: "'+F.q+'"':'Menampilkan semua data.')},
  'play'(g){if(typeof window.__upzTest==='function')window.__upzTest(g)},
- 'export'(){const o={};Object.keys(localStorage).filter(k=>k.startsWith('cerdasPlay')&&k!==K.cfg).forEach(k=>o[k]=localStorage.getItem(k));dl('cadangan-cerdasplay-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify(o),'application/json');log('Ekspor cadangan data')},
+ 'export'(){const o={};Object.keys(localStorage).filter(k=>k.startsWith('cerdasPlay')&&k!==K.cfg&&k!==K.teachers&&k!==K.users).forEach(k=>o[k]=localStorage.getItem(k));dl('cadangan-cerdasplay-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify(o),'application/json');log('Ekspor cadangan data')},
  'import'(){$('adFile').click()},
  'rst-rooms'(){if(!confirm('Hapus semua room dan notifikasi kode room?'))return;localStorage.removeItem(K.room);localStorage.removeItem(K.notif);log('Hapus semua room & notifikasi');render()},
  'rst-prog'(){if(!confirm('Hapus progres & skor game semua siswa (akun tetap ada)?'))return;rmKeys(k=>/^cerdasPlay:student|^cerdasPlaystudent|^cerdasPlayLogicLevel|^cerdasPlayPictureLevel/.test(k));log('Hapus progres & skor siswa');render()},
- 'rst-all'(){if(lvl()!=='master')return toast(MASTER_ONLY);modal('Reset total aplikasi',[{k:'w',l:'Ketik HAPUS untuk melanjutkan'}],v=>{if(v.w!=='HAPUS')return 'Ketik HAPUS dengan huruf besar.';rmKeys(k=>k.startsWith('cerdasPlay')&&k!==K.cfg&&k!==K.log);applyTeachers();log('Reset total aplikasi')},'Reset total',true)}
+ 'rst-all'(){if(lvl()!=='master')return toast(MASTER_ONLY);modal('Reset total aplikasi',[{k:'w',l:'Ketik HAPUS untuk melanjutkan'}],v=>{if(v.w!=='HAPUS')return 'Ketik HAPUS dengan huruf besar.';rmKeys(k=>k.startsWith('cerdasPlay')&&k!==K.cfg&&k!==K.log&&k!==K.teachers&&k!==K.users);applyTeachers();log('Reset total aplikasi')},'Reset total',true)}
 };
 document.addEventListener('click',e=>{
   const p=$('adminPortalPage');if(!p||!p.contains(e.target))return;
@@ -230,27 +228,14 @@ document.addEventListener('change',e=>{
   else if(t.id==='adScRoom'){F.rc=t.value;render()}
   else if(t.id==='adScPvp'){F.pc=t.value;render()}
   else if(t.id==='adCls'){F.cls=t.value;view==='scores'?render():$('adList').innerHTML=(view==='students'?stuRows:tchRows)()}
-  else if(t.id==='adFile'&&t.files[0]){const rd=new FileReader();rd.onload=()=>{try{const o=JSON.parse(rd.result);if(!confirm('Pulihkan '+Object.keys(o).length+' data? Data saat ini akan ditimpa.'))return;Object.entries(o).forEach(([k,v])=>{if(k.startsWith('cerdasPlay')&&k!==K.cfg)localStorage.setItem(k,v)});applyTeachers();log('Impor cadangan data');render();toast('Data dipulihkan.')}catch(x){toast('File cadangan tidak valid.')}};rd.readAsText(t.files[0])}
+  else if(t.id==='adFile'&&t.files[0]){const rd=new FileReader();rd.onload=()=>{try{const o=JSON.parse(rd.result);if(!confirm('Pulihkan '+Object.keys(o).length+' data? Data saat ini akan ditimpa.'))return;Object.entries(o).forEach(([k,v])=>{if(k.startsWith('cerdasPlay')&&k!==K.cfg&&k!==K.teachers&&k!==K.users)localStorage.setItem(k,v)});applyTeachers();log('Impor cadangan data');render();toast('Data dipulihkan.')}catch(x){toast('File cadangan tidak valid.')}};rd.readAsText(t.files[0])}
 });
 document.addEventListener('keydown',e=>{if(e.target.id==='adQ'&&e.key==='Enter'){e.preventDefault();A['q-go']()}});
 document.addEventListener('input',e=>{if(e.target.id==='adQ'){F.q=e.target.value;$('adList').innerHTML=(view==='students'?stuRows:tchRows)()}});
 
-/* ---------- login rahasia lewat form login yang sama ---------- */
-document.addEventListener('submit',e=>{
-  if(!e.target||e.target.id!=='loginForm')return;
-  const n=$('loginName').value.trim(),p=$('loginPassword').value,err=$('loginError');
-  const alv=adminAuth(n,p);
-  if(alv){
-    e.preventDefault();e.stopImmediatePropagation();
-    setSession({role:'admin',id:alv,name:alv==='master'?'Master':'Admin',adminLevel:alv});closeModal();$('loginPassword').value='';$('loginName').value='';
-    log((alv==='master'?'Master':'Admin')+' masuk');showPage('admin');return;
-  }
-  const bad=m=>{e.preventDefault();e.stopImmediatePropagation();err.classList.remove('success-message');err.textContent=m};
-  if(cfg().maintenance)return bad('🛠️ Aplikasi sedang dalam pemeliharaan. Coba beberapa saat lagi.');
-  const lo=n.toLowerCase();
-  if(students().some(s=>s.disabled&&s.name.toLowerCase()===lo&&s.password===p))return bad('⚠️ Akun dinonaktifkan. Hubungi admin sekolah.');
-  if(allTeachers().some(t=>t.disabled&&t.name.toLowerCase()===lo&&t.password===p))return bad('⚠️ Akun dinonaktifkan. Hubungi admin sekolah.');
-},true);
+/* ---------- login ---------- */
+/* Login admin/master kini diproses di SERVER (06-main.js → POST /auth/login). Tidak ada lagi
+   pemeriksaan password, hash, atau pesan pemeliharaan di sisi browser. */
 
 /* ---------- pasang tampilan admin ---------- */
 const sec=$('adminPortalPage'),mainEl=sec&&sec.querySelector('main');
