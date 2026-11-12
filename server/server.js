@@ -94,7 +94,7 @@ async function getVersion() {
 let studentsReady = false;
 async function ensureStudents() { // sekali: impor data lama dari kv_store & isi nameLower/emailLower
   if (studentsReady) return;
-  const flag = col('meta').doc('studentsReady');
+  const flag = col('meta').doc('studentsMigrated');
   if (!(await flag.get()).exists) {
     const old = await col('kv_store').doc(STUDENT_KEY).get();
     if (old.exists) {

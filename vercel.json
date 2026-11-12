@@ -1,21 +1,14 @@
 {
   "version": 2,
   "rewrites": [
-    {
-      "source": "/health",
-      "destination": "/api/[...path]"
-    },
-    {
-      "source": "/events",
-      "destination": "/api/[...path]"
-    },
-    {
-      "source": "/kv",
-      "destination": "/api/[...path]"
-    },
-    {
-      "source": "/kv/:path*",
-      "destination": "/api/[...path]"
-    }
+    { "source": "/health", "destination": "/api/[...path]" },
+    { "source": "/version", "destination": "/api/[...path]" },
+    { "source": "/events", "destination": "/api/[...path]" },
+    { "source": "/kv", "destination": "/api/[...path]" },
+    { "source": "/kv/:path*", "destination": "/api/[...path]" },
+    { "source": "/auth/:path*", "destination": "/api/[...path]" },
+    { "source": "/admin/:path*", "destination": "/api/[...path]" },
+    { "source": "/students/:path*", "destination": "/api/[...path]" },
+    { "source": "/api/:path*", "destination": "/api/[...path]" }
   ]
 }
