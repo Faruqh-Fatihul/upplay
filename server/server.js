@@ -1,5 +1,19 @@
 /* =====================================================================
-   UpPlay — Server Pengembangan dengan Express.js & Firebase Firestore
+   UpPlay — Server (Express + Firebase Firestore)  ·  v2 (perbaikan)
+
+   Perubahan utama dibanding versi sebelumnya:
+   1. Error Firestore TIDAK lagi ditelan: kegagalan simpan → HTTP 500 (terlihat di klien & Vercel Logs).
+   2. Siswa disimpan PER DOKUMEN di koleksi `students` (bukan satu string besar):
+        - hapus siswa benar-benar terhapus (tidak "hidup lagi" karena merge),
+        - dua perangkat yang mendaftar bersamaan tidak saling menimpa,
+        - tidak kena batas 1 MiB per dokumen Firestore.
+      Aplikasi lama tetap jalan: GET /kv tetap mengembalikan 'cerdasPlayStudents' sebagai array JSON.
+   3. DELETE /kv/:key sekarang benar-benar menghapus (dulu memanggil persistFirestore tanpa nilai).
+   4. /health tidak crash lagi; /version baru untuk polling ringan (pengganti SSE).
+   5. /events (SSE) dimatikan: tidak cocok dengan Vercel serverless. Dibalas 204 agar EventSource berhenti menyambung ulang.
+   6. Penghapusan room dari admin ikut tersimpan (header X-Removed).
+   7. Jika Firebase gagal diinisialisasi (mis. env belum diisi), server tetap hidup dan
+      menjawab 500 dengan pesan jelas; detail lengkap ada di Vercel Logs.
    ===================================================================== */
 'use strict';
 require('dotenv').config();
@@ -8,75 +22,107 @@ const cors = require('cors');
 const helmet = require('helmet');
 const fs = require('fs');
 const path = require('path');
-
 const { initializeApp, cert, getApps } = require('firebase-admin/app');
-const { getFirestore } = require('firebase-admin/firestore');
+const { getFirestore, FieldPath } = require('firebase-admin/firestore');
 
-// Inisialisasi Firebase Admin SDK
-let serviceAccount;
-if (process.env.FIREBASE_SERVICE_ACCOUNT) {
-  serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-} else {
-  const serviceAccountPath = path.join(__dirname, 'serviceAccountKey.json');
-  serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
-}
-
-let firebaseApp;
-if (!getApps().length) {
-  firebaseApp = initializeApp({
-    credential: cert(serviceAccount)
-  });
-} else {
-  firebaseApp = getApps()[0];
-}
-
-const dbFirestore = getFirestore(firebaseApp);
-console.log("Firebase Admin SDK berhasil terhubung ke Firestore!");
-
-// Inisialisasi Express
-const app = express();
-// Middleware untuk membaca body teks dan JSON dari request client
-app.use(express.text({ limit: '10mb' }));
-app.use(express.json({ limit: '10mb' }));
-
-// Aktifkan helmet (dengan konfigurasi aman untuk SSE & Statis)
-app.use(
-  helmet({
-    contentSecurityPolicy: false,
-    crossOriginEmbedderPolicy: false
-  })
-);
-
-// Middleware CORS
-app.use(cors());
-
+/* ---------- Konfigurasi ---------- */
 const PORT = +process.env.PORT || 5173;
 const ROOT = path.join(__dirname, '..', 'public');
+const KEY_RE = /^(cerdasPlay|upplay)/i;
+const STUDENT_KEY = 'cerdasPlayStudents';
 const ROOM_KEY = 'cerdasPlayQuizRoomsV2';
 const NOTIF_KEY = 'cerdasPlayRoomNotifsV1';
+const ID_RE = /^[A-Za-z0-9_-]{1,80}$/;
+const MAX_BYTES = 900 * 1024; // batas aman < 1 MiB per dokumen Firestore
 const DAY = 864e5;
 
-// Menyimpan data secara asinkron ke Firestore
-async function persistFirestore(key, value) {
-  try {
-    await dbFirestore.collection('kv_store').doc(key).set({ value: value });
-  } catch (e) {
-    console.error("Gagal menyimpan ke Firestore:", e.message);
+/* ---------- Inisialisasi Firebase Admin ---------- */
+let db = null;
+let initError = null;
+try {
+  let sa;
+  if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+    sa = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+  } else {
+    const p = path.join(__dirname, 'serviceAccountKey.json');
+    if (!fs.existsSync(p)) throw new Error('FIREBASE_SERVICE_ACCOUNT belum diisi dan serviceAccountKey.json tidak ada');
+    sa = JSON.parse(fs.readFileSync(p, 'utf8'));
+  }
+  if (sa.private_key) sa.private_key = sa.private_key.replace(/\\n/g, '\n'); // jaga-jaga newline ter-escape
+  const fbApp = getApps().length ? getApps()[0] : initializeApp({ credential: cert(sa) });
+  db = getFirestore(fbApp);
+  try { db.settings({ ignoreUndefinedProperties: true }); } catch (_) { /* sudah pernah di-set */ }
+  console.log('[UpPlay] Firebase Admin terhubung ke Firestore.');
+} catch (e) {
+  initError = e;
+  console.error('[UpPlay] Firebase GAGAL diinisialisasi:', e.message);
+}
+
+/* ---------- Helper ---------- */
+const wrap = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
+const httpError = (status, msg) => Object.assign(new Error(msg), { status });
+const parse = (v, d) => { try { const r = JSON.parse(v); return r == null ? d : r; } catch (e) { return d; } };
+const validKey = k => KEY_RE.test(k) && !k.includes('/') && k.length <= 200;
+
+async function commitChunks(items, apply) {
+  for (let i = 0; i < items.length; i += 400) {
+    const b = db.batch();
+    items.slice(i, i + 400).forEach(it => apply(b, it));
+    await b.commit();
   }
 }
 
-// Menghapus data dari Firestore
-async function deleteFirestore(key) {
-  try {
-    await dbFirestore.collection('kv_store').doc(key).delete();
-  } catch (e) {
-    console.error("Gagal menghapus dari Firestore:", e.message);
+/* Penanda versi: naik setiap ada perubahan data. Klien cukup membaca 1 dokumen ini untuk tahu ada yang baru. */
+async function bump() {
+  const v = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  await db.collection('meta').doc('version').set({ v });
+  return v;
+}
+async function getVersion() {
+  const s = await db.collection('meta').doc('version').get();
+  return s.exists ? s.data().v : '0';
+}
+
+/* ---------- Siswa (satu dokumen per siswa) ---------- */
+let migrated = false;
+async function migrateLegacyStudents() {
+  if (migrated) return;
+  const flag = db.collection('meta').doc('studentsMigrated');
+  if (!(await flag.get()).exists) {
+    const old = await db.collection('kv_store').doc(STUDENT_KEY).get();
+    if (old.exists) {
+      const arr = parse(old.data().value, []);
+      const list = (Array.isArray(arr) ? arr : []).filter(s => s && ID_RE.test(s.id || ''));
+      await commitChunks(list, (b, s) => b.set(db.collection('students').doc(s.id), s));
+    }
+    await flag.set({ at: Date.now() });
+  }
+  migrated = true;
+}
+
+async function listStudents() {
+  await migrateLegacyStudents();
+  const snap = await db.collection('students').get();
+  const list = snap.docs.map(d => d.data());
+  list.sort((a, b) => String(a.createdAt || '').localeCompare(String(b.createdAt || '')));
+  return list;
+}
+
+async function deleteStudent(id) {
+  await db.collection('students').doc(id).delete();
+  // hapus juga skor/progres siswa itu (kunci 'cerdasPlay:<id>:...' dan 'cerdasPlay<id>...')
+  const col = db.collection('kv_store');
+  for (const prefix of ['cerdasPlay:' + id + ':', 'cerdasPlay' + id]) {
+    const snap = await col
+      .where(FieldPath.documentId(), '>=', prefix)
+      .where(FieldPath.documentId(), '<', prefix + '\uf8ff')
+      .get();
+    await commitChunks(snap.docs, (b, d) => b.delete(d.ref));
   }
 }
 
-/* ---------- Penggabungan Kunci Ruang ---------- */
+/* ---------- Penggabungan kunci ruang & notifikasi ---------- */
 const STATUS = { waiting: 1, playing: 2, finished: 3, closed: 4 };
-const parse = (v, d) => { try { return JSON.parse(v); } catch (e) { return d; } };
 function better(a, b) {
   const k = p => [p.finished ? 1 : 0, p.roundIndex || 0, p.lastAnswerAt || 0, (p.score || 0) + (p.live || 0)];
   const x = k(a), y = k(b);
@@ -102,35 +148,12 @@ function mergeRooms(oldV, newV) {
   }
   return JSON.stringify(out);
 }
-
-async function put(key, value) {
-  try {
-    // 1. Ambil data eksisting langsung dari Firestore
-    const docRef = dbFirestore.collection('kv_store').doc(key);
-    const docSnap = await docRef.get();
-    let existingValue = docSnap.exists ? docSnap.data().value : null;
-
-    // 2. Lakukan pengecekan dan merge jika kuncinya spesifik
-    if (existingValue) {
-      if (key === ROOM_KEY) {
-        value = mergeRooms(existingValue, value);
-      } else if (key === NOTIF_KEY) {
-        value = mergeNotifs(existingValue, value);
-      } else if (/students|siswa/i.test(key)) {
-        value = mergeStudents(existingValue, value);
-      }
-    }
-
-    // 3. Simpan hasil merge terbaru ke Firestore
-    await persistFirestore(key, value); 
-    broadcast({ key, value });
-    return value;
-  } catch (e) {
-    console.error("Gagal di fungsi put:", e.message);
-    throw e;
-  }
+function dropRooms(value, codes) {
+  if (!codes || !codes.length) return value;
+  const o = parse(value, {}) || {};
+  codes.forEach(c => { delete o[c]; });
+  return JSON.stringify(o);
 }
-
 function mergeNotifs(oldV, newV) {
   const o = parse(oldV, []) || [], n = parse(newV, []) || [], seen = new Set(), out = [];
   for (const x of [...n, ...o]) {
@@ -141,116 +164,150 @@ function mergeNotifs(oldV, newV) {
   return JSON.stringify(out.sort((a, b) => (b.ts || 0) - (a.ts || 0)));
 }
 
-// Fungsi penggabungan aman untuk data siswa agar tidak saling overwrite
-function mergeStudents(oldV, newV) {
-  const o = parse(oldV, []) || [], n = parse(newV, []) || [];
-  const map = new Map();
-  // Masukkan data lama dan baru, gabungkan berdasarkan id atau email yang unik
-  [...o, ...n].forEach(item => {
-    const uniqueKey = item.id || item.email || JSON.stringify(item);
-    map.set(uniqueKey, item); // Data terbaru / terakhir akan memperbarui yang lama
-  });
-  return JSON.stringify(Array.from(map.values()));
-}
-/* ---------- Realtime (SSE) ---------- */
-const clients = new Set();
-function broadcast(msg) {
-  const line = 'data: ' + JSON.stringify(msg) + '\n\n';
-  for (const res of clients) res.write(line);
-}
-setInterval(() => { for (const res of clients) res.write(': ping\n\n'); }, 20000);
-
-/* ---------- Express Middleware & Routes ---------- */
-app.get('/health', (req, res) => {
-  res.json({ ok: true, app: 'UpPlay', keys: Object.keys(db).length });
-});
-
-app.get('/events', (req, res) => {
-  res.setHeader('Content-Type', 'text/event-stream');
-  res.setHeader('Cache-Control', 'no-cache');
-  res.setHeader('Connection', 'keep-alive');
-  res.write('retry: 2000\n\n');
-  clients.add(res);
-  req.on('close', () => clients.delete(res));
-});
-
-app.get('/kv', async (req, res) => {
-  try {
-    const snapshot = await dbFirestore.collection('kv_store').get();
-    const allData = {};
-    snapshot.forEach(doc => {
-      allData[doc.id] = doc.data().value;
-    });
-    res.json(allData);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-app.get('/kv/:key', async (req, res) => {
-  const key = req.params.key;
-
-  // Validasi pola kunci
-  if (!/^cerdasPlay|^upplay/i.test(key)) {
-    return res.status(400).json({ error: 'kunci tidak dikenal' });
-  }
-
-  try {
-    // Ambil langsung dari koleksi Firestore 'kv_store'
-    const docRef = dbFirestore.collection('kv_store').doc(key);
-    const docSnap = await docRef.get();
-
-    if (docSnap.exists) {
-      res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-      return res.send(docSnap.data().value);
-    } else {
-      return res.status(404).send({ error: 'tidak ada' });
+/* Simpan satu kunci (dengan merge di dalam transaksi supaya tidak balapan). Error TIDAK ditelan. */
+async function putKey(key, value, removed) {
+  if (Buffer.byteLength(value, 'utf8') > MAX_BYTES) throw httpError(413, 'Data terlalu besar untuk satu dokumen Firestore');
+  const ref = db.collection('kv_store').doc(key);
+  const saved = await db.runTransaction(async tx => {
+    const snap = await tx.get(ref);
+    let v = value;
+    if (snap.exists) {
+      const old = snap.data().value;
+      if (typeof old === 'string') {
+        if (key === ROOM_KEY) v = mergeRooms(old, v);
+        else if (key === NOTIF_KEY) v = mergeNotifs(old, v);
+      }
     }
-  } catch (error) {
-    console.error("Error reading Firestore:", error);
-    return res.status(500).json({ error: error.message });
-  }
+    if (key === ROOM_KEY) v = dropRooms(v, removed);
+    tx.set(ref, { value: v });
+    return v;
+  });
+  await bump();
+  return saved;
+}
+
+/* ---------- Express ---------- */
+const app = express();
+app.use(express.text({ limit: '4mb', type: 'text/*' }));
+app.use(express.json({ limit: '4mb' }));
+app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
+app.use(cors({ maxAge: 600 }));
+
+// Jika Firebase belum siap, jawab jelas (CORS sudah terpasang sehingga pesan terbaca di browser).
+app.use((req, res, next) => {
+  if (initError) return res.status(500).json({ error: 'Server belum terhubung ke Firestore. Periksa env FIREBASE_SERVICE_ACCOUNT di Vercel.' });
+  next();
 });
 
-app.put('/kv/:key', async (req, res) => {
-  const key = req.params.key;
-  if (!/^cerdasPlay|^upplay/i.test(key)) {
-    return res.status(400).json({ error: 'kunci tidak dikenal' });
-  }
-  
-  const value = req.body || '';
-  
-  try {
-    // GUNAKAN FUNGSI put() AGAR LOGIKA MERGE (students, rooms, notifs) BERJALAN!
-    const savedValue = await put(key, value);
+app.get('/health', wrap(async (req, res) => {
+  const v = await getVersion(); // sekaligus membuktikan Firestore bisa dibaca
+  res.json({ ok: true, app: 'UpPlay', firestore: true, version: v });
+}));
 
-    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-    res.send(savedValue);
-  } catch (error) {
-    console.error("Error saving data:", error);
-    return res.status(500).json({ error: error.message });
-  }
-});
+app.get('/version', wrap(async (req, res) => {
+  res.set('Cache-Control', 'no-store');
+  res.json({ v: await getVersion() });
+}));
 
-app.delete('/kv/:key', async (req, res) => {
+// SSE dimatikan (tidak cocok dengan serverless). 204 = EventSource berhenti menyambung ulang.
+app.get('/events', (req, res) => res.status(204).end());
+
+/* --- semua data sekaligus (dibaca klien saat halaman dibuka) --- */
+app.get('/kv', wrap(async (req, res) => {
+  res.set('Cache-Control', 'no-store');
+  const v = await getVersion(); // dibaca DULU: kalau ada tulis di tengah jalan, klien akan memuat ulang di polling berikutnya
+  const snap = await db.collection('kv_store').get();
+  const all = {};
+  snap.forEach(d => {
+    const val = d.data().value;
+    if (d.id !== STUDENT_KEY && typeof val === 'string') all[d.id] = val;
+  });
+  all[STUDENT_KEY] = JSON.stringify(await listStudents());
+  all.__v = v;
+  res.json(all);
+}));
+
+app.get('/kv/:key', wrap(async (req, res) => {
   const key = req.params.key;
-  if (!/^cerdasPlay|^upplay/i.test(key)) {
-    return res.status(400).json({ error: 'kunci tidak dikenal' });
+  if (!validKey(key)) throw httpError(400, 'kunci tidak dikenal');
+  res.set('Cache-Control', 'no-store');
+  if (key === STUDENT_KEY) return res.type('text/plain').send(JSON.stringify(await listStudents()));
+  const snap = await db.collection('kv_store').doc(key).get();
+  if (!snap.exists) return res.status(404).json({ error: 'tidak ada' });
+  res.type('text/plain').send(snap.data().value);
+}));
+
+app.put('/kv/:key', wrap(async (req, res) => {
+  const key = req.params.key;
+  if (!validKey(key)) throw httpError(400, 'kunci tidak dikenal');
+  if (typeof req.body !== 'string') throw httpError(400, 'body harus berupa teks (Content-Type: text/plain)');
+
+  if (key === STUDENT_KEY) {
+    // Jalur lama (klien versi lama mengirim seluruh daftar): hanya tambah/ubah, TIDAK menghapus.
+    const arr = parse(req.body, []);
+    const list = (Array.isArray(arr) ? arr : []).filter(s => s && ID_RE.test(s.id || '') && typeof s.name === 'string');
+    await commitChunks(list, (b, s) => b.set(db.collection('students').doc(s.id), s));
+    await bump();
+    return res.type('text/plain').send(JSON.stringify(await listStudents()));
   }
-  await persistFirestore(key);
-  broadcast({ key, value: null });
+
+  const removed = (req.get('x-removed') || '').split(',').map(s => s.trim()).filter(Boolean);
+  const saved = await putKey(key, req.body, removed);
+  res.type('text/plain').send(saved);
+}));
+
+app.delete('/kv/:key', wrap(async (req, res) => {
+  const key = req.params.key;
+  if (!validKey(key)) throw httpError(400, 'kunci tidak dikenal');
+  if (key === STUDENT_KEY) return res.json({ ok: true, ignored: true }); // hapus siswa lewat DELETE /students/:id
+  await db.collection('kv_store').doc(key).delete();
+  await bump();
   res.json({ ok: true });
-});
+}));
 
-/* ---------- Berkas Statis Frontend ---------- */
+/* --- siswa per dokumen --- */
+app.get('/students', wrap(async (req, res) => {
+  res.set('Cache-Control', 'no-store');
+  res.json(await listStudents());
+}));
+
+app.put('/students/:id', wrap(async (req, res) => {
+  const id = req.params.id;
+  if (!ID_RE.test(id)) throw httpError(400, 'id tidak valid');
+  const s = req.body;
+  if (!s || typeof s !== 'object' || Array.isArray(s) || s.id !== id ||
+      typeof s.name !== 'string' || !s.name.trim() ||
+      typeof s.className !== 'string' || !s.className) {
+    throw httpError(400, 'data siswa tidak valid (butuh id, name, className)');
+  }
+  if (Buffer.byteLength(JSON.stringify(s), 'utf8') > MAX_BYTES) throw httpError(413, 'data siswa terlalu besar (foto profil?)');
+  await db.collection('students').doc(id).set(s);
+  await bump();
+  res.json({ ok: true });
+}));
+
+app.delete('/students/:id', wrap(async (req, res) => {
+  const id = req.params.id;
+  if (!ID_RE.test(id)) throw httpError(400, 'id tidak valid');
+  await deleteStudent(id);
+  await bump();
+  res.json({ ok: true });
+}));
+
+/* ---------- Berkas statis (hanya untuk pengembangan lokal; di Vercel disajikan oleh Vercel) ---------- */
 app.use(express.static(ROOT));
 
-// Jalankan server setelah data Firestore berhasil dimuat ke cache lokal
-  if (process.env.NODE_ENV !== 'production') {
-    app.listen(PORT, () => {
-      console.log('UpPlay (Express + Firestore) berjalan di http://localhost:' + PORT);
-      console.log('Buka di HP (satu Wi-Fi): http://<IP-laptop>:' + PORT);
-    });
-  }
-// WAJIB: Ekspor app agar bisa dibaca oleh Vercel Serverless
+/* ---------- Penanganan error ---------- */
+app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+  const status = err.status || err.statusCode || 500;
+  console.error('[UpPlay] ' + req.method + ' ' + req.originalUrl + ' → ' + status + ': ' + err.message);
+  res.status(status).json({ error: status < 500 ? err.message : 'Kesalahan server (lihat Vercel Logs)' });
+});
+
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log('UpPlay (Express + Firestore) berjalan di http://localhost:' + PORT);
+  });
+}
+// Vercel serverless membaca app ini lewat api/[...path].js
 module.exports = app;
